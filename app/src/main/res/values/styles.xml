@@ -19,7 +19,7 @@
 
     <style name="main_bottom_radiobutton_style">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">80dp</item>
         <item name="android:layout_weight">1</item>
         <!--<item name="android:background">@color/home_bar_classbg_select</item>-->
     </style>
@@ -31,6 +31,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
     <style name="textStyle_white_15">
         <item name="android:textColor">@color/text_color_white</item>
         //34px
