@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources>
+    <string name="app_name">EtcommYolk</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="network_error">网络连接错误,请稍后再试</string>
     <string name="network_conn_error">网络连接错误,请检查网络连接</string>
     <string name="server_error">内部错误,请稍后再试</string>
@@ -18,7 +22,6 @@
     <string name="disscuss_null">请输入评论内容</string>
     <string name="dev_ing">此功能正在开发中,敬请期待</string>
     <string name="btn_yes">确&#160;&#160;&#160;定</string>
-    <string name="app_name">上班趣</string>
     <string name="atv_parameter">activity参数异常,请检查</string>
     <string name="action_settings">Settings</string>
     <string name="home_suggest">头条</string>

@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".fragment.AroundFragment">
     <!-- TODO: Update blank fragment layout -->
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/save"
@@ -34,7 +35,6 @@
         android:layout_centerInParent="true"
         fresco:placeholderImage="@mipmap/ic_launcher"
         fresco:roundedCornerRadius="10dp">
-
     </com.facebook.drawee.view.SimpleDraweeView>
 
 

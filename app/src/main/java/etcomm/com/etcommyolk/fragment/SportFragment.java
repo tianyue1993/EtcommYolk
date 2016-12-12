@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 
 import etcomm.com.etcommyolk.R;
 
-public class FindFragment extends Fragment {
+public class SportFragment extends Fragment {
     /**
      * 控制OnResume()执行次数
      */
-    public static boolean limitResumeFind;
+    public static boolean limitOnresumeSports;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,9 +22,7 @@ public class FindFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_find, container, false);
+        return inflater.inflate(R.layout.fragment_sports, container, false);
     }
-
-
 
 }

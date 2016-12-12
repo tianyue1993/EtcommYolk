@@ -15,6 +15,7 @@ import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.fragment.FindFragment;
 import etcomm.com.etcommyolk.fragment.AroundFragment;
+import etcomm.com.etcommyolk.fragment.SportFragment;
 
 /**
  * 主页 首页页面切换
@@ -27,9 +28,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     /**
      * 健步
      */
-    private FindFragment mSportsFragment;
+    private SportFragment mSportsFragment;
     /**
-     * 我的
+     * 身边
      */
     private AroundFragment mSideFragment;
     /**
@@ -63,7 +64,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             initView();
         } else {
             mFindFragment = (FindFragment) getFragmentManager().findFragmentByTag("mFind");
-            mSportsFragment = (FindFragment) getFragmentManager().findFragmentByTag("mSport");
+            mSportsFragment = (SportFragment) getFragmentManager().findFragmentByTag("mSport");
             mSideFragment = (AroundFragment) getFragmentManager().findFragmentByTag("mSide");
             initView();
         }
@@ -120,7 +121,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         limitOnresume();
         switch (i) {
             case 0:
-                FindFragment.limitOnresumeSports = true;
+                FindFragment.limitResumeFind = true;
                 if (mFindFragment == null) {
                     mFindFragment = new FindFragment();
                     transaction.add(R.id.mian_fragment, mFindFragment, "mFind");
@@ -136,9 +137,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 mFind.setChecked(true);
                 break;
             case 1:
-                FindFragment.limitOnresumeSports = true;
+                SportFragment.limitOnresumeSports = true;
                 if (mSportsFragment == null) {
-                    mSportsFragment = new FindFragment();
+                    mSportsFragment = new SportFragment();
                     transaction.add(R.id.mian_fragment, mSportsFragment, "mSport");
                 } else {
                     transaction.show(mSportsFragment);
@@ -166,7 +167,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * 修改变量就行
      */
     private void limitOnresume() {
-        mFindFragment.limitOnresumeSports = false;
+        mFindFragment.limitResumeFind = false;
         mSportsFragment.limitOnresumeSports = false;
         mSideFragment.limitOnresumSide = false;
     }

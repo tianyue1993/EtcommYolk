@@ -1,9 +1,9 @@
-package etcomm.com.etcommyolk;
+package etcomm.com.etcommyolk.Utils;
 
 import android.app.Activity;
 import android.app.Application;
-
-import com.facebook.drawee.backends.pipeline.Fresco;
+import android.os.Build;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 
@@ -49,10 +49,4 @@ public class EtcommApplication extends Application {
     }
 
 
-   
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Fresco.initialize(this);
-    }
 }
