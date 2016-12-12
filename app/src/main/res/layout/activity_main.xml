@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/mian_fragment"
@@ -13,7 +12,7 @@
     <RadioGroup
         android:id="@+id/main_bottom_menu_rg"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
@@ -21,20 +20,18 @@
             android:id="@+id/main_bottom_rb_sport"
             style="@style/main_bottom_radiobutton_style"
             android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            />
+            android:drawableTop="@drawable/bar_bottom_rb_sports_selector" />
 
         <CheckBox
             android:id="@+id/main_bottom_rb_find"
             style="@style/main_bottom_radiobutton_style"
             android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher" />
+            android:drawableTop="@drawable/bar_bottom_rb_find_selector" />
 
         <CheckBox
             android:id="@+id/main_bottom_rb_side"
             style="@style/main_bottom_radiobutton_style"
             android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            />
+            android:drawableTop="@drawable/bar_bottom_rb_around_selector" />
     </RadioGroup>
 </RelativeLayout>
