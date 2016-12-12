@@ -10,12 +10,11 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.Utils.EtcommApplication;
+import etcomm.com.etcommyolk.fragment.AroundFragment;
 import etcomm.com.etcommyolk.fragment.FindFragment;
-import etcomm.com.etcommyolk.fragment.SideFragment;
 import etcomm.com.etcommyolk.fragment.SportFragment;
+import etcomm.com.etcommyolk.EtcommApplication;
 
 /**
  * 主页 首页页面切换
@@ -30,9 +29,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
      */
     private SportFragment mSportsFragment;
     /**
-     * 我的
+     * 身边
      */
-    private SideFragment mSideFragment;
+    private AroundFragment mSideFragment;
     /**
      * 进入发现模块
      */
@@ -65,7 +64,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         } else {
             mFindFragment = (FindFragment) getFragmentManager().findFragmentByTag("mFind");
             mSportsFragment = (SportFragment) getFragmentManager().findFragmentByTag("mSport");
-            mSideFragment = (SideFragment) getFragmentManager().findFragmentByTag("mSide");
+            mSideFragment = (AroundFragment) getFragmentManager().findFragmentByTag("mSide");
             initView();
         }
 
@@ -95,7 +94,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mSports.setOnClickListener(this);
 
         /**
-         * 我的
+         * 身边
          */
         mSide = (CheckBox) findViewById(R.id.main_bottom_rb_side);
         mSide.setChecked(false);
@@ -148,9 +147,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 mSports.setChecked(true);
                 break;
             case 2:
-                SideFragment.limitOnresumSide = true;
+                AroundFragment.limitOnresumSide = true;
                 if (mSideFragment == null) {
-                    mSideFragment = new SideFragment();
+                    mSideFragment = new AroundFragment();
                     transaction.add(R.id.mian_fragment, mSideFragment, "mSide");
                 } else {
                     transaction.show(mSideFragment);

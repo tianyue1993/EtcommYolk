@@ -1,17 +1,23 @@
 package etcomm.com.etcommyolk.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.utils.GlobalSetting;
 
 public class BaseActivity extends Activity {
+
     //标题
     private Button title;
     //左边按钮
@@ -20,11 +26,79 @@ public class BaseActivity extends Activity {
     private Button rightTextView;
     //外部布局
     private RelativeLayout allRelativeLayout;
+    String tag = getClass().getSimpleName();
+    Context mContext;
+    protected GlobalSetting prefs;
+    protected ApiClient client;
+
+    public static final int MSG_CLOSE_PROGRESS = 1;
+    public static final int MSG_SHOW_TOAST = 2;
+    public Handler baseHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case MSG_CLOSE_PROGRESS:
+                    // cancelProgress(); //加载进度条
+                    break;
+                case MSG_SHOW_TOAST:
+                    int resid = msg.arg1;
+                    if (resid > 0) {
+                        showToast(resid);
+                    } else if (msg.obj != null) {
+                        String mes = (String) msg.obj;
+                        if (!TextUtils.isEmpty(mes)) {
+                            showToast(mes);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        ;
+    };
+    Toast toast = null;
+
+    protected void showToast(String message) {
+        if (toast != null) {
+            return;
+        }
+        toast = Toast.makeText(mContext, (!TextUtils.isEmpty(message)) ? message
+                : this.getString(R.string.network_error), Toast.LENGTH_SHORT);
+        toast.show();
+        baseHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (toast != null) {
+                    toast.cancel();
+                    toast = null;
+                }
+            }
+        }, 2000);
+    }
+
+    protected void showToast(int resid) {
+        if (toast != null) {
+            return;
+        }
+        toast = Toast.makeText(mContext, resid, Toast.LENGTH_SHORT);
+        toast.show();
+        baseHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (toast != null) {
+                    toast.cancel();
+                    toast = null;
+                }
+            }
+        }, 2000);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
-
+        mContext = this;
+        prefs = GlobalSetting.getInstance(mContext);
+        client = ApiClient.getInstance();
         title = (Button) findViewById(R.id.base_title);
         leftTextView = (Button) findViewById(R.id.base_left);
         rightTextView = (Button) findViewById(R.id.base_right);
@@ -54,8 +128,8 @@ public class BaseActivity extends Activity {
     /**
      * 设置右边按钮
      */
-    public void setRightTextView(String string, View.OnClickListener onClickListener){
-        if (rightTextView != null){
+    public void setRightTextView(String string, View.OnClickListener onClickListener) {
+        if (rightTextView != null) {
             rightTextView.setVisibility(View.VISIBLE);
             if (string != null) {
                 rightTextView.setText(string);
@@ -69,8 +143,8 @@ public class BaseActivity extends Activity {
     /**
      * 设置左边按钮
      */
-    public void setLeftTextView(String string, View.OnClickListener onClickListener){
-        if (leftTextView != null){
+    public void setLeftTextView(String string, View.OnClickListener onClickListener) {
+        if (leftTextView != null) {
             leftTextView.setVisibility(View.VISIBLE);
             if (string != null) {
                 leftTextView.setText(string);
@@ -84,8 +158,8 @@ public class BaseActivity extends Activity {
     /**
      * 设置标题
      */
-    public void setTitleTextView(String string, View.OnClickListener onClickListener){
-        if (title != null){
+    public void setTitleTextView(String string, View.OnClickListener onClickListener) {
+        if (title != null) {
             title.setVisibility(View.VISIBLE);
             if (string != null) {
                 title.setText(string);
