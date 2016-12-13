@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.StrictMode;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -76,7 +74,6 @@ public class EtcommApplication extends Application {
     }
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -94,12 +91,13 @@ public class EtcommApplication extends Application {
         return InterfaceUrl;
     }
 
-    private static String getLogin = "sign-in";
+    public static String LOGIN() {
+        return InterfaceUrl + "sign-in";
+    }
 
-    /**
-     * 获取登录接口
-     */
-    public static String getLogin(){ return InterfaceUrl + getLogin; }
+    public static String POINT_EXCHANGE() {
+        return InterfaceUrl + "gift";
+    }
 
 
 }

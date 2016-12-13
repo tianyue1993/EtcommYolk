@@ -9,20 +9,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import etcomm.com.etcommyolk.entity.Login;
+import etcomm.com.etcommyolk.entity.PointsExchange;
 import etcomm.com.etcommyolk.exception.BaseException;
 
-public class LoginHandler extends JsonResponseHandler {
+public class PointExchangeHandler extends JsonResponseHandler {
 
-    public LoginHandler() {
+    public PointExchangeHandler() {
         this(DEFAULT_CHARSET);
     }
 
-    public LoginHandler(String encoding) {
+    public PointExchangeHandler(String encoding) {
         super(encoding);
     }
 
-    public void onSuccess(Login login) {
+    public void onSuccess(PointsExchange exchange) {
 
     }
 
@@ -40,7 +40,7 @@ public class LoginHandler extends JsonResponseHandler {
                         try {
                             if (response.has("code") && !response.isNull("code")) {
                                 int code = response.getInt("code");
-                                onSuccess(JSON.parseObject(response.toString(), Login.class));
+                                onSuccess(JSON.parseObject(response.toString(), PointsExchange.class));
                             } else {
                                 onFailure(new BaseException("Unexpected response " + response, -1));
                             }
@@ -56,7 +56,7 @@ public class LoginHandler extends JsonResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         Log.d("onFailure JSONObject", statusCode + "---" + throwable + "---" + errorResponse);
-        onFailure(new BaseException("网络请求失败，请重试", statusCode));
+        onFailure(new BaseException("无网络连接，请查看网络配置", statusCode));
     }
 
     @Override

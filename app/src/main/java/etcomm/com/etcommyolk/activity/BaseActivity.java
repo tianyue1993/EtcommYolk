@@ -8,9 +8,12 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.umeng.analytics.MobclickAgent;
 
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
@@ -19,11 +22,11 @@ import etcomm.com.etcommyolk.utils.GlobalSetting;
 public class BaseActivity extends Activity {
 
     //标题
-    private Button title;
+    private TextView title;
     //左边按钮
-    private Button leftTextView;
+    private ImageView leftTextView;
     //右边按钮
-    private Button rightTextView;
+    private ImageView rightTextView;
     //外部布局
     private RelativeLayout allRelativeLayout;
     String tag = getClass().getSimpleName();
@@ -99,10 +102,16 @@ public class BaseActivity extends Activity {
         mContext = this;
         prefs = etcomm.com.etcommyolk.utils.GlobalSetting.getInstance(mContext);
         client = ApiClient.getInstance();
-        title = (Button) findViewById(R.id.base_title);
-        leftTextView = (Button) findViewById(R.id.base_left);
-        rightTextView = (Button) findViewById(R.id.base_right);
+        title = (TextView) findViewById(R.id.base_title);
+        leftTextView = (ImageView) findViewById(R.id.base_left);
+        rightTextView = (ImageView) findViewById(R.id.base_right);
         allRelativeLayout = (RelativeLayout) findViewById(R.id.all_base_layout);
+        leftTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
@@ -128,11 +137,13 @@ public class BaseActivity extends Activity {
     /**
      * 设置右边按钮
      */
-    public void setRightTextView(String string, View.OnClickListener onClickListener) {
+    public void setRightTextView(int id, View.OnClickListener onClickListener) {
         if (rightTextView != null) {
-            rightTextView.setVisibility(View.VISIBLE);
-            if (string != null) {
-                rightTextView.setText(string);
+            if (rightTextView != null) {
+                rightTextView.setVisibility(View.VISIBLE);
+                if (id != 0) {
+                    rightTextView.setImageResource(id);
+                }
             }
             if (onClickListener != null) {
                 rightTextView.setOnClickListener(onClickListener);
@@ -140,14 +151,15 @@ public class BaseActivity extends Activity {
         }
     }
 
+
     /**
      * 设置左边按钮
      */
-    public void setLeftTextView(String string, View.OnClickListener onClickListener) {
+    public void setLeftTextView(int id, View.OnClickListener onClickListener) {
         if (leftTextView != null) {
             leftTextView.setVisibility(View.VISIBLE);
-            if (string != null) {
-                leftTextView.setText(string);
+            if (id != 0) {
+                leftTextView.setImageResource(id);
             }
             if (onClickListener != null) {
                 leftTextView.setOnClickListener(onClickListener);
@@ -168,6 +180,21 @@ public class BaseActivity extends Activity {
                 title.setOnClickListener(onClickListener);
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(tag);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(tag);
     }
 
 }

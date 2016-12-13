@@ -1,14 +1,20 @@
 package etcomm.com.etcommyolk.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.activity.PointsExchangeActivity;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 import etcomm.com.etcommyolk.widget.SlideADView;
 
@@ -59,9 +65,16 @@ public class FindFragment extends BaseFragment {
     ImageView healthImage;
     @Bind(R.id.welfare_image)
     ImageView welfareImage;
+    @Bind(R.id.base_left)
+    ImageView baseLeft;
+    @Bind(R.id.base_right)
+    ImageView baseRight;
+
+    private Context mContext;
 
     /**
      * onCreateView
+     *
      * @param view
      * @param savedInstanceState
      */
@@ -78,6 +91,7 @@ public class FindFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity();
     }
 
 
@@ -86,4 +100,36 @@ public class FindFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @OnClick({R.id.exchange, R.id.group, R.id.tv_more_activity, R.id.tv_more_health, R.id.tv_more_walfe, R.id.base_left, R.id.base_right})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.exchange:
+                startActivity(new Intent(getBaseActivity(), PointsExchangeActivity.class));
+
+                break;
+            case R.id.group:
+                break;
+            case R.id.tv_more_activity:
+                break;
+            case R.id.tv_more_health:
+                break;
+            case R.id.tv_more_walfe:
+                break;
+            case R.id.base_left:
+                break;
+            case R.id.base_right:
+                break;
+        }
+    }
+
+
 }

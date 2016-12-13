@@ -48,8 +48,20 @@ public class ApiClient {
         asyncHttpClient.get(url, handler);
     }
 
+    /**
+     * 登录接口
+     */
     public void invokeLogin(Context context, HttpEntity entity, JsonResponseHandler handler) {
-        asyncHttpClient.post(context, EtcommApplication.getLogin(), entity, PROTOCOL_CONTENT_TYPE, handler);
+        asyncHttpClient.post(context, EtcommApplication.LOGIN(), entity,
+                PROTOCOL_CONTENT_TYPE, handler);
+
+    }
+
+    /**
+     * 积分兑换接口
+     */
+    public void invokePointExch(Context context, HttpEntity entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(context, EtcommApplication.POINT_EXCHANGE(), entity, PROTOCOL_CONTENT_TYPE, handler);
     }
 
     public void cancelRequest() {
