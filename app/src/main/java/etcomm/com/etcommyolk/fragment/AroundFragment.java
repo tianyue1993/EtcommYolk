@@ -27,14 +27,11 @@ import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.LoginHandler;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
 
-public class AroundFragment extends Fragment {
+public class AroundFragment extends BaseFragment {
     /**
      * 控制OnResume()执行次数
      */
     public static boolean limitOnresumSide;
-    public static GlobalSetting pres;
-    public static Context mContext;
-    protected ApiClient client;
     public static String TAG = "AroundFragment";
     @Bind(R.id.save)
     Button save;
@@ -48,10 +45,10 @@ public class AroundFragment extends Fragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.get:
-                Toast.makeText(mContext, pres.getUid(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseActivity(), prefs.getUid(), Toast.LENGTH_LONG).show();
                 break;
             case R.id.save:
-                pres.saveUid("123456");
+                prefs.saveUid("123456");
                 break;
             case R.id.login:
                 visitorLogin();
@@ -59,24 +56,26 @@ public class AroundFragment extends Fragment {
         }
     }
 
+    /**
+     * onCreateView
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    protected void initView(View view, Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
+        SimpleDraweeView myImageView = (SimpleDraweeView) view.findViewById(R.id.my_image_view);
+        myImageView.setImageURI(Uri.parse("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1481514246&di=b84ff611e64fafe69fd2b9bcad7e7ca5&src=http://pic.58pic.com/58pic/12/40/40/21C58PICc7e.jpg"));
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_side;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity();
-        pres = GlobalSetting.getInstance(mContext);
-        client = ApiClient.getInstance();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_side, container, false);
-        ButterKnife.bind(this, view);
-        SimpleDraweeView myImageView = (SimpleDraweeView) view.findViewById(R.id.my_image_view);
-        myImageView.setImageURI(Uri.parse("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1481514246&di=b84ff611e64fafe69fd2b9bcad7e7ca5&src=http://pic.58pic.com/58pic/12/40/40/21C58PICc7e.jpg"));
-        return view;
-
     }
 
     @Override
@@ -101,17 +100,17 @@ public class AroundFragment extends Fragment {
         object.put("device_id", "ad2c5508b66d5835");
         try {
             StringEntity entity = new StringEntity(object.toJSONString(), "utf-8");
-            client.invokeLogin(mContext, entity, new LoginHandler() {
+            client.invokeLogin(getBaseActivity(), entity, new LoginHandler() {
                 @Override
                 public void onSuccess(Login login) {
                     super.onSuccess(login);
-                    Toast.makeText(mContext, login.message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseActivity(), login.message, Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onFailure(BaseException exception) {
                     super.onFailure(exception);
-                    Toast.makeText(mContext, exception.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         } catch (UnsupportedEncodingException e) {
