@@ -4,10 +4,51 @@
     android:layout_height="match_parent"
     tools:context=".fragment.FindFragment">
 
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#FFCC00">
+
+        <ImageView
+            android:id="@+id/base_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@mipmap/ic_mine"
+            android:padding="7dp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/base_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:padding="7dp"
+            android:src="@mipmap/ic_messege"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/base_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="发现"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:visibility="visible" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,10 +87,10 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:background="@color/bg_default"
                     android:id="@+id/header1"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp">
+                    android:layout_height="25dp"
+                    android:background="@color/bg_default">
 
                     <TextView
                         android:layout_width="wrap_content"

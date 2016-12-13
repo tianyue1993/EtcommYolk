@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp">
+
+        <TextView
+            android:id="@+id/mypoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marginlargehuge"
+            android:drawableLeft="@mipmap/mine_goldpoints"
+            android:text="200分" />
+
+        <TextView
+            android:id="@+id/myexchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marginhuge"
+            android:text="我的兑换" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grey" />
+
+    <etcomm.com.etcommyolk.widget.DownPullRefreshListView
+        android:id="@+id/refreshlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerPadding="@dimen/marginmiddle"
+        android:includeFontPadding="false" />
+
+</LinearLayout>
