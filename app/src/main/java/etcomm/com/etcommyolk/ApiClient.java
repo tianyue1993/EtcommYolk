@@ -15,7 +15,7 @@ public class ApiClient {
     private static final String PROTOCOL_CHARSET = "utf-8";
     private static final String PROTOCOL_CONTENT_TYPE = String.format("application/json; charset=%s", PROTOCOL_CHARSET);
 
-    public static final String LOGIN = BASE_URL + "sign-in"; // 登陆
+
     private AsyncHttpClient asyncHttpClient;
     private SyncHttpClient syncHttpClient;
 
@@ -49,7 +49,7 @@ public class ApiClient {
     }
 
     public void invokeLogin(Context context, HttpEntity entity, JsonResponseHandler handler) {
-        asyncHttpClient.post(context, LOGIN, entity, PROTOCOL_CONTENT_TYPE, handler);
+        asyncHttpClient.post(context, EtcommApplication.getLogin(), entity, PROTOCOL_CONTENT_TYPE, handler);
     }
 
     public void cancelRequest() {

@@ -10,19 +10,54 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        manifestPlaceholders = [serverDoMain      : "http://113.59.227.10:86/index.php?r="]
     }
+    //代码混淆
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //打包相关
+//    signingConfigs {
+//
+//        release {
+//            //签名文件 需放在根目录
+//            storeFile file("")
+//            storePassword ""
+//            keyAlias ""
+//            keyPassword ""
+//        }
+//
+//    }
+
+    //分渠道 分站点打包 分配服务器路径等
+    productFlavors {
+
+        //正式站
+        major {
+        }
+
+        // 测试站：测试服务器地址，
+        alpha {
+            applicationId "etcomm.com.etcommyolk.alpha"
+            minSdkVersion 15
+            targetSdkVersion 21
+            versionCode 28
+            versionName "1.0"
+
+            manifestPlaceholders = [serverDoMain      : "http://113.59.227.10:86/index.php?r="]
+        }
+
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
     compile fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
