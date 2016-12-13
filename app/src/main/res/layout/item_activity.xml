@@ -4,7 +4,7 @@
     android:layout_height="160dp">
 
     <ImageView
-        android:id="@+id/suggest_image"
+        android:id="@+id/activity_image"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="centerCrop"
