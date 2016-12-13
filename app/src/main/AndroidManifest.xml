@@ -26,7 +26,16 @@
         </activity>
         <activity
             android:name=".activity.BaseActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PointsExchangeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.MyExchangeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.MyPointsDetailActivity"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>
