@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
+
+    <ImageView
+        android:id="@+id/suggest_image"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_defalt_small" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_alignParentBottom="true"
+        android:background="@mipmap/ic_item_backgroud">
+
+        <TextView
+            android:id="@+id/healthtopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marginmiddle"
+            android:layout_marginRight="80dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="get新技能"
+            android:textColor="@color/nav_btn_black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/readingamount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marginlarge"
+            android:drawableLeft="@mipmap/eyereadcount_black"
+            android:drawablePadding="5dp"
+            android:paddingLeft="@dimen/marginmiddle"
+            android:text="3856"
+            android:textColor="@color/nav_btn_black"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
