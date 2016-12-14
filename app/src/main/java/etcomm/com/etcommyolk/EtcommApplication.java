@@ -18,7 +18,7 @@ public class EtcommApplication extends Application {
     /**
      * 接口跟Url
      */
-    public static String InterfaceUrl;
+    public static String BASE_URL;
 
 
     /**
@@ -69,7 +69,7 @@ public class EtcommApplication extends Application {
         }
         //读取信息
         if (null != applicationInfo) {
-            this.InterfaceUrl = applicationInfo.metaData.getString("serverDoMain");
+            this.BASE_URL = applicationInfo.metaData.getString("serverDoMain");
         }
     }
 
@@ -88,16 +88,19 @@ public class EtcommApplication extends Application {
      * @return 服务器域名
      */
     public static String getServerDoMain() {
-        return InterfaceUrl;
+        return BASE_URL;
     }
 
     public static String LOGIN() {
-        return InterfaceUrl + "sign-in";
+        return BASE_URL + "sign-in";
     }
 
     public static String POINT_EXCHANGE() {
-        return InterfaceUrl + "gift";
+        return BASE_URL + "gift";
     }
 
+    public static String EXCHANGE() {
+        return BASE_URL + "gift/gift-exchange";// 兑换礼品
+    }
 
 }

@@ -9,17 +9,24 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import etcomm.com.etcommyolk.ApiClient;
+import etcomm.com.etcommyolk.utils.GlobalSetting;
+
 public class YolkBaseAdapter<T> extends BaseAdapter {
     protected final String tag = getClass().getSimpleName();
     protected List<T> mList = null;
     protected LayoutInflater mInflater = null;
     protected Context mContext = null;
+    protected GlobalSetting pres;
+    protected ApiClient client;
 
     public YolkBaseAdapter(Context context) {
         super();
         mInflater = LayoutInflater.from(context);
         mContext = context;
         mList = new ArrayList<T>();
+        pres = GlobalSetting.getInstance(mContext);
+        client = ApiClient.getInstance();
     }
 
 

@@ -3,15 +3,15 @@ package etcomm.com.etcommyolk.entity;
 public class PointsExchangeItems extends Entity {
     public String list_id;
 
-    public int gift_id;
+    public String gift_id;
 
     public String name;
 
     public String detail;
 
-    public int inventory;
+    public String inventory;
 
-    public int score;
+    public String score;
 
     public String image;
 

@@ -3,12 +3,12 @@ package etcomm.com.etcommyolk;
 import android.content.Context;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import org.apache.http.HttpEntity;
-
 import etcomm.com.etcommyolk.handler.JsonResponseHandler;
+import etcomm.com.etcommyolk.utils.GlobalSetting;
 
 public class ApiClient {
     public static final String BASE_URL = "http://113.59.227.10:86/index.php?r="; // 测试
@@ -18,6 +18,7 @@ public class ApiClient {
 
     private AsyncHttpClient asyncHttpClient;
     private SyncHttpClient syncHttpClient;
+    private GlobalSetting pres;
 
     private volatile static ApiClient instance;
 
@@ -51,17 +52,24 @@ public class ApiClient {
     /**
      * 登录接口
      */
-    public void invokeLogin(Context context, HttpEntity entity, JsonResponseHandler handler) {
-        asyncHttpClient.post(context, EtcommApplication.LOGIN(), entity,
-                PROTOCOL_CONTENT_TYPE, handler);
+    public void invokeLogin(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(context, EtcommApplication.LOGIN(),
+                entity, handler);
 
     }
 
     /**
      * 积分兑换接口
      */
-    public void invokePointExch(Context context, HttpEntity entity, JsonResponseHandler handler) {
-        asyncHttpClient.post(context, EtcommApplication.POINT_EXCHANGE(), entity, PROTOCOL_CONTENT_TYPE, handler);
+    public void invokePointExch(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.POINT_EXCHANGE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 兑换接口
+     */
+    public void invokeExch(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.EXCHANGE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     public void cancelRequest() {

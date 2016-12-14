@@ -114,7 +114,6 @@ public class FindFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.exchange:
                 startActivity(new Intent(getBaseActivity(), PointsExchangeActivity.class));
-
                 break;
             case R.id.group:
                 break;
