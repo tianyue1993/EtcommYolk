@@ -40,7 +40,9 @@ public class LoginHandler extends JsonResponseHandler {
                         try {
                             if (response.has("code") && !response.isNull("code")) {
                                 int code = response.getInt("code");
-                                onSuccess(JSON.parseObject(response.toString(), Login.class));
+                                if (code == 0) {
+                                    onSuccess(JSON.parseObject(response.toString(), Login.class));
+                                }
                             } else {
                                 onFailure(new BaseException("Unexpected response " + response, -1));
                             }

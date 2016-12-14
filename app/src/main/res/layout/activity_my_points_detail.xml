@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="etcomm.com.etcommyolk.activity.MyPointsDetailActivity">
+    android:background="@color/common_bg"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_bg"
+        android:minHeight="50dp">
+
+        <TextView
+            android:id="@+id/mytotalpoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marginhuge"
+            android:drawableLeft="@mipmap/mine_goldpoints"
+            android:drawablePadding="5dp"
+            android:text="累计积分:"
+            android:textColor="@color/common_black_text" />
+
+        <TextView
+            android:id="@+id/howtoearnpoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marginlargehuge"
+            android:drawableLeft="@mipmap/mine_goldpoints"
+            android:drawablePadding="5dp"
+            android:text="可用积分:"
+            android:textColor="@color/common_black_text" />
+    </RelativeLayout>
+
+
+    <etcomm.com.etcommyolk.widget.DownPullRefreshListView
+        android:id="@+id/refreshlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_bg"
+        android:dividerPadding="@dimen/marginmiddle" />
+
+</LinearLayout>

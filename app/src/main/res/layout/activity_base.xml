@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:background="@mipmap/ic_back"
-            android:padding="7dp"
+            android:padding="5dp"
             android:visibility="visible" />
 
         <ImageView
@@ -30,7 +30,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:padding="7dp"
+            android:padding="5dp"
             android:textColor="@android:color/white"
             android:visibility="gone" />
 

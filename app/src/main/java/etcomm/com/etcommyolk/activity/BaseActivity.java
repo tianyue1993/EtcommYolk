@@ -18,6 +18,7 @@ import com.umeng.analytics.MobclickAgent;
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
+import etcomm.com.etcommyolk.widget.ProgressDialog;
 
 public class BaseActivity extends Activity {
 
@@ -33,6 +34,7 @@ public class BaseActivity extends Activity {
     Context mContext;
     protected GlobalSetting prefs;
     protected ApiClient client;
+    protected ProgressDialog mProgress;
 
     public static final int MSG_CLOSE_PROGRESS = 1;
     public static final int MSG_SHOW_TOAST = 2;
@@ -197,4 +199,35 @@ public class BaseActivity extends Activity {
         MobclickAgent.onPageEnd(tag);
     }
 
+    public void showProgress(int resId, boolean cancel) {
+        mProgress = new ProgressDialog(this);
+        if (resId <= 0) {
+            mProgress.setMessage(R.string.loading_data, cancel);
+        } else {
+            mProgress.setMessage(resId, cancel);
+        }
+        mProgress.show();
+    }
+
+    public void cancelmDialog() {
+        if (mProgress != null && mProgress.isShowing()) {
+            mProgress.dismiss();
+        }
+    }
+
+    protected synchronized void exceptionCode(int code) {
+        switch (code) {
+            case 10000:
+                showToast(R.string.token_error);
+//                mContext.sendBroadcast(new Intent(Preferences.ACTION_USER_EXIT));
+                finish();
+//                startAtvTask(LoginActivity.class);
+//                Intent intent = new Intent(mContext, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+                break;
+            default:
+
+                break;
+        }
+    }
 }

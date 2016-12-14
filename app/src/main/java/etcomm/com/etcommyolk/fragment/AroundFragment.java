@@ -1,31 +1,21 @@
 package etcomm.com.etcommyolk.fragment;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import org.apache.http.entity.StringEntity;
-
-import java.io.UnsupportedEncodingException;
+import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.Login;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.LoginHandler;
-import etcomm.com.etcommyolk.utils.GlobalSetting;
 
 public class AroundFragment extends BaseFragment {
     /**
@@ -58,6 +48,7 @@ public class AroundFragment extends BaseFragment {
 
     /**
      * onCreateView
+     *
      * @param view
      * @param savedInstanceState
      */
@@ -93,29 +84,25 @@ public class AroundFragment extends BaseFragment {
      * 接口调试，模拟登录
      */
     public void visitorLogin() {
-        JSONObject object = new JSONObject();
+        RequestParams object = new RequestParams();
         object.put("username", "23652356@qq.com");
         object.put("password", "123456");
         object.put("client_id", "23245538a6de9b824741556172c2d8da");
         object.put("device_id", "ad2c5508b66d5835");
-        try {
-            StringEntity entity = new StringEntity(object.toJSONString(), "utf-8");
-            client.invokeLogin(getBaseActivity(), entity, new LoginHandler() {
-                @Override
-                public void onSuccess(Login login) {
-                    super.onSuccess(login);
-                    Toast.makeText(getBaseActivity(), login.message, Toast.LENGTH_LONG).show();
-                }
+        client.invokeLogin(getBaseActivity(), object, new LoginHandler() {
+            @Override
+            public void onSuccess(Login login) {
+                super.onSuccess(login);
+                Toast.makeText(getBaseActivity(), login.message, Toast.LENGTH_LONG).show();
+            }
 
-                @Override
-                public void onFailure(BaseException exception) {
-                    super.onFailure(exception);
-                    Toast.makeText(getBaseActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                Toast.makeText(getBaseActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
 
