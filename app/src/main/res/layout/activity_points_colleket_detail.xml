@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="etcomm.com.etcommyolk.activity.MyExchangeActivity">
+    tools:context="etcomm.com.etcommyolk.activity.PointsColleketDetailActivity">
 
-    <etcomm.com.etcommyolk.widget.DownPullRefreshListView
-        android:id="@+id/myexchangelist"
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerPadding="@dimen/marginmiddle" />
+        android:layout_height="match_parent" />
+
 </RelativeLayout>

@@ -35,7 +35,13 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.MyPointsDetailActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.PointsColleketDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.LoginActivityeg"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
