@@ -17,20 +17,24 @@ public class PointsExchangeItems extends Entity {
 
     public String status;
     public String show_money;
+    public String draw_address;
+    public String number;
 
 
     @Override
     public String toString() {
         return "PointsExchangeItems{" +
                 "list_id='" + list_id + '\'' +
-                ", gift_id=" + gift_id +
+                ", gift_id='" + gift_id + '\'' +
                 ", name='" + name + '\'' +
                 ", detail='" + detail + '\'' +
-                ", inventory=" + inventory +
-                ", score=" + score +
+                ", inventory='" + inventory + '\'' +
+                ", score='" + score + '\'' +
                 ", image='" + image + '\'' +
                 ", status='" + status + '\'' +
                 ", show_money='" + show_money + '\'' +
+                ", draw_address='" + draw_address + '\'' +
+                ", number='" + number + '\'' +
                 '}';
     }
 }

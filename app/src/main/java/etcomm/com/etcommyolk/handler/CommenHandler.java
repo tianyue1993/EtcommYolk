@@ -11,20 +11,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import etcomm.com.etcommyolk.EtcommApplication;
-import etcomm.com.etcommyolk.entity.Exchange;
+import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.exception.BaseException;
 
-public class ExchangeHandler extends JsonResponseHandler {
+public class CommenHandler extends JsonResponseHandler {
 
-    public ExchangeHandler() {
+    /**
+     * 用于返回值content仅仅只有一个string数据格式
+     */
+    public CommenHandler() {
         this(DEFAULT_CHARSET);
     }
 
-    public ExchangeHandler(String encoding) {
+    public CommenHandler(String encoding) {
         super(encoding);
     }
 
-    public void onSuccess(Exchange exchange) {
+    public void onSuccess(Commen commen) {
 
     }
 
@@ -44,14 +47,14 @@ public class ExchangeHandler extends JsonResponseHandler {
                                 int code = response.getInt("code");
                                 String messege = response.getString("message");
                                 if (code == 0) {
-                                    onSuccess(JSON.parseObject(response.toString(), Exchange.class));
+                                    onSuccess(JSON.parseObject(response.toString(), Commen.class));
                                 } else if (code == 10000) {
                                     exceptionCode();
                                 } else {
+                                    //请求异常,弹出提示
                                     onFinish();
                                     Toast.makeText(EtcommApplication.getContext(), messege, Toast.LENGTH_SHORT).show();
                                 }
-
                             } else {
                                 onFailure(new BaseException("Unexpected response " + response, -1));
                             }
@@ -67,7 +70,7 @@ public class ExchangeHandler extends JsonResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         Log.d("onFailure JSONObject", statusCode + "---" + throwable + "---" + errorResponse);
-        onFailure(new BaseException("无网络连接，请查看网络配置", statusCode));
+        onFailure(new BaseException("网络请求失败，请重试", statusCode));
     }
 
     @Override

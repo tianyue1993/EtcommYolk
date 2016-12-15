@@ -6,12 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +29,7 @@ import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 
 /**
  * 积分兑换
- * 可以兑换物品，显示当前自己的积分，可进入铁 兑换中
+ * 可以兑换物品，显示当前自己的积分，可进入 兑换中
  */
 public class PointsExchangeActivity extends BaseActivity {
 
@@ -44,22 +42,7 @@ public class PointsExchangeActivity extends BaseActivity {
     private PointsExchangeListAdapter mAdapter;
     protected List<PointsExchangeItems> list = new ArrayList<PointsExchangeItems>();
     protected ArrayList<PointsExchangeItems> adaptList = new ArrayList<PointsExchangeItems>();
-    protected int page_size = 10;
-    protected int page_number = 1;
-    private AbsListView.OnScrollListener loadMoreListener;
-    private boolean loadMore;
-    private boolean loadStatus = false;
-    private View footer;
-    private ProgressBar loadingProgressBar;
-    private TextView loadingText;
     private int totalpoints;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart(tag);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +52,6 @@ public class PointsExchangeActivity extends BaseActivity {
         initDatas();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd(tag);
-    }
 
     /**
      * 接口调试，获取兑换列表
@@ -83,7 +60,7 @@ public class PointsExchangeActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.put("page_size", page_size + "");
         params.put("page", String.valueOf(page_number++));
-        params.put("access_token", "ee6d116c0e7dab6190cc0e246b421cfc");
+        params.put("access_token", prefs.getAccessToken());
         Log.d(tag, "getList: " + params.toString());
         cancelmDialog();
         showProgress(0, true);
@@ -144,6 +121,12 @@ public class PointsExchangeActivity extends BaseActivity {
                 loadStatus = false;
                 loadingProgressBar.setVisibility(View.GONE);
             }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                cancelmDialog();
+            }
         });
     }
 
@@ -151,9 +134,6 @@ public class PointsExchangeActivity extends BaseActivity {
     protected void initDatas() {
         getList();
         setTitleTextView("积分兑换", null);
-        footer = View.inflate(mContext, R.layout.loadmore, null);
-        loadingProgressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
-        loadingText = (TextView) footer.findViewById(R.id.title);
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,10 +207,12 @@ public class PointsExchangeActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mypoints:
+                //我的积分页面
                 Intent intent1 = new Intent(mContext, MyPointsDetailActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.myexchange:
+                //我的兑换页面
                 Intent intent2 = new Intent(mContext, MyExchangeActivity.class);
                 startActivity(intent2);
                 break;

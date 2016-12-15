@@ -2,6 +2,7 @@ package etcomm.com.etcommyolk;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  */
 public class EtcommApplication extends Application {
 
+    public static EtcommApplication etcommApplication;
     /**
      * 接口跟Url
      */
@@ -78,11 +80,18 @@ public class EtcommApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
-
-
+        etcommApplication = this;
         initDoMain();
     }
 
+    /**
+     * 获取上下文对象
+     *
+     * @return
+     */
+    public static Context getContext() {
+        return etcommApplication;
+    }
 
     /**
      * @return 服务器域名
@@ -101,6 +110,17 @@ public class EtcommApplication extends Application {
 
     public static String EXCHANGE() {
         return BASE_URL + "gift/gift-exchange";// 兑换礼品
+    }
+
+    public static String MYPOINTS_DETAIL() {
+        return BASE_URL + "user/score";//我的积分记录页面
+    }
+
+    public static String SCORE_RULE() {
+        return BASE_URL + "user/score-rules";//我的积分规则
+    }
+    public static String MY_EXCHANGE(){
+        return BASE_URL+"gift/exchange-list";
     }
 
 }

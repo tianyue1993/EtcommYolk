@@ -11,20 +11,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import etcomm.com.etcommyolk.EtcommApplication;
-import etcomm.com.etcommyolk.entity.Exchange;
+import etcomm.com.etcommyolk.entity.MyPointsDetail;
 import etcomm.com.etcommyolk.exception.BaseException;
 
-public class ExchangeHandler extends JsonResponseHandler {
+public class MyPointHandler extends JsonResponseHandler {
 
-    public ExchangeHandler() {
+    public MyPointHandler() {
         this(DEFAULT_CHARSET);
     }
 
-    public ExchangeHandler(String encoding) {
+    public MyPointHandler(String encoding) {
         super(encoding);
     }
 
-    public void onSuccess(Exchange exchange) {
+    public void onSuccess(MyPointsDetail exchange) {
 
     }
 
@@ -44,7 +44,7 @@ public class ExchangeHandler extends JsonResponseHandler {
                                 int code = response.getInt("code");
                                 String messege = response.getString("message");
                                 if (code == 0) {
-                                    onSuccess(JSON.parseObject(response.toString(), Exchange.class));
+                                    onSuccess(JSON.parseObject(response.toString(), MyPointsDetail.class));
                                 } else if (code == 10000) {
                                     exceptionCode();
                                 } else {

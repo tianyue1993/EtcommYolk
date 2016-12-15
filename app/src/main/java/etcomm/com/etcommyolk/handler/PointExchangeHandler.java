@@ -1,6 +1,7 @@
 package etcomm.com.etcommyolk.handler;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
@@ -9,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.entity.PointsExchange;
 import etcomm.com.etcommyolk.exception.BaseException;
 
@@ -40,8 +42,14 @@ public class PointExchangeHandler extends JsonResponseHandler {
                         try {
                             if (response.has("code") && !response.isNull("code")) {
                                 int code = response.getInt("code");
+                                String messege = response.getString("message");
                                 if (code == 0) {
                                     onSuccess(JSON.parseObject(response.toString(), PointsExchange.class));
+                                } else if (code == 10000) {
+                                    exceptionCode();
+                                } else {
+                                    onFinish();
+                                    Toast.makeText(EtcommApplication.getContext(), messege, Toast.LENGTH_SHORT).show();
                                 }
 
                             } else {

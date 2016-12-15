@@ -15,6 +15,7 @@ public class GlobalSetting {
     private static final String PREFERENCE_USER_ID = "user_id";
     private static final String PREFERENCE_SCORE = "preference_score";
     public static final String ACCESS_TOKEN = "access_token"; //保存token
+    public static final String TOTALSCORE = "totalscore";
 
 
     private GlobalSetting(Context context) {
@@ -99,4 +100,21 @@ public class GlobalSetting {
         return getSharedPreferences().getString(ACCESS_TOKEN, "ee6d116c0e7dab6190cc0e246b421cfc");
     }
 
+    /**
+     * 设总积分
+     *
+     * @return
+     */
+    public void setTotalScore(String score) {
+        saveString(TOTALSCORE, score);
+    }
+
+    /**
+     * 获取总积分
+     *
+     * @return
+     */
+    public String getTotalScore() {
+        return getSharedPreferences().getString(TOTALSCORE, "");
+    }
 }

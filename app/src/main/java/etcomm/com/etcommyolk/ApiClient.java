@@ -36,12 +36,12 @@ public class ApiClient {
     private ApiClient() {
         asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.setURLEncodingEnabled(false);
-        asyncHttpClient.setTimeout(20000);
+        asyncHttpClient.setTimeout(10000);
         asyncHttpClient.setMaxRetriesAndTimeout(0, 5000);
         asyncHttpClient.addHeader("Accept", "application/json; version=public");
         syncHttpClient = new SyncHttpClient();
         syncHttpClient.setURLEncodingEnabled(false);
-        syncHttpClient.setTimeout(20000);
+        syncHttpClient.setTimeout(10000);
         syncHttpClient.setMaxRetriesAndTimeout(0, 5000);
     }
 
@@ -70,6 +70,27 @@ public class ApiClient {
      */
     public void invokeExch(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.EXCHANGE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 我的积分记录页面
+     */
+    public void GetMyPointsDetail(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.MYPOINTS_DETAIL() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 获取积分规则URL链接
+     */
+    public void GetPointRuleUrl(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.SCORE_RULE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 获取我的兑换列表
+     */
+    public void GetMyExchange(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.MY_EXCHANGE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     public void cancelRequest() {

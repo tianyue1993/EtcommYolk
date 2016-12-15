@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,14 +29,23 @@ public class BaseActivity extends Activity {
     //左边按钮
     private ImageView leftTextView;
     //右边按钮
-    private ImageView rightTextView;
+    private ImageView rightImageView;
+    private TextView rightTextView;
     //外部布局
     private RelativeLayout allRelativeLayout;
     String tag = getClass().getSimpleName();
     Context mContext;
-    protected GlobalSetting prefs;
-    protected ApiClient client;
-    protected ProgressDialog mProgress;
+    public GlobalSetting prefs;
+    public ApiClient client;
+    public ProgressDialog mProgress;
+    public int page_size = 10;
+    public int page_number = 1;
+    public AbsListView.OnScrollListener loadMoreListener;
+    public boolean loadMore;
+    public boolean loadStatus = false;
+    public View footer;
+    public ProgressBar loadingProgressBar;
+    public TextView loadingText;
 
     public static final int MSG_CLOSE_PROGRESS = 1;
     public static final int MSG_SHOW_TOAST = 2;
@@ -106,7 +117,8 @@ public class BaseActivity extends Activity {
         client = ApiClient.getInstance();
         title = (TextView) findViewById(R.id.base_title);
         leftTextView = (ImageView) findViewById(R.id.base_left);
-        rightTextView = (ImageView) findViewById(R.id.base_right);
+        rightImageView = (ImageView) findViewById(R.id.base_right);
+        rightTextView = (TextView) findViewById(R.id.text_base_right);
         allRelativeLayout = (RelativeLayout) findViewById(R.id.all_base_layout);
         leftTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +131,12 @@ public class BaseActivity extends Activity {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        /**
+         * 下拉列表相关布局变量
+         */
+        footer = View.inflate(mContext, R.layout.loadmore, null);
+        loadingProgressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
+        loadingText = (TextView) footer.findViewById(R.id.title);
 
     }
 
@@ -137,14 +155,31 @@ public class BaseActivity extends Activity {
     }
 
     /**
-     * 设置右边按钮
+     * 设置右边按钮图片
      */
-    public void setRightTextView(int id, View.OnClickListener onClickListener) {
+    public void setRightImage(int id, View.OnClickListener onClickListener) {
+        if (rightImageView != null) {
+            if (rightImageView != null) {
+                rightImageView.setVisibility(View.VISIBLE);
+                if (id != 0) {
+                    rightImageView.setImageResource(id);
+                }
+            }
+            if (onClickListener != null) {
+                rightImageView.setOnClickListener(onClickListener);
+            }
+        }
+    }
+
+    /**
+     * 设置右边文字
+     */
+    public void setRightTextView(String string, View.OnClickListener onClickListener) {
         if (rightTextView != null) {
             if (rightTextView != null) {
                 rightTextView.setVisibility(View.VISIBLE);
-                if (id != 0) {
-                    rightTextView.setImageResource(id);
+                if (!string.isEmpty()) {
+                    rightTextView.setText(string);
                 }
             }
             if (onClickListener != null) {
@@ -215,19 +250,4 @@ public class BaseActivity extends Activity {
         }
     }
 
-    protected synchronized void exceptionCode(int code) {
-        switch (code) {
-            case 10000:
-                showToast(R.string.token_error);
-//                mContext.sendBroadcast(new Intent(Preferences.ACTION_USER_EXIT));
-                finish();
-//                startAtvTask(LoginActivity.class);
-//                Intent intent = new Intent(mContext, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-                break;
-            default:
-
-                break;
-        }
-    }
 }
