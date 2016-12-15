@@ -48,7 +48,7 @@ public class PointExchangeHandler extends JsonResponseHandler {
                                 } else if (code == 10000) {
                                     exceptionCode();
                                 } else {
-                                    onFinish();
+                                    onFailure(new BaseException("Unexpected response " + response, -1));
                                     Toast.makeText(EtcommApplication.getContext(), messege, Toast.LENGTH_SHORT).show();
                                 }
 

@@ -115,18 +115,12 @@ public class PointsExchangeActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-                showToast(exception.getMessage());
                 cancelmDialog();
                 listView.onRefreshComplete();
                 loadStatus = false;
                 loadingProgressBar.setVisibility(View.GONE);
             }
 
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                cancelmDialog();
-            }
         });
     }
 

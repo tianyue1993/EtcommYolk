@@ -52,7 +52,7 @@ public class CommenHandler extends JsonResponseHandler {
                                     exceptionCode();
                                 } else {
                                     //请求异常,弹出提示
-                                    onFinish();
+                                    onFailure(new BaseException("Unexpected response " + response, -1));
                                     Toast.makeText(EtcommApplication.getContext(), messege, Toast.LENGTH_SHORT).show();
                                 }
                             } else {

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 
@@ -164,7 +163,6 @@ public class MyExchangeActivity extends BaseActivity {
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
                 cancelmDialog();
-                Toast.makeText(mContext, R.string.network_error, Toast.LENGTH_SHORT).show();
                 listView.onRefreshComplete();
                 loadStatus = false;
                 loadingProgressBar.setVisibility(View.GONE);

@@ -111,7 +111,6 @@ public class PointsColleketDetailActivity extends BaseActivity {
             public void onFailure(BaseException exception) {
                 cancelmDialog();
                 super.onFailure(exception);
-                Toast.makeText(mContext, exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

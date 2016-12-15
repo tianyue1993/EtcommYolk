@@ -126,7 +126,6 @@ public class MyPointsDetailActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-                showToast(exception.getMessage());
                 cancelmDialog();
                 listView.onRefreshComplete();
                 loadStatus = false;

@@ -240,7 +240,6 @@ public class PointsExchangeListAdapter extends YolkBaseAdapter<PointsExchangeIte
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-                showToast(exception.getMessage());
                 cancelmDialog();
             }
         });
