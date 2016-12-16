@@ -86,6 +86,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
      */
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
     }
 
     @Override
