@@ -16,6 +16,7 @@ import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.Login;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.LoginHandler;
+import etcomm.com.etcommyolk.utils.StringUtils;
 
 public class AroundFragment extends BaseFragment {
     /**
@@ -84,7 +85,7 @@ public class AroundFragment extends BaseFragment {
      * 接口调试，模拟登录
      */
     public void visitorLogin() {
-        RequestParams object = new RequestParams();
+        final RequestParams object = new RequestParams();
         object.put("username", "23652356@qq.com");
         object.put("password", "123456");
         object.put("client_id", "23245538a6de9b824741556172c2d8da");

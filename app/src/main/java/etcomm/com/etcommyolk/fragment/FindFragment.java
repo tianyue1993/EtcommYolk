@@ -65,6 +65,7 @@ public class FindFragment extends BaseFragment {
     ImageView healthImage;
     @Bind(R.id.welfare_image)
     ImageView welfareImage;
+    //我的
     @Bind(R.id.base_left)
     ImageView baseLeft;
     @Bind(R.id.base_right)
@@ -81,6 +82,7 @@ public class FindFragment extends BaseFragment {
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        baseLeft.setOnClickListener(toMineOnclickListener);
     }
 
     @Override
@@ -109,7 +111,7 @@ public class FindFragment extends BaseFragment {
         return rootView;
     }
 
-    @OnClick({R.id.exchange, R.id.group, R.id.tv_more_activity, R.id.tv_more_health, R.id.tv_more_walfe, R.id.base_left, R.id.base_right})
+    @OnClick({R.id.exchange, R.id.group, R.id.tv_more_activity, R.id.tv_more_health, R.id.tv_more_walfe})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.exchange:
@@ -122,10 +124,6 @@ public class FindFragment extends BaseFragment {
             case R.id.tv_more_health:
                 break;
             case R.id.tv_more_walfe:
-                break;
-            case R.id.base_left:
-                break;
-            case R.id.base_right:
                 break;
         }
     }

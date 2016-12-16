@@ -119,5 +119,7 @@
     <string name="growingio_url_scheme">growing.b95538ffc8e73082</string>
     <string name="down_pull_flush">下拉刷新</string>
     <string name="loadmore">加载更多</string>
+    <string name="title_activity_mine">MineActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
