@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp">
+    android:layout_height="160dp"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/health_image"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_defalt_small" />
+        fresco:placeholderImage="@mipmap/ic_defalt_small" />
 
     <RelativeLayout
         android:layout_width="match_parent"

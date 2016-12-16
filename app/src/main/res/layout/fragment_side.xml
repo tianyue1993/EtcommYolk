@@ -30,12 +30,11 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/my_image_view"
-        android:layout_width="130dp"
+        android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_centerInParent="true"
-        fresco:placeholderImage="@mipmap/ic_launcher"
-        fresco:roundedCornerRadius="10dp">
-    </com.facebook.drawee.view.SimpleDraweeView>
+        fresco:placeholderImage="@mipmap/ic_eg"
+        fresco:roundedCornerRadius="10dp"></com.facebook.drawee.view.SimpleDraweeView>
 
 
 </RelativeLayout>

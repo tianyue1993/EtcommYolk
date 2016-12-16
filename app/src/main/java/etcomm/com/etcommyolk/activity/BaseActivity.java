@@ -37,7 +37,6 @@ public class BaseActivity extends Activity {
     Context mContext;
     public GlobalSetting prefs;
     public ApiClient client;
-    public ProgressDialog mProgress;
     public int page_size = 10;
     public int page_number = 1;
     public AbsListView.OnScrollListener loadMoreListener;
@@ -46,7 +45,7 @@ public class BaseActivity extends Activity {
     public View footer;
     public ProgressBar loadingProgressBar;
     public TextView loadingText;
-
+    public ProgressDialog mProgress;
     public static final int MSG_CLOSE_PROGRESS = 1;
     public static final int MSG_SHOW_TOAST = 2;
     public Handler baseHandler = new Handler() {

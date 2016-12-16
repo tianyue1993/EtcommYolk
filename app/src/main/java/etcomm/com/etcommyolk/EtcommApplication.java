@@ -26,7 +26,7 @@ public class EtcommApplication extends Application {
     /**
      * 是否是第一次默认设置
      * 针对MainActivity默认设置Home为显示页面
-     * <p/>
+     * <p>
      * 每一次从其他页面返回MainActivity可见页面时，都会先初始化一下Home的初始值
      * 无故增多网络请求次数，因此添加限定
      */
@@ -119,8 +119,17 @@ public class EtcommApplication extends Application {
     public static String SCORE_RULE() {
         return BASE_URL + "user/score-rules";//我的积分规则
     }
-    public static String MY_EXCHANGE(){
-        return BASE_URL+"gift/exchange-list";
+
+    public static String MY_EXCHANGE() {
+        return BASE_URL + "gift/exchange-list";
+    }
+
+    public static String HOME() {
+        return BASE_URL + "home";
+    }
+
+    public static String ACTIVITY_LIST() {
+        return BASE_URL + "activity";
     }
 
 }

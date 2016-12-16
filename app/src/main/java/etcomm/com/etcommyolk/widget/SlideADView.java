@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import java.util.ArrayList;
 
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.entity.Ad;
+import etcomm.com.etcommyolk.entity.RecommendItems;
 
 
 /**
@@ -117,7 +119,7 @@ public class SlideADView extends LinearLayout {
      * @param ads
      * @param slideADViewListener
      */
-    public void setImageResources(ArrayList<Ad> ads, SlideADViewListener slideADViewListener) {
+    public void setImageResources(ArrayList<RecommendItems> ads, SlideADViewListener slideADViewListener) {
         // 清除所有子视图
         mGroup.removeAllViews();
         // 图片广告数量
@@ -227,12 +229,12 @@ public class SlideADView extends LinearLayout {
         /**
          * 图片视图缓存列表
          */
-        private ArrayList<ImageView> mImageViewCacheList;
+        private ArrayList<SimpleDraweeView> mImageViewCacheList;
 
         /**
          * 图片资源列表
          */
-        private ArrayList<Ad> mAdList = new ArrayList<Ad>();
+        private ArrayList<RecommendItems> mAdList = new ArrayList<RecommendItems>();
 
         /**
          * 广告图片点击监听器
@@ -241,11 +243,11 @@ public class SlideADView extends LinearLayout {
 
         private Context mContext;
 
-        public ImageCycleAdapter(Context context, ArrayList<Ad> adList, SlideADViewListener slideADViewListener) {
+        public ImageCycleAdapter(Context context, ArrayList<RecommendItems> adList, SlideADViewListener slideADViewListener) {
             mContext = context;
             mAdList = adList;
             mSlideADViewListener = slideADViewListener;
-            mImageViewCacheList = new ArrayList<ImageView>();
+            mImageViewCacheList = new ArrayList<SimpleDraweeView>();
         }
 
         @Override
@@ -260,10 +262,10 @@ public class SlideADView extends LinearLayout {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            final Ad ad = mAdList.get(position);
-            ImageView imageView;
+            final RecommendItems ad = mAdList.get(position);
+            SimpleDraweeView imageView;
             if (mImageViewCacheList.isEmpty()) {
-                imageView = new ImageView(mContext);
+                imageView = new SimpleDraweeView(mContext);
                 imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -286,7 +288,7 @@ public class SlideADView extends LinearLayout {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ImageView view = (ImageView) object;
+            SimpleDraweeView view = (SimpleDraweeView) object;
             container.removeView(view);
             mImageViewCacheList.add(view);
         }
@@ -304,7 +306,7 @@ public class SlideADView extends LinearLayout {
          * @param ad
          * @param imageView
          */
-        void displayImage(Ad ad, ImageView imageView);
+        void displayImage(RecommendItems ad, SimpleDraweeView imageView);
 
         /**
          * 单击图片事件
@@ -312,7 +314,7 @@ public class SlideADView extends LinearLayout {
          * @param ad
          * @param imageView
          */
-        void onImageClick(Ad ad, View imageView);
+        void onImageClick(RecommendItems ad, View imageView);
     }
 
 }

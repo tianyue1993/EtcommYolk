@@ -31,7 +31,7 @@ public class JsonResponseHandler extends JsonHttpResponseHandler {
         String jsonString = getResponseString(responseBody, getCharset());
 
         if (getRequestURI() != null) {
-            Log.d("Reqeust:" + getRequestURI().toString(), jsonString);
+            Log.i("Reqeust", getRequestURI().toString() + "==>" + jsonString);
         }
 
         if (jsonString != null) {

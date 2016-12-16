@@ -7,11 +7,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
+import etcomm.com.etcommyolk.widget.ProgressDialog;
 
 /**
  * zuoh
@@ -26,17 +30,35 @@ public abstract class BaseFragment extends Fragment {
 
     //onCreate方法 里面执行各种初始化及调用
     protected abstract void initView(View view, Bundle savedInstanceState);
+
     //获取布局文件ID
     protected abstract int getLayoutId();
+
     //获取上下文对象
-    protected Context getBaseActivity(){
+    protected Context getBaseActivity() {
         return getActivity();
-    };
+    }
+
+    //下来加载相关布局
+    public int page_size = 10;
+    public int page_number = 2;
+    public AbsListView.OnScrollListener loadMoreListener;
+    public boolean loadMore;
+    public boolean loadStatus = false;
+    public View footer;
+    public ProgressBar loadingProgressBar;
+    public TextView loadingText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         prefs = etcomm.com.etcommyolk.utils.GlobalSetting.getInstance(getBaseActivity());
         client = ApiClient.getInstance();
+        /**
+         * 下拉列表相关布局变量
+         */
+        footer = View.inflate(getActivity(), R.layout.loadmore, null);
+        loadingProgressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
+        loadingText = (TextView) footer.findViewById(R.id.title);
         super.onCreate(savedInstanceState);
     }
 
@@ -65,4 +87,21 @@ public abstract class BaseFragment extends Fragment {
         toast.show();
     }
 
+    public ProgressDialog mProgress;
+
+    public void showProgress(int resId, boolean cancel) {
+        mProgress = new ProgressDialog(getActivity());
+        if (resId <= 0) {
+            mProgress.setMessage(R.string.loading_data, cancel);
+        } else {
+            mProgress.setMessage(resId, cancel);
+        }
+        mProgress.show();
+    }
+
+    public void cancelmDialog() {
+        if (mProgress != null && mProgress.isShowing()) {
+            mProgress.dismiss();
+        }
+    }
 }

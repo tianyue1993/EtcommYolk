@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 
@@ -75,37 +74,30 @@ public class PointsExchangeActivity extends BaseActivity {
             public void onSuccess(PointsExchange exchange) {
                 super.onSuccess(exchange);
                 cancelmDialog();
-                int code = exchange.code;
-                String message = exchange.message;
-                if (code == 0) {
-                    list = exchange.content.model;
-                    totalpoints = Integer.parseInt(exchange.content.my_score);
-                    if (!StringUtils.isEmpty(prefs.getScore()) && Integer.valueOf(prefs.getScore()) == totalpoints) {
-                    } else {
-                        prefs.setScore(totalpoints + "");
-                    }
-
-                    if (list.size() > 0) {
-                        if (listView.getFooterViewsCount() == 0 && Integer.parseInt(exchange.content.page_count) > 1) {
-                            listView.addFooterView(footer);
-                            listView.setAdapter(mAdapter);
-                        }
-                        for (Iterator<PointsExchangeItems> iterator = list.iterator(); iterator.hasNext(); ) {
-                            PointsExchangeItems disscussCommentItems = (PointsExchangeItems) iterator.next();
-                            adaptList.add(disscussCommentItems);
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    } else {
-                        showToast("已无更多内容");
-                        if (listView.getFooterViewsCount() > 0) {
-                            listView.removeFooterView(footer);
-                        }
-                    }
-
+                list = exchange.content.model;
+                totalpoints = Integer.parseInt(exchange.content.my_score);
+                if (!StringUtils.isEmpty(prefs.getScore()) && Integer.valueOf(prefs.getScore()) == totalpoints) {
                 } else {
-                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-
+                    prefs.setScore(totalpoints + "");
                 }
+
+                if (list.size() > 0) {
+                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(exchange.content.page_count) > 1) {
+                        listView.addFooterView(footer);
+                        listView.setAdapter(mAdapter);
+                    }
+                    for (Iterator<PointsExchangeItems> iterator = list.iterator(); iterator.hasNext(); ) {
+                        PointsExchangeItems disscussCommentItems = (PointsExchangeItems) iterator.next();
+                        adaptList.add(disscussCommentItems);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    showToast("已无更多内容");
+                    if (listView.getFooterViewsCount() > 0) {
+                        listView.removeFooterView(footer);
+                    }
+                }
+
                 loadStatus = false;
                 listView.onRefreshComplete();
                 loadingProgressBar.setVisibility(View.GONE);
@@ -142,7 +134,7 @@ public class PointsExchangeActivity extends BaseActivity {
             @Override
             public void exchangegift(int score) {
                 mypoints.setText("我的积分：" + (int) (Integer.valueOf(prefs.getScore()) - score));
-                prefs.setScore((int) (Integer.valueOf(prefs.getScore()) - score) + "");
+                prefs.setScore((Integer.valueOf(prefs.getScore()) - score) + "");
             }
         });
         listView.setAdapter(mAdapter);

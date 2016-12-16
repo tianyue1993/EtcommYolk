@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <etcomm.com.etcommyolk.widget.SlideADView
+        android:id="@+id/slideADView"
+        android:layout_width="match_parent"
+        android:layout_height="160dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:id="@+id/exchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_exchange" />
+
+        <ImageView
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_group" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/header1"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/bg_default">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/white"
+                android:drawableLeft="@mipmap/ic_push_activity"
+                android:drawablePadding="6dp" />
+
+            <TextView
+                android:id="@+id/tv_more_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/white"
+                android:drawablePadding="6dp"
+                android:drawableRight="@mipmap/ic_more"
+                android:text="更多"
+                android:textColor="@color/text_more_color"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <include
+            layout="@layout/item_activity"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@+id/header1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/header2"
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/white"
+                android:drawableLeft="@mipmap/ic_push_health"
+                android:drawablePadding="6dp" />
+
+            <TextView
+                android:id="@+id/tv_more_health"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/white"
+                android:drawablePadding="6dp"
+                android:drawableRight="@mipmap/ic_more"
+                android:text="更多"
+                android:textColor="@color/text_more_color"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <include
+            layout="@layout/item_health"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@+id/header2" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/header3"
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/white"
+                android:drawableLeft="@mipmap/ic_push_walfe"
+                android:drawablePadding="6dp" />
+
+            <TextView
+                android:id="@+id/tv_more_walfe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/white"
+                android:drawablePadding="6dp"
+                android:drawableRight="@mipmap/ic_more"
+                android:text="更多"
+                android:textColor="@color/text_more_color"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+        <include
+            layout="@layout/item_welfare"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@+id/header3" />
+    </RelativeLayout>
+
+
+</LinearLayout>
