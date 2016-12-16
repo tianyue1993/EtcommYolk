@@ -110,7 +110,6 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onFailure(BaseException exception) {
                     super.onFailure(exception);
-                    Toast.makeText(LoginActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
