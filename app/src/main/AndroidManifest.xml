@@ -42,6 +42,9 @@
         <activity
             android:name=".activity.LoginActivityeg"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.AdWebActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
