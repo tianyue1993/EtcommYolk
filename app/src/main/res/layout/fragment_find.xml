@@ -13,22 +13,20 @@
         <ImageView
             android:id="@+id/base_left"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:background="@mipmap/ic_mine"
-            android:padding="7dp"
+            android:src="@mipmap/ic_mine"
             android:visibility="visible" />
 
         <ImageView
             android:id="@+id/base_right"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:padding="7dp"
             android:src="@mipmap/ic_messege"
             android:visibility="visible" />
 

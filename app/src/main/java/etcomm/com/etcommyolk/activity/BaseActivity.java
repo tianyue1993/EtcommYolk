@@ -192,7 +192,7 @@ public class BaseActivity extends Activity {
     /**
      * 设置左边按钮
      */
-    public void setLeftTextView(int id, View.OnClickListener onClickListener) {
+    protected void setLeftTextView(int id, View.OnClickListener onClickListener) {
         if (leftTextView != null) {
             leftTextView.setVisibility(View.VISIBLE);
             if (id != 0) {
