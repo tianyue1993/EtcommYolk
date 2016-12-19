@@ -97,6 +97,7 @@ public class ApiClient {
      * 获取发现，首页列表
      */
     public void GetFindHome(Context context, RequestParams entity, JsonResponseHandler handler) {
+        String str = EtcommApplication.HOME() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken();
         asyncHttpClient.get(EtcommApplication.HOME() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 

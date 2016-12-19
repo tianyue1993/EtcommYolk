@@ -1,10 +1,9 @@
 package etcomm.com.etcommyolk.fragment;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.LoginActivity;
-import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
 
