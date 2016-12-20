@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,13 +22,17 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.activity.AdWebActivity;
+import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
+import etcomm.com.etcommyolk.activity.LoginActivity;
+import etcomm.com.etcommyolk.activity.MoreHealthActivity;
+import etcomm.com.etcommyolk.activity.MoreSportsActivity;
+import etcomm.com.etcommyolk.activity.MoreWealfeActivity;
 import etcomm.com.etcommyolk.activity.PointsExchangeActivity;
-import etcomm.com.etcommyolk.adapter.ActivityAdapter;
+import etcomm.com.etcommyolk.adapter.SportsAdapter;
 import etcomm.com.etcommyolk.entity.FindHome;
 import etcomm.com.etcommyolk.entity.FindList;
 import etcomm.com.etcommyolk.entity.RecommendItems;
@@ -75,8 +80,11 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     private int AppMudle = 0;//爱康显示标识
     private ArrayList<RecommendItems> adaptList = new ArrayList<>();
     protected ArrayList<RecommendItems> list = new ArrayList<RecommendItems>();
-    private ActivityAdapter mAdapter;
+    private SportsAdapter mAdapter;
     private View header;
+    RecommendItems recommendactivity;
+    RecommendItems recommendhealth;
+    RecommendItems recommendwelfare;
 
     /**
      * onCreateView
@@ -135,7 +143,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         welfareImage = (SimpleDraweeView) header.findViewById(R.id.welfare_image);
         welfaretopic = (TextView) header.findViewById(R.id.welfaretopic);
         tvTime = (TextView) header.findViewById(R.id.tv_time);
-        mAdapter = new ActivityAdapter(mContext, adaptList);
+        mAdapter = new SportsAdapter(mContext, adaptList, 0);
         listView.setAdapter(mAdapter);
         exchange.setOnClickListener(this);
         group.setOnClickListener(this);
@@ -144,6 +152,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         tvMoreWalfe.setOnClickListener(this);
         baseLeft.setOnClickListener(this);
         baseRight.setOnClickListener(this);
+        activityImage.setOnClickListener(this);
+        healthImage.setOnClickListener(this);
+        welfareImage.setOnClickListener(this);
         //点击角布局加载更多
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,11 +204,24 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
             }
         });
 
+        //条目点击进入webview详情
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RecommendItems recommendItems = mAdapter.getItem(position - 1);
+                Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("RecommendItems", recommendItems);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
+
         getFindHome();
         return rootView;
     }
 
-    @OnClick({R.id.exchange, R.id.group, R.id.tv_more_activity, R.id.tv_more_health, R.id.tv_more_walfe, R.id.base_left, R.id.base_right})
+    @OnClick({R.id.exchange, R.id.group, R.id.tv_more_activity, R.id.tv_more_health, R.id.tv_more_walfe, R.id.base_left, R.id.base_right, R.id.activity_image, R.id.health_image, R.id.welfare_image})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.exchange:
@@ -211,18 +235,54 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.tv_more_activity:
+                startActivity(new Intent(mContext, MoreSportsActivity.class));
                 break;
             case R.id.tv_more_health:
+                startActivity(new Intent(mContext, MoreHealthActivity.class));
                 break;
             case R.id.tv_more_walfe:
+                startActivity(new Intent(mContext, MoreWealfeActivity.class));
                 break;
             case R.id.base_left:
+                startActivity(new Intent(mContext, LoginActivity.class));
                 break;
             case R.id.base_right:
                 break;
+            case R.id.activity_image:
+                if (!recommendactivity.detail_url.isEmpty()) {
+                    Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("RecommendItems", recommendactivity);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+                break;
+            case R.id.health_image:
+
+                if (!recommendhealth.detail_url.isEmpty()) {
+                    Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("RecommendItems", recommendhealth);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+                break;
+            case R.id.welfare_image:
+                if (!recommendwelfare.detail_url.isEmpty()) {
+                    Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("RecommendItems", recommendwelfare);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+                break;
+
         }
     }
 
+    /**
+     * 获取首页数据：轮播+企业module+推荐条目+list部分条目
+     */
     public void getFindHome() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
@@ -240,9 +300,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
             public void onSuccess(FindHome findHome) {
                 super.onSuccess(findHome);
                 cancelmDialog();
-                RecommendItems recommendactivity = findHome.content.recommend.get(0);
-                RecommendItems recommendhealth = findHome.content.recommend.get(1);
-                RecommendItems recommendwelfare = findHome.content.recommend.get(2);
+                recommendactivity = findHome.content.recommend.get(0);
+                recommendhealth = findHome.content.recommend.get(1);
+                recommendwelfare = findHome.content.recommend.get(2);
                 //活动相关信息
                 activityImage.setImageURI(recommendactivity.image);
                 activityStatus.setText(recommendactivity.status);
@@ -284,8 +344,10 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                     if (listView.getHeaderViewsCount() < 2) {
                         listView.addHeaderView(header);
                     }
-                    adaptList.addAll(list);
-                    listView.setAdapter(mAdapter);
+                    for (Iterator<RecommendItems> iterator = list.iterator(); iterator.hasNext(); ) {
+                        RecommendItems disscussCommentItems = iterator.next();
+                        adaptList.add(disscussCommentItems);
+                    }
                     mAdapter.notifyDataSetChanged();
 
                 } else {
@@ -313,7 +375,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-
+    /**
+     * list条目加载更多调用
+     */
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
@@ -341,8 +405,10 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }
-                    adaptList.addAll(list);
-                    listView.setAdapter(mAdapter);
+                    for (Iterator<RecommendItems> iterator = list.iterator(); iterator.hasNext(); ) {
+                        RecommendItems disscussCommentItems = iterator.next();
+                        adaptList.add(disscussCommentItems);
+                    }
                     mAdapter.notifyDataSetChanged();
                 } else {
                     showToast("已无更多内容");
@@ -374,7 +440,10 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
             if (TextUtils.isEmpty(ad.detail_url)) {
                 Toast.makeText(mContext, "链接地址无效：" + ad.detail_url, Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(mContext, AdWebActivity.class);
+                Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("RecommendItems", ad);
+                intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
         }

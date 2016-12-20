@@ -2,12 +2,11 @@ package etcomm.com.etcommyolk.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
 import com.loopj.android.http.RequestParams;
 
@@ -18,35 +17,40 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.adapter.MyExchangeListAdapter;
-import etcomm.com.etcommyolk.entity.MyExchange;
-import etcomm.com.etcommyolk.entity.PointsExchangeItems;
+import etcomm.com.etcommyolk.adapter.SportsAdapter;
+import etcomm.com.etcommyolk.entity.NewsList;
+import etcomm.com.etcommyolk.entity.RecommendItems;
 import etcomm.com.etcommyolk.exception.BaseException;
-import etcomm.com.etcommyolk.handler.MyExchangeHandler;
+import etcomm.com.etcommyolk.handler.NewsListHandler;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 
-public class MyExchangeActivity extends BaseActivity {
+public class MoreWealfeActivity extends BaseActivity {
 
-    @Bind(R.id.myexchangelist)
+    @Bind(R.id.more_sports)
     DownPullRefreshListView listView;
-    private ArrayList<PointsExchangeItems> list = new ArrayList<>();
-    private ArrayList<PointsExchangeItems> adaptList = new ArrayList<>();
-    private MyExchangeListAdapter mAdapter;
-    private View emptyView;
+    @Bind(R.id.hot_switch)
+    CheckBox hotSwitch;
+    private ArrayList<RecommendItems> adaptList = new ArrayList<>();
+    protected ArrayList<RecommendItems> list = new ArrayList<RecommendItems>();
+    private SportsAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_exchange);
+        setContentView(R.layout.activity_more_sports);
         ButterKnife.bind(this);
         EtcommApplication.addActivity(this);
-        setTitleTextView("我的兑换", null);
+        setTitleTextView("公司福利", null);
+        hotSwitch.setVisibility(View.GONE);
         initData();
-
     }
 
     public void initData() {
         getList();
+        mAdapter = new SportsAdapter(mContext, adaptList, 1);
+        listView.setAdapter(mAdapter);
+        //点击角布局加载更多
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,21 +59,8 @@ public class MyExchangeActivity extends BaseActivity {
                 }
             }
         });
-        mAdapter = new MyExchangeListAdapter(mContext, adaptList);
-        listView.setAdapter(mAdapter);
-        listView.setFooterDividersEnabled(false);
-        listView.setHeaderDividersEnabled(false);
-        listView.setDividerHeight(4);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PointsExchangeItems m = mAdapter.getItem(position - 1);
-                Log.i(tag, "mInfo  itemClick  : " + m.toString());
-            }
-        });
-        View emptyView = getLayoutInflater().inflate(
-                R.layout.empty_pointsexchange_view, null);
-        listView.setEmptyView(emptyView);
+
+        //上拉listview加载更多监听
         loadMoreListener = new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -105,31 +96,32 @@ public class MyExchangeActivity extends BaseActivity {
                 getList();
             }
         });
-        emptyView = getLayoutInflater().inflate(R.layout.empty_myexchange, null);
-        TextView emptydec = (TextView) emptyView.findViewById(R.id.empty_dec);
-        emptydec.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent(mContext, PointsExchangeActivity.class);
-                                            mContext.startActivity(intent);
-                                            finish();
-                                        }
-                                    }
 
-        );
-        String html = "暂时没有兑换任何商品\n <br/>&#10;赶紧去【<font color=\"#f37f32\">兑换</font>】吧！";
-        emptydec.setText(Html.fromHtml(html));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RecommendItems recommendItems = mAdapter.getItem(position - 1);
+                Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("RecommendItems", recommendItems);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
+
+
     }
 
-    private void getList() {
+
+    public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
-        params.put("page_size", String.valueOf(page_size));
-        params.put("page", String.valueOf(page_number++));
+        params.put("page", (page_number++) + "");
+        params.put("page_size", page_size + "");
+        Log.d("", "getFindHome: " + params.toString());
         cancelmDialog();
         showProgress(0, true);
-        Log.i(tag, "params: " + params.toString());
-        client.GetMyExchange(mContext, params, new MyExchangeHandler() {
+        client.GetWelfareList(mContext, params, new NewsListHandler() {
             @Override
             public void onCancel() {
                 super.onCancel();
@@ -137,24 +129,27 @@ public class MyExchangeActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(MyExchange exchange) {
-                super.onSuccess(exchange);
+            public void onSuccess(NewsList findList) {
+                super.onSuccess(findList);
                 cancelmDialog();
-                list = exchange.content.model;
-                if (list != null && list.size() > 0) {
-                    for (Iterator<PointsExchangeItems> iterator = list.iterator(); iterator.hasNext(); ) {
-                        PointsExchangeItems disscussCommentItems = (PointsExchangeItems) iterator.next();
+                list = findList.content.items;
+                if (list.size() > 0) {
+                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(findList.content.page_count) > 1) {
+                        listView.addFooterView(footer);
+                        listView.setAdapter(mAdapter);
+                    }
+                    for (Iterator<RecommendItems> iterator = list.iterator(); iterator.hasNext(); ) {
+                        RecommendItems disscussCommentItems = iterator.next();
                         adaptList.add(disscussCommentItems);
                     }
                     mAdapter.notifyDataSetChanged();
-                    listView.setEmptyView(emptyView);
                 } else {
                     showToast("已无更多内容");
                     if (listView.getFooterViewsCount() > 0) {
                         listView.removeFooterView(footer);
                     }
-                }
 
+                }
                 loadStatus = false;
                 listView.onRefreshComplete();
                 loadingProgressBar.setVisibility(View.GONE);
@@ -164,12 +159,12 @@ public class MyExchangeActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-                cancelmDialog();
                 listView.onRefreshComplete();
                 loadStatus = false;
                 loadingProgressBar.setVisibility(View.GONE);
             }
         });
+
     }
 
 

@@ -12,6 +12,7 @@ import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.exception.BaseException;
@@ -46,6 +47,7 @@ public class PointsColleketDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_points_colleket_detail);
         ButterKnife.bind(this);
+        EtcommApplication.addActivity(this);
         setTitleTextView("积分规则", null);
         token = getIntent().getStringExtra("Token");
         WebSettings webSettings = webview.getSettings();

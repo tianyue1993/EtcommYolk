@@ -13,11 +13,14 @@ import etcomm.com.etcommyolk.entity.RecommendItems;
 /**
  * Created by ${tianyue} on 2016/12/16.
  */
-public class ActivityAdapter extends YolkBaseAdapter<RecommendItems> {
+public class SportsAdapter extends YolkBaseAdapter<RecommendItems> {
 
-    public ActivityAdapter(Context context, ArrayList<RecommendItems> list) {
+    public int itemType;
+
+    public SportsAdapter(Context context, ArrayList<RecommendItems> list, int tpye) {
         super(context);
         this.mList = list;
+        itemType = tpye;//表示条类型，是活动还是福利
 
     }
 
@@ -38,6 +41,16 @@ public class ActivityAdapter extends YolkBaseAdapter<RecommendItems> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+
+        if (itemType == 0) {
+//            是活动
+            viewHolder.activityStatus.setVisibility(View.VISIBLE);
+            viewHolder.participation.setVisibility(View.VISIBLE);
+        } else {
+//            是福利
+            viewHolder.activityStatus.setVisibility(View.INVISIBLE);
+            viewHolder.participation.setVisibility(View.INVISIBLE);
+        }
         RecommendItems recommendactivity = getItem(position);
         if (recommendactivity != null) {
             viewHolder.activityImage.setImageURI(recommendactivity.image);

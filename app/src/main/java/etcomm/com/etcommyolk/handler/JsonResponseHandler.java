@@ -11,7 +11,7 @@ import org.json.JSONTokener;
 
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.activity.LoginActivityeg;
+import etcomm.com.etcommyolk.activity.LoginActivity;
 
 public class JsonResponseHandler extends JsonHttpResponseHandler {
 
@@ -55,7 +55,7 @@ public class JsonResponseHandler extends JsonHttpResponseHandler {
      */
     protected synchronized void exceptionCode() {
         Toast.makeText(EtcommApplication.getContext(), R.string.token_error, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(EtcommApplication.getContext(), LoginActivityeg.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(EtcommApplication.getContext(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         EtcommApplication.getContext().startActivity(intent);
     }
 }

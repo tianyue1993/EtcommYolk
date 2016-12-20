@@ -79,7 +79,7 @@ public class PointsExchangeListAdapter extends YolkBaseAdapter<PointsExchangeIte
                 viewHolder.reduce_count.setEnabled(true);
             }
             viewHolder.gift_image.setImageURI(mInfo.image);
-            if (!mInfo.show_money.equals("")) {
+            if (mInfo.show_money != null) {
                 viewHolder.gift_realprice.setText(mInfo.show_money);
                 viewHolder.rl_realprice.setVisibility(View.VISIBLE);
 
@@ -98,7 +98,9 @@ public class PointsExchangeListAdapter extends YolkBaseAdapter<PointsExchangeIte
                 viewHolder.gift_exchange.setClickable(true);
             }
 
-            viewHolder.gift_detail.setText("详    情：" + mInfo.detail);
+            if (mInfo.detail != null) {
+                viewHolder.gift_detail.setText("详    情：" + mInfo.detail);
+            }
             viewHolder.gift_detail.setOnClickListener(new OnClickListener() {
                 Boolean flag = true;
 

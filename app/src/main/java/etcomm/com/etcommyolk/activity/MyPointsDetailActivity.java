@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.adapter.MyPointsDetailListAdapter;
 import etcomm.com.etcommyolk.entity.MyPointsDetail;
@@ -42,6 +43,7 @@ public class MyPointsDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_points_detail);
         ButterKnife.bind(this);
+        EtcommApplication.addActivity(this);
         setTitleTextView("我的积分", null);
         setRightTextView("积分规则", new View.OnClickListener() {
             @Override

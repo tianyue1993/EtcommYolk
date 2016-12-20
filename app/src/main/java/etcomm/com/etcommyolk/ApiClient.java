@@ -108,6 +108,27 @@ public class ApiClient {
         asyncHttpClient.get(EtcommApplication.ACTIVITY_LIST() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
+    /**
+     * 资讯阅读，活动列表
+     */
+    public void GetNewsList(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.NEWS_LIST() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 资讯阅读，资讯搜索
+     */
+    public void GetNewsSearch(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.NEWS_SEARCH() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 公司福利列表
+     */
+    public void GetWelfareList(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.WELFARE_LIST() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
 
     public void cancelRequest() {
         asyncHttpClient.cancelAllRequests(true);

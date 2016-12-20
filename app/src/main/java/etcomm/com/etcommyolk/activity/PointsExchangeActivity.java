@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.adapter.PointsExchangeListAdapter;
 import etcomm.com.etcommyolk.entity.PointsExchange;
@@ -48,6 +49,7 @@ public class PointsExchangeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pointsexchange);
         ButterKnife.bind(this);
+        EtcommApplication.addActivity(this);
         initDatas();
     }
 

@@ -41,17 +41,28 @@
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".activity.PointsColleketDetailActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.LoginActivityeg"
+            android:name=".activity.WebviewDetailActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MoreSportsActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.AdWebActivity"
+            android:name=".activity.MoreHealthActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.MoreWealfeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.SearchHealthNewsActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
