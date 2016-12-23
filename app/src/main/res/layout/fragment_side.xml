@@ -142,8 +142,8 @@
 
     <com.yydcdut.sdlv.SlideAndDragListView
         android:id="@+id/listview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/titlebar"
         android:dividerHeight="0.5dip" />
 

@@ -254,6 +254,7 @@ public class AroundFragment extends BaseFragment {
                     if (listView.getFooterViewsCount() > 0) {
                         listView.removeFooterView(footer);
                     }
+                    empty.setVisibility(View.VISIBLE);
 
                 }
             }
