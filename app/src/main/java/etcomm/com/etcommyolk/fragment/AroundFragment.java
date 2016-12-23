@@ -69,12 +69,11 @@ public class AroundFragment extends BaseFragment {
     private ArrayList<GroupItems> adaptList = new ArrayList<>();
     protected ArrayList<GroupItems> list = new ArrayList<GroupItems>();
     private MyGroupListAdapter mAdapter;
-    //关注成功，刷新身边页面——添加关注小组到我的小组列表
+    //关注成功，刷新身边页面————添加关注小组到我的小组列表
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("add")) {
-                showToast("添加成功");
                 if (intent.getExtras() != null) {
                     GroupItems items = (GroupItems) intent.getExtras().getSerializable("item");
                     adaptList.add(items);
@@ -220,7 +219,7 @@ public class AroundFragment extends BaseFragment {
         RequestParams params = new RequestParams();
         params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
         params.put("page", (page_number++) + "");
-        params.put("page_size", page_size + "");
+        params.put("page_size", 1000 + "");
         params.put("type", 1 + "");//2为搜索全部，1为已关注
         Log.d("", "getList: " + params.toString());
         cancelmDialog();
