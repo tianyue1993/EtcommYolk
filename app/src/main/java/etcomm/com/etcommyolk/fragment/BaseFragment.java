@@ -16,6 +16,7 @@ import android.widget.Toast;
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.LoginActivity;
+import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
 
@@ -49,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
     protected View.OnClickListener toMineOnclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+            startActivity(new Intent(getActivity(), MineActivity.class));
         }
     };
 

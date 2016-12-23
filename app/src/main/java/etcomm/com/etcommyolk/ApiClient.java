@@ -53,10 +53,52 @@ public class ApiClient {
      * 登录接口
      */
     public void invokeLogin(Context context, RequestParams entity, JsonResponseHandler handler) {
-        asyncHttpClient.post(context, EtcommApplication.LOGIN(),
+        asyncHttpClient.post(context, EtcommApplication.LOGIN() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(),
                 entity, handler);
-
     }
+
+    /**
+     * 找回密码/注册页面 综合接口
+     */
+    public void lostPwdverify(Context context,String url, RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.post(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken() , entity, handler);
+    }
+
+    /**
+     *  找回密码/注册 综合调用 设置密码
+     */
+    public void newPwdverify(Context context,String url, RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.post(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 完善注册信息
+     */
+    public void toRegisterUpdateInfo(Context context,RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.post(context, EtcommApplication.toRegisterUpdateInfo() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 修改用户基本信息
+     */
+    public void toUserEdit(Context context,RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.post(context, EtcommApplication.toUserEdit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 企业邀请码效验
+     */
+    public void toSerialNumber(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.getSerialNumber() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 获取默认头像
+     */
+    public void getDefaultAvator(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.getDefaultAvator() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+
 
     /**
      * 积分兑换接口

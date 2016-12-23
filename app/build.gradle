@@ -10,9 +10,16 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
+        // 不让gradle自动生成不同屏幕分辨率的png图
+        generatedDensities = []
         manifestPlaceholders = [serverDoMain: "http://113.59.227.10:96/"]
     }
+
+        manifestPlaceholders = [serverDoMain: "http://113.59.227.10:96/"]
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+
     //代码混淆
     buildTypes {
         release {
@@ -20,6 +27,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //相关文件冲突解决
+    packagingOptions{
+        exclude'META-INF/DEPENDENCIES.txt'
+        exclude'META-INF/LICENSE.txt'
+        exclude'META-INF/NOTICE.txt'
+        exclude'META-INF/NOTICE'
+        exclude'META-INF/LICENSE'
+        exclude'META-INF/DEPENDENCIES'
+        exclude'META-INF/notice.txt'
+        exclude'META-INF/license.txt'
+        exclude'META-INF/dependencies.txt'
+        exclude'META-INF/LGPL2.1'
+    }
+
 
     //打包相关
 //    signingConfigs {
@@ -48,6 +70,10 @@ android {
             targetSdkVersion 21
             versionCode 28
             versionName "1.0"
+            // 不让gradle自动生成不同屏幕分辨率的png图
+            generatedDensities = []
+            manifestPlaceholders = [serverDoMain: "http://113.59.227.10:96/"]
+        }
 
             manifestPlaceholders = [serverDoMain: "http://113.59.227.10:96/"]
 
@@ -70,4 +96,21 @@ android {
         compile files('libs/GetuiSDK2.7.0.0.jar')
         compile files('libs/sdlv.jar')
     }
+}dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    // 图片加载依赖
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.google.zxing:core:3.3.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.facebook.fresco:fresco:0.12.0'
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    compile files('libs/umeng-analytics-v6.0.1.jar')
+    compile files('libs/umeng_social_sdk.jar')
+    compile files('libs/GetuiExt-2.0.3.jar')
+    compile files('libs/GetuiSDK2.7.0.0.jar')
+    compile files('libs/universal-image-loader-1.9.3-with-sources.jar')
+    compile files('libs/joda-time-2.9.1.jar')
 }

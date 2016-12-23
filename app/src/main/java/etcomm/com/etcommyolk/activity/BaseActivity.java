@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 
 import etcomm.com.etcommyolk.ApiClient;
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
@@ -216,6 +217,10 @@ public class BaseActivity extends Activity {
                 title.setOnClickListener(onClickListener);
             }
         }
+    }
+    //获取右边
+    protected TextView getRightTextView(){
+        return  rightTextView;
     }
 
     @Override

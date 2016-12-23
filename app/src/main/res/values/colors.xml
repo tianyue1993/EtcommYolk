@@ -202,6 +202,32 @@
     <color name="btn_unable">#e0e0e0</color>
     <color name="mine_usefulpoint_bg">#ffbc4b</color>
 
+    <!--二维码-->
+    <color name="color_1">#7cc576</color>
+    <color name="cateory2_item">#ffF5F5F5</color>
+    <color name="gray1">#ff8b8b8b</color>
+    <color name="gray_808080">#808080</color>
+    <color name="fontblack">#ff4b4b4b</color>
+    <color name="font_gray">#ff888888</color>
+    <color name="font_gray11">#ffF5F5F5</color>
+    <color name="font_gray12">#ff1E1E1E</color>
+    <color name="setting_background">#ffeeeeee</color>
+    <color name="myitegralhead">#948477</color>
+    <color name="myitegral">#ff8300</color>
+    <color name="official_text2">#ff646464</color>
+    <color name="black1">#ff0f0f0f</color>
+    <color name="redphone">#ff3b3c</color>
+    <color name="bar_classbg_select">#fff5f5f5</color>
+    <color name="orange_1">#ff9800</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="blue_1">#007aff</color>
+    <color name="gray_1">#DEDEDE</color>
+    <color name="red_1">#df0021</color>
+    <color name="province_line_border">#C7C7C7</color>
 
     <!-- 蛋黄新颜色-->
     <color name="text_more_color">#8B572A</color>

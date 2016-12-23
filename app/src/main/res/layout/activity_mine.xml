@@ -18,11 +18,11 @@
             android:layout_height="115dp"
             >
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/user_photo"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@mipmap/mine_default_avator"
+                android:background="@mipmap/mine_default_avator"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="17dp"
@@ -225,8 +225,8 @@
 
 
         <RelativeLayout
-            android:id="@+id/mine_minecount_rl"
             android:layout_width="fill_parent"
+            android:id="@+id/mine_minecount_rl"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:background="@drawable/mine_item_bg"

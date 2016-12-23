@@ -12,6 +12,7 @@ import org.json.JSONTokener;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.LoginActivity;
+import etcomm.com.etcommyolk.activity.LoginActivityeg;
 
 public class JsonResponseHandler extends JsonHttpResponseHandler {
 
@@ -31,7 +32,7 @@ public class JsonResponseHandler extends JsonHttpResponseHandler {
         String jsonString = getResponseString(responseBody, getCharset());
 
         if (getRequestURI() != null) {
-            Log.i("Reqeust", getRequestURI().toString() + "==>" + jsonString);
+            Log.d("Reqeust:" + getRequestURI().toString(), jsonString);
         }
 
         if (jsonString != null) {

@@ -100,6 +100,84 @@ public class EtcommApplication extends Application {
         return BASE_URL;
     }
 
+    /**
+     * 获取手机验证码
+     * @return
+     */
+    public static String getPhoneCode(){
+        return BASE_URL + "mobile-captcha/send";
+    }
+
+    /**
+     * 验证手机验证码
+     * @return
+     */
+    public static String verifyPhoneCode(){
+        return BASE_URL + "mobile-captcha/validate";
+    }
+
+    /**
+     * 获取邮箱验证码
+     * @return
+     */
+    public static String getMailCode(){
+        return BASE_URL + "email-captcha/send";
+    }
+
+    /**
+     * 验证邮箱验证码
+     * @return
+     */
+    public static String verifyMailCode(){
+        return BASE_URL + "email-captcha/validate";
+    }
+
+    /**
+     * 邮箱找回密码
+     * @return
+     */
+    public static String alterMailPwd(){
+        return BASE_URL + "email-forgot-password";
+    }
+
+    /**
+     * 手机找回密码
+     * @return
+     */
+    public static String alterPhonePwd(){
+        return BASE_URL + "mobile-forgot-password";
+    }
+
+    /**
+     * 效验邀请码
+     */
+    public static String getSerialNumber(){ return BASE_URL + "serial-number"; }
+
+    /**
+     * 邮箱注册
+     */
+    public static String toMailRegister(){ return BASE_URL + "email-sign-up"; }
+
+    /**
+     * 手机注册
+     */
+    public static String toPhoneRegister(){ return BASE_URL + "mobile-sign-up"; }
+
+    /**
+     * 获取默认头像
+     */
+    public static String getDefaultAvator(){ return BASE_URL + "avatar"; }
+
+    /**
+     * 完善注册信息
+     */
+    public static String toRegisterUpdateInfo(){return  BASE_URL + "user/update"; }
+    /**
+     * 修改用户基本信息
+     */
+    public static String toUserEdit(){return  BASE_URL + "user/edit"; }
+
+
     public static String LOGIN() {
         return BASE_URL + "sign-in";
     }

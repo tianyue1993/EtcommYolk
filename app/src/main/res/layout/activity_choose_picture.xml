@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <etcomm.com.etcommyolk.widget.ScrollHorizontalScrollView
+        android:id="@+id/scrollhsv"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginTop="@dimen/marginlarge"
+        android:fadingEdge="none"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/scrollli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="120dp"
+            android:paddingRight="100dp"/>
+
+    </etcomm.com.etcommyolk.widget.ScrollHorizontalScrollView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#999999"
+        android:textSize="10dp"
+        android:layout_below="@+id/scrollhsv"
+        android:layout_centerHorizontal="true"
+        android:text="滑动选择头像" />
+
+    <CheckBox
+        android:id="@+id/sex_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_sex_selector"
+        android:button="@null"
+        android:checked="false"
+        android:minHeight="30dp"
+        android:minWidth="100dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutcho"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/sex_switch"
+        android:background="@mipmap/login_input_bac"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="昵　称："
+            android:textColor="#797979"
+            android:textSize="18dp" />
+
+
+        <EditText
+            android:id="@+id/input_choose"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:maxLines="1"
+            android:layout_toRightOf="@+id/textView3"
+            android:gravity="center|left"
+            android:paddingLeft="35dp"
+            android:singleLine="true"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btn_enterusernamechooseavatarnext"
+        style="@style/common_btn_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/all_fil_button"
+        android:gravity="center"
+        android:clickable="false"
+        android:layout_below="@+id/relativeLayoutcho"
+        android:layout_marginTop="50dp"
+        android:text="@string/next"
+        android:textColor="#f4f3f3" />
+
+</RelativeLayout>
