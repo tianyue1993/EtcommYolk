@@ -100,6 +100,8 @@ public class PointsExchangeListAdapter extends YolkBaseAdapter<PointsExchangeIte
 
             if (mInfo.detail != null) {
                 viewHolder.gift_detail.setText("详    情：" + mInfo.detail);
+            } else {
+                viewHolder.gift_detail.setText("详    情：");
             }
             viewHolder.gift_detail.setOnClickListener(new OnClickListener() {
                 Boolean flag = true;

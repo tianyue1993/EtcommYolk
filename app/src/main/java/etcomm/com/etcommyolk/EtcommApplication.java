@@ -144,4 +144,24 @@ public class EtcommApplication extends Application {
         return BASE_URL + "welfare";
     }
 
+    public static String ALL_GROUP_LIST() {
+        return BASE_URL + "topic";
+    }
+
+    public static String ATTENTION_GROUP() {
+        return BASE_URL + "topic/follow";
+    }
+
+    public static String UN_ATTENTION_GROUP() {
+        return BASE_URL + "topic/un-follow";
+    }
+
+    public static String CHECK_CREATE() {
+        return BASE_URL + "topic/check-create";
+    }
+
+    public static String TOPIC_CREATE() {
+        return BASE_URL + "topic/create";
+    }
+
 }

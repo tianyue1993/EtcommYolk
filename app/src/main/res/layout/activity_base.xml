@@ -10,7 +10,7 @@
         android:id="@+id/base_layout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#FFCC00">
+        android:background="@color/base_color">
 
         <ImageView
             android:id="@+id/base_left"

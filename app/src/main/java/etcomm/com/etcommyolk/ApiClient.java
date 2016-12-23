@@ -130,6 +130,42 @@ public class ApiClient {
     }
 
 
+    /**
+     * 小组搜索页面所有小组显示列表
+     */
+    public void GetGroupList(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.ALL_GROUP_LIST() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+
+    /**
+     * 小组关注
+     */
+    public void Attention(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.ATTENTION_GROUP() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 小组取消关注
+     */
+    public void UnAttention(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.UN_ATTENTION_GROUP() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 检测是否可以创建小组
+     */
+    public void CheckCreate(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.CHECK_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 创建小组
+     */
+    public void TopicCreate(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.TOPIC_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
     public void cancelRequest() {
         asyncHttpClient.cancelAllRequests(true);
     }

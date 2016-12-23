@@ -134,7 +134,7 @@ public class MoreWealfeActivity extends BaseActivity {
                 cancelmDialog();
                 list = findList.content.items;
                 if (list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(findList.content.page_count) > 1) {
+                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(findList.content.pages) > 1) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }

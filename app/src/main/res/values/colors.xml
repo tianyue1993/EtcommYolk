@@ -6,7 +6,7 @@
 
     <!--白色字体  -->
     <color name="text_color_white">#FFFFFF</color>
-    <color name="base_color">#f8b551</color>
+    <color name="base_color">#FFCC00</color>
     <color name="title_color">#0f0f0f</color>
     <color name="divider_color">#d2d2d2</color>
 
@@ -158,7 +158,7 @@
     <!-- 公共颜色结束 -->
     <color name="divided_color">#D0D0D0</color>
     <color name="transparent">#00000000</color>
-    <color name="bg_default">#ffffff</color>
+    <color name="bg_default">#e7eeec</color>
     <color name="left_item_pressed">#e7eeec</color>
     <color name="leftmenuitem_pressed">#f1f1f1</color>
     <color name="span_line_color">#d5d5d5</color>

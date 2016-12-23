@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="etcomm.com.etcommyolk.activity.MoreSportsActivity">
+
+
+    <etcomm.com.etcommyolk.widget.DownPullRefreshListView
+        android:id="@+id/more_sports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </etcomm.com.etcommyolk.widget.DownPullRefreshListView>
+
+    <CheckBox
+        android:id="@+id/hot_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_hotornew_selector"
+        android:button="@null"
+        android:checked="false"
+        android:minHeight="30dp"
+        android:minWidth="100dp" />
+</RelativeLayout>

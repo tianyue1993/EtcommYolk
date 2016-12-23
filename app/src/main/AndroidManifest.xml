@@ -62,7 +62,15 @@
         <activity
             android:name=".activity.SearchHealthNewsActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activity.SearchGroupActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".activity.TopicDisscussListActivity" />
+        <activity android:name=".activity.AddNewTopicActivity"></activity>
     </application>
 
 </manifest>

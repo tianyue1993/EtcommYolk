@@ -9,7 +9,7 @@
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:alpha="0.9"
-        android:background="@color/grey"
+        android:background="@color/gray"
         android:gravity="center"
         android:orientation="vertical" >
 

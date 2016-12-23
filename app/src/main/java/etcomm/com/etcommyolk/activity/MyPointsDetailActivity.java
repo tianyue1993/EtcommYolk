@@ -140,7 +140,7 @@ public class MyPointsDetailActivity extends BaseActivity {
                 cancelmDialog();
                 list = exchange.content.score;
                 if (list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(exchange.content.page_count) > 1) {
+                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(exchange.content.pages) > 1) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }

@@ -8,5 +8,5 @@ import java.util.ArrayList;
 public class NewsModule extends Entity {
 
     public ArrayList<RecommendItems> items;
-    public String page_count;
+    public String pages;
 }

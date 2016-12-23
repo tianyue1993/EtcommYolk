@@ -12,7 +12,7 @@ public class MyExchange extends Entity {
     public Content content;
 
     public class Content {
-        public String page_count;
+        public String pages;
 
         public ArrayList<PointsExchangeItems> model;
 

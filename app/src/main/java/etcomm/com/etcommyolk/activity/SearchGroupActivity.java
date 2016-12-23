@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,31 +24,25 @@ import com.loopj.android.http.RequestParams;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.adapter.HealthAdapter;
-import etcomm.com.etcommyolk.entity.NewsList;
-import etcomm.com.etcommyolk.entity.RecommendItems;
+import etcomm.com.etcommyolk.adapter.GroupListAdapter;
+import etcomm.com.etcommyolk.entity.GroupItems;
+import etcomm.com.etcommyolk.entity.GroupList;
 import etcomm.com.etcommyolk.exception.BaseException;
-import etcomm.com.etcommyolk.handler.NewsListHandler;
+import etcomm.com.etcommyolk.handler.GroupListHandler;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 import etcomm.com.etcommyolk.widget.ExEditText;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
 
-public class SearchHealthNewsActivity extends Activity {
+public class SearchGroupActivity extends Activity {
 
-
-    @Bind(R.id.search_healthnew_et)
-    ExEditText searchHealthnewEt;
-    @Bind(R.id.cancel)
-    TextView cancel;
-    @Bind(R.id.pulllistview)
-    DownPullRefreshListView listView;
+    ImageView back;//返回键
+    ExEditText searchHealthnewEt;//搜索框
+    DownPullRefreshListView listView;//小组列表
+    private Context mContext;
     public int page_size = 10;
     public int page_number = 1;
     public AbsListView.OnScrollListener loadMoreListener;
@@ -57,20 +52,19 @@ public class SearchHealthNewsActivity extends Activity {
     public ProgressBar loadingProgressBar;
     public TextView loadingText;
     public ProgressDialog mProgress;
-    private ArrayList<RecommendItems> adaptList = new ArrayList<>();
-    protected ArrayList<RecommendItems> list = new ArrayList<RecommendItems>();
-    private HealthAdapter mAdapter;
-    private Context mContext;
-    public static final int MSG_CLOSE_PROGRESS = 1;
-    public static final int MSG_SHOW_TOAST = 2;
-    String searchType = "0";//0为搜索全部，1为搜索收藏
+    private ArrayList<GroupItems> adaptList = new ArrayList<>();
+    protected ArrayList<GroupItems> list = new ArrayList<GroupItems>();
+    private GroupListAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_health_news);
-        ButterKnife.bind(this);
+        setContentView(R.layout.activity_search_group);
         EtcommApplication.addActivity(this);
+        listView = (DownPullRefreshListView) findViewById(R.id.listview);
+        back = (ImageView) findViewById(R.id.back);
+        searchHealthnewEt = (ExEditText) findViewById(R.id.search_topic_et);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -79,43 +73,47 @@ public class SearchHealthNewsActivity extends Activity {
         footer = View.inflate(this, R.layout.loadmore, null);
         loadingProgressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
         loadingText = (TextView) footer.findViewById(R.id.title);
-        initData();
-
-    }
-
-    public void initData() {
-        Intent intent = getIntent();
-        if (intent.getStringExtra("type") != "") {
-            searchType = intent.getStringExtra("type");
-        }
-        searchType = intent.getStringExtra("type");
-        cancel.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        initData();
+    }
 
+
+    public void initData() {
+        getList();
+        //点击键盘的搜索符号：搜小组
         searchHealthnewEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     page_number = 1;
+                    adaptList.clear();
                     getList();
 
                 }
                 return false;
             }
         });
-        mAdapter = new HealthAdapter(mContext, adaptList);
+
+        mAdapter = new GroupListAdapter(mContext, adaptList, new GroupListAdapter.mAttentioned() {
+            @Override
+            public void onAttentioned(GroupItems item) {
+                item.is_followed = "1";
+                listView.onRefreshComplete();
+            }
+        });
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RecommendItems m = mAdapter.getItem(position - 1);
+                GroupItems m = mAdapter.getItem(position - 1);
                 Bundle extras = new Bundle();
-                extras.putSerializable("RecommendItems", m);
-                Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                extras.putSerializable("GroupItems", m);
+                Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -170,27 +168,24 @@ public class SearchHealthNewsActivity extends Activity {
 
     }
 
-    @OnClick({R.id.search_healthnew_et, R.id.cancel})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.search_healthnew_et:
-                break;
-            case R.id.cancel:
-                break;
-        }
-    }
-
+    /**
+     * 获取用户下面所有的小组，包括已关注和未关注
+     */
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
         params.put("page", (page_number++) + "");
         params.put("page_size", page_size + "");
-        params.put("keyword", searchHealthnewEt.getText().toString());
-        params.put("type", searchType);
-        Log.d("", "getFindHome: " + params.toString());
+        if (searchHealthnewEt.getText().toString() != "" && !searchHealthnewEt.getText().toString().isEmpty()) {
+            //获取所有小组下面包含关键字的小组
+            params.put("keyword", searchHealthnewEt.getText().toString());
+        }
+        //获取用户下面的全部小组
+        params.put("type", 2 + "");//2为搜索全部，1为已关注
+        Log.d("", "getList: " + params.toString());
         cancelmDialog();
         showProgress(0, true);
-        ApiClient.getInstance().GetNewsSearch(mContext, params, new NewsListHandler() {
+        ApiClient.getInstance().GetGroupList(mContext, params, new GroupListHandler() {
             @Override
             public void onCancel() {
                 super.onCancel();
@@ -198,17 +193,26 @@ public class SearchHealthNewsActivity extends Activity {
             }
 
             @Override
-            public void onSuccess(NewsList findList) {
-                super.onSuccess(findList);
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
                 cancelmDialog();
-                list = findList.content.items;
+                listView.onRefreshComplete();
+                loadStatus = false;
+                loadingProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(GroupList groupList) {
+                super.onSuccess(groupList);
+                cancelmDialog();
+                list = groupList.content.items;
                 if (list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(findList.content.pages) > 1) {
+                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(groupList.content.pages) > 1) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }
-                    for (Iterator<RecommendItems> iterator = list.iterator(); iterator.hasNext(); ) {
-                        RecommendItems disscussCommentItems = iterator.next();
+                    for (Iterator<GroupItems> iterator = list.iterator(); iterator.hasNext(); ) {
+                        GroupItems disscussCommentItems = iterator.next();
                         adaptList.add(disscussCommentItems);
                     }
                     mAdapter.notifyDataSetChanged();
@@ -224,17 +228,9 @@ public class SearchHealthNewsActivity extends Activity {
                 loadingProgressBar.setVisibility(View.GONE);
                 loadingText.setText(getResources().getString(R.string.loadmore));
             }
-
-            @Override
-            public void onFailure(BaseException exception) {
-                super.onFailure(exception);
-                listView.onRefreshComplete();
-                loadStatus = false;
-                loadingProgressBar.setVisibility(View.GONE);
-            }
         });
-
     }
+
 
     public void showProgress(int resId, boolean cancel) {
         mProgress = new ProgressDialog(this);
@@ -252,6 +248,8 @@ public class SearchHealthNewsActivity extends Activity {
         }
     }
 
+    public static final int MSG_CLOSE_PROGRESS = 1;
+    public static final int MSG_SHOW_TOAST = 2;
     public Handler baseHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {

@@ -136,7 +136,7 @@ public class MoreSportsActivity extends BaseActivity {
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
-        params.put("page_number", (page_number++) + "");
+        params.put("page", (page_number++) + "");
         params.put("sort", sort);
         params.put("page_size", page_size + "");
         Log.d("", "getFindHome: " + params.toString());

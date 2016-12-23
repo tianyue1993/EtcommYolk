@@ -117,7 +117,7 @@ public class MoreHealthActivity extends BaseActivity {
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
-        params.put("page_number", (page_number++) + "");
+        params.put("page", (page_number++) + "");
         params.put("page_size", page_size + "");
         Log.d("", "getFindHome: " + params.toString());
         cancelmDialog();
@@ -135,7 +135,7 @@ public class MoreHealthActivity extends BaseActivity {
                 cancelmDialog();
                 list = findList.content.items;
                 if (list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(findList.content.page_count) > 1) {
+                    if (listView.getFooterViewsCount() == 0 && Integer.parseInt(findList.content.pages) > 1) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }

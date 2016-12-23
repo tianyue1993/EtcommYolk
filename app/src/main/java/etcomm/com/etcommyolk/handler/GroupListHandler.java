@@ -11,23 +11,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import etcomm.com.etcommyolk.EtcommApplication;
-import etcomm.com.etcommyolk.entity.Commen;
+import etcomm.com.etcommyolk.entity.GroupList;
 import etcomm.com.etcommyolk.exception.BaseException;
 
-public class CommenHandler extends JsonResponseHandler {
+public class GroupListHandler extends JsonResponseHandler {
 
-    /**
-     * 用于返回值content仅仅只有一个string数据格式
-     */
-    public CommenHandler() {
+    public GroupListHandler() {
         this(DEFAULT_CHARSET);
     }
 
-    public CommenHandler(String encoding) {
+    public GroupListHandler(String encoding) {
         super(encoding);
     }
 
-    public void onSuccess(Commen commen) {
+    public void onSuccess(GroupList groupList) {
 
     }
 
@@ -46,15 +43,15 @@ public class CommenHandler extends JsonResponseHandler {
                             if (response.has("code") && !response.isNull("code")) {
                                 int code = response.getInt("code");
                                 String messege = response.getString("message");
-                                if (code == 0 || code == 30005) {
-                                    onSuccess(JSON.parseObject(response.toString(), Commen.class));
+                                if (code == 0) {
+                                    onSuccess(JSON.parseObject(response.toString(), GroupList.class));
                                 } else if (code == 10000) {
                                     exceptionCode();
                                 } else {
-                                    //请求异常,弹出提示
                                     onFailure(new BaseException("Unexpected response " + response, -1));
                                     Toast.makeText(EtcommApplication.getContext(), messege, Toast.LENGTH_SHORT).show();
                                 }
+
                             } else {
                                 onFailure(new BaseException("Unexpected response " + response, -1));
                             }
@@ -70,7 +67,7 @@ public class CommenHandler extends JsonResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         Log.d("onFailure JSONObject", statusCode + "---" + throwable + "---" + errorResponse);
-        onFailure(new BaseException("网络请求失败，请重试", statusCode));
+        onFailure(new BaseException("无网络连接，请查看网络配置", statusCode));
     }
 
     @Override

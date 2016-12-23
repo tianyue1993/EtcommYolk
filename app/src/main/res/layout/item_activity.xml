@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="160dp">
+    android:layout_height="180dp">
 
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/activity_image"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        fresco:failureImage="@mipmap/ic_eg"
+        android:layout_height="190dp"
         fresco:actualImageScaleType="fitXY"
-        fresco:placeholderImage="@mipmap/ic_eg" />
+        fresco:failureImage="@mipmap/ic_defalt"
+        fresco:placeholderImage="@mipmap/ic_defalt" />
 
 
     <RelativeLayout

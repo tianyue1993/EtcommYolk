@@ -1,22 +1,45 @@
 package etcomm.com.etcommyolk.fragment;
 
-import android.net.Uri;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
+import com.yydcdut.sdlv.Menu;
+import com.yydcdut.sdlv.MenuItem;
+import com.yydcdut.sdlv.SlideAndDragListView;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.entity.Login;
+import etcomm.com.etcommyolk.activity.AddNewTopicActivity;
+import etcomm.com.etcommyolk.activity.SearchGroupActivity;
+import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
+import etcomm.com.etcommyolk.adapter.MyGroupListAdapter;
+import etcomm.com.etcommyolk.entity.Commen;
+import etcomm.com.etcommyolk.entity.GroupItems;
+import etcomm.com.etcommyolk.entity.GroupList;
 import etcomm.com.etcommyolk.exception.BaseException;
-import etcomm.com.etcommyolk.handler.LoginHandler;
-import etcomm.com.etcommyolk.utils.StringUtils;
+import etcomm.com.etcommyolk.handler.CommenHandler;
+import etcomm.com.etcommyolk.handler.GroupListHandler;
+import etcomm.com.etcommyolk.utils.GlobalSetting;
 
 public class AroundFragment extends BaseFragment {
     /**
@@ -24,28 +47,42 @@ public class AroundFragment extends BaseFragment {
      */
     public static boolean limitOnresumSide;
     public static String TAG = "AroundFragment";
-    @Bind(R.id.save)
-    Button save;
-    @Bind(R.id.get)
-    Button get;
-    @Bind(R.id.login)
-    Button login;
-
-
-    @OnClick({R.id.get, R.id.save, R.id.login})
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.get:
-                Toast.makeText(getBaseActivity(), prefs.getUid(), Toast.LENGTH_LONG).show();
-                break;
-            case R.id.save:
-                prefs.saveUid("123456");
-                break;
-            case R.id.login:
-                visitorLogin();
-                break;
+    @Bind(R.id.base_left)
+    ImageView baseLeft;
+    @Bind(R.id.add_topic)
+    ImageView addTopic;
+    @Bind(R.id.topic_search)
+    ImageView topicSearch;
+    @Bind(R.id.base_right)
+    ImageView baseRight;
+    @Bind(R.id.listview)
+    SlideAndDragListView listView;
+    @Bind(R.id.base_title)
+    TextView baseTitle;
+    @Bind(R.id.title)
+    RelativeLayout title;
+    @Bind(R.id.empty)
+    RelativeLayout empty;
+    Context mContext;
+    @Bind(R.id.to_see)
+    TextView to_see;
+    private ArrayList<GroupItems> adaptList = new ArrayList<>();
+    protected ArrayList<GroupItems> list = new ArrayList<GroupItems>();
+    private MyGroupListAdapter mAdapter;
+    //关注成功，刷新身边页面——添加关注小组到我的小组列表
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("add")) {
+                showToast("添加成功");
+                if (intent.getExtras() != null) {
+                    GroupItems items = (GroupItems) intent.getExtras().getSerializable("item");
+                    adaptList.add(items);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
         }
-    }
+    };
 
     /**
      * onCreateView
@@ -55,9 +92,6 @@ public class AroundFragment extends BaseFragment {
      */
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
-        SimpleDraweeView myImageView = (SimpleDraweeView) view.findViewById(R.id.my_image_view);
-        myImageView.setImageURI(Uri.parse("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1481514246&di=b84ff611e64fafe69fd2b9bcad7e7ca5&src=http://pic.58pic.com/58pic/12/40/40/21C58PICc7e.jpg"));
     }
 
     @Override
@@ -68,6 +102,10 @@ public class AroundFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("add");
+        mContext.registerReceiver(receiver, filter);
     }
 
     @Override
@@ -79,32 +117,191 @@ public class AroundFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        if (receiver != null) {
+            mContext.unregisterReceiver(receiver);
+        }
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        limitOnresumSide = true;
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        getList();
+        mAdapter = new MyGroupListAdapter(mContext, adaptList, new MyGroupListAdapter.mAttentioned() {
+            @Override
+            public void onAttentioned(GroupItems item) {
+                item.is_followed = "1";
+            }
+        });
+        //设置侧滑菜单按钮
+        Menu menu = new Menu(new ColorDrawable(Color.LTGRAY), true, 0);// the
+        menu.addItem(new MenuItem.Builder().setWidth(200)// set Width
+                //设置背景
+                .setBackground(new ColorDrawable(Color.LTGRAY))// set background
+                .setText("取消关注")// set text string
+                .setDirection(MenuItem.DIRECTION_RIGHT).setTextColor(Color.WHITE)// set
+                .setTextSize(10)// set text size
+                .build());
+        listView.setMenu(menu);
+        listView.setDividerHeight(0);
+        listView.setAdapter(mAdapter);
+
+        listView.setOnMenuItemClickListener(new SlideAndDragListView.OnMenuItemClickListener() {
+            @Override
+            public int onMenuItemClick(View v, int itemPosition, int buttonPosition, int direction) {
+                switch (direction) {
+                    case MenuItem.DIRECTION_LEFT:
+                        switch (buttonPosition) {
+                            case 0:// One
+                                return Menu.ITEM_SCROLL_BACK;
+                        }
+                        break;
+                    case MenuItem.DIRECTION_RIGHT:
+                        switch (buttonPosition) {
+                            case 0:// icon
+                                showToast("取消关注");
+                                unAttention(mAdapter.getItem(itemPosition));
+                                return Menu.ITEM_NOTHING;
+                        }
+                        break;
+                    default:
+                        return Menu.ITEM_NOTHING;
+                }
+                return Menu.ITEM_NOTHING;
+            }
+        });
+
+        listView.setOnListItemClickListener(new SlideAndDragListView.OnListItemClickListener() {
+            @Override
+            public void onListItemClick(View view, int i) {
+                GroupItems m = mAdapter.getItem(i);
+                Bundle extras = new Bundle();
+                extras.putSerializable("GroupItems", m);
+                Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+        return rootView;
+    }
+
+    @OnClick({R.id.base_left, R.id.add_topic, R.id.topic_search, R.id.base_right, R.id.to_see})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.base_left:
+                break;
+            case R.id.add_topic:
+                startActivity(new Intent(mContext, AddNewTopicActivity.class));
+                break;
+            case R.id.topic_search:
+                startActivity(new Intent(mContext, SearchGroupActivity.class));
+                break;
+            case R.id.base_right:
+                break;
+            case R.id.to_see:
+                startActivity(new Intent(mContext, SearchGroupActivity.class));
+                break;
+        }
     }
 
     /**
-     * 接口调试，模拟登录
+     * 获取用户下面所有的小组，包括已关注和未关注
      */
-    public void visitorLogin() {
-        final RequestParams object = new RequestParams();
-        object.put("username", "23652356@qq.com");
-        object.put("password", "123456");
-        object.put("client_id", "23245538a6de9b824741556172c2d8da");
-        object.put("device_id", "ad2c5508b66d5835");
-        client.invokeLogin(getBaseActivity(), object, new LoginHandler() {
+    public void getList() {
+        RequestParams params = new RequestParams();
+        params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
+        params.put("page", (page_number++) + "");
+        params.put("page_size", page_size + "");
+        params.put("type", 1 + "");//2为搜索全部，1为已关注
+        Log.d("", "getList: " + params.toString());
+        cancelmDialog();
+        showProgress(0, true);
+        ApiClient.getInstance().GetGroupList(mContext, params, new GroupListHandler() {
             @Override
-            public void onSuccess(Login login) {
-                super.onSuccess(login);
-                Toast.makeText(getBaseActivity(), login.message, Toast.LENGTH_LONG).show();
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
             }
 
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-                Toast.makeText(getBaseActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(GroupList groupList) {
+                super.onSuccess(groupList);
+                cancelmDialog();
+                list = groupList.content.items;
+                if (list.size() > 0) {
+                    empty.setVisibility(View.GONE);
+                    for (Iterator<GroupItems> iterator = list.iterator(); iterator.hasNext(); ) {
+                        GroupItems disscussCommentItems = iterator.next();
+                        adaptList.add(disscussCommentItems);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    showToast("已无更多内容");
+                    if (listView.getFooterViewsCount() > 0) {
+                        listView.removeFooterView(footer);
+                    }
+
+                }
             }
         });
-
     }
 
+
+    /**
+     * 取消关注
+     *
+     * @param mInfo
+     * @return
+     */
+    protected int unAttention(final GroupItems mInfo) {
+        RequestParams params = new RequestParams();
+        params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
+        params.put("topic_id", mInfo.topic_id);
+        cancelmDialog();
+        showProgress(0, true);
+        ApiClient.getInstance().UnAttention(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
+                adaptList.remove(mInfo);
+                mAdapter.notifyDataSetChanged();
+                if (adaptList.size() < 1) {
+                    empty.setVisibility(View.VISIBLE);
+                } else {
+                    empty.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+        });
+        return 0;
+    }
 
 }

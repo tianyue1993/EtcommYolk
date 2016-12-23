@@ -12,7 +12,7 @@ public class MyPointsDetail extends Entity {
 
     public class Content {
 
-        public String page_count;
+        public String pages;
         public ArrayList<Score> score;
 
         public class Score {
@@ -31,7 +31,7 @@ public class MyPointsDetail extends Entity {
         @Override
         public String toString() {
             return "Content{" +
-                    "page_count='" + page_count + '\'' +
+                    "page_count='" + pages + '\'' +
                     ", score=" + score +
                     '}';
         }

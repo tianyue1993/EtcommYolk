@@ -108,6 +108,11 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        limitResumeFind = true;
+    }
 
     @Override
     public void onDestroyView() {

@@ -39,7 +39,9 @@ public abstract class BaseFragment extends Fragment {
     //获取上下文对象
     protected Context getBaseActivity() {
         return getActivity();
-    };
+    }
+
+    ;
 
     /**
      * 跳转进入我的页面
@@ -53,7 +55,7 @@ public abstract class BaseFragment extends Fragment {
 
     //下来加载相关布局
     public int page_size = 10;
-    public int page_number = 2;
+    public int page_number = 1;
     public AbsListView.OnScrollListener loadMoreListener;
     public boolean loadMore;
     public boolean loadStatus = false;
