@@ -4,7 +4,7 @@
     <!-- 背景图 -->
     <item
         android:id="@android:id/background"
-        android:height="3dp"
+        android:height="5dp"
         android:width="300dp">
         <shape android:shape="rectangle" >
             <corners android:radius="10dip" />
@@ -20,7 +20,7 @@
                 android:height="3dp"
                 android:width="300dp" >
             </size>
-
+            <!--未确认的进度条颜色-->
             <solid android:color="@color/grey" >
             </solid>
         </shape>
@@ -28,7 +28,7 @@
     <!-- 第二进度图 -->
     <item
         android:id="@android:id/secondaryProgress"
-        android:height="3dp"
+        android:height="5dp"
         android:width="300dp">
         <clip>
             <shape>
@@ -38,7 +38,7 @@
                     android:height="3dp"
                     android:width="300dp" >
                 </size>
-
+                <!--未确认的进度条颜色-->
                 <solid android:color="@color/grey" >
                 </solid>
 
@@ -54,7 +54,7 @@
     <!-- 进度度 -->
     <item
         android:id="@android:id/progress"
-        android:height="3dp"
+        android:height="5dp"
         android:width="300dp">
         <clip>
             <shape>
@@ -63,17 +63,18 @@
                 <gradient
                     android:angle="270"
                     android:centerColor="#ffffb600"
-                    android:centerY="0.75"
+                    android:centerX="0.75"
                     android:endColor="#ffffcb00"
                     android:startColor="#ffffd300" />
+
+
 
                 <size
                     android:height="3dp"
                     android:width="300dp" >
                 </size>
-
-                <solid android:color="@color/title_bg_color" >
-                </solid>
+                <!--确认过的进度条颜色-->
+                <!--<solid android:color="@color/title_bg_color" />-->
             </shape>
         </clip>
     </item>

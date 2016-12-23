@@ -3,6 +3,13 @@
     package="etcomm.com.etcommyolk">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 二维码 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".EtcommApplication"
@@ -41,14 +48,40 @@
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".activity.PointsColleketDetailActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.LoginActivityeg"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.LostPwdActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activity.ForgotPasswordActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".zxing.activity.CaptureActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ChoosePictureActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".activity.TargetActivity" />
+        <activity android:name=".activity.PersonalProfileActivity"></activity>
     </application>
 
 </manifest>
