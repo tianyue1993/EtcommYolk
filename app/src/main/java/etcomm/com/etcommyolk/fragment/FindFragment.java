@@ -330,7 +330,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 //广告轮播相关代码
                 ArrayList<RecommendItems> carousel = findHome.content.carousel;
                 //计算广告图高度
-                WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
                 Display display = wm.getDefaultDisplay();
                 int hight = display.getWidth() * 355 / 960;
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) slideADView.getLayoutParams();

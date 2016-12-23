@@ -68,5 +68,6 @@ android {
         compile files('libs/umeng_social_sdk.jar')
         compile files('libs/GetuiExt-2.0.3.jar')
         compile files('libs/GetuiSDK2.7.0.0.jar')
+        compile files('libs/sdlv.jar')
     }
 }
