@@ -12,7 +12,6 @@ import org.json.JSONTokener;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.LoginActivity;
-import etcomm.com.etcommyolk.activity.LoginActivityeg;
 
 public class JsonResponseHandler extends JsonHttpResponseHandler {
 

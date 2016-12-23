@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.joda.time.DateTime;
 
@@ -20,7 +19,6 @@ import butterknife.OnClick;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.Commen;
-import etcomm.com.etcommyolk.entity.Login;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.utils.StringUtils;
@@ -45,9 +43,6 @@ public class TargetActivity extends BaseActivity {
     private boolean isFirstSetUserInfo;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    ImageLoader imageloader = ImageLoader.getInstance();
-    private Login login;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
