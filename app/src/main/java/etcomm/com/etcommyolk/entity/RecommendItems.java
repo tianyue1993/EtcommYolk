@@ -15,6 +15,7 @@ public class RecommendItems extends Entity {
     public String share_url;
     public String detail_url;
     public String pv;//浏览量
+    public String desc;
 
     @Override
     public String toString() {

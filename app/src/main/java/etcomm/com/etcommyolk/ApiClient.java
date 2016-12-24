@@ -208,6 +208,22 @@ public class ApiClient {
         asyncHttpClient.post(EtcommApplication.TOPIC_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
+
+    /**
+     * 小组详情
+     */
+    public void GetDiscussion(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.DISCUSSION() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+
+    /**
+     * 小组修改
+     */
+    public void topicUpdate(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.TOPIC_UPDATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
     public void cancelRequest() {
         asyncHttpClient.cancelAllRequests(true);
     }

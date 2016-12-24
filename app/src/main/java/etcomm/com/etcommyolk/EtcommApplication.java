@@ -242,4 +242,13 @@ public class EtcommApplication extends Application {
         return BASE_URL + "topic/create";
     }
 
+    public static String DISCUSSION() {
+        return BASE_URL + "discussion";
+    }
+
+    public static String TOPIC_UPDATE() {
+        return BASE_URL + " topic/update";
+    }
+   
+
 }

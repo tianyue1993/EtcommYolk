@@ -183,10 +183,8 @@ public class AroundFragment extends BaseFragment {
             @Override
             public void onListItemClick(View view, int i) {
                 GroupItems m = mAdapter.getItem(i);
-                Bundle extras = new Bundle();
-                extras.putSerializable("GroupItems", m);
                 Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
-                intent.putExtras(extras);
+                intent.putExtra("GroupItems",m);
                 startActivity(intent);
             }
         });
