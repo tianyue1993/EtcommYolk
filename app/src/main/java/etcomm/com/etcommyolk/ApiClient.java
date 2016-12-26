@@ -171,7 +171,7 @@ public class ApiClient {
      * 小组详情
      */
     public void GetDiscussion(Context context, RequestParams entity, JsonResponseHandler handler) {
-        asyncHttpClient.post(EtcommApplication.DISCUSSION() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+        asyncHttpClient.get(EtcommApplication.DISCUSSION() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
 

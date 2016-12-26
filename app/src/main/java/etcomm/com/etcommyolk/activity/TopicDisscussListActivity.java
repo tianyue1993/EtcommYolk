@@ -57,6 +57,8 @@ public class TopicDisscussListActivity extends BaseActivity {
     RelativeLayout root;
     @Bind(R.id.emptyview)
     View emptyview;
+    @Bind(R.id.if_join)
+    TextView if_join;
 
 
     public static final int PIC = 1;
@@ -86,7 +88,6 @@ public class TopicDisscussListActivity extends BaseActivity {
     private CircleAdapter circleAdapter;
     private Intent intent;
     boolean isAttentioned;
-    String topic_id;
     String user_id = "";
     String discuse;
     String activity_rank;
@@ -144,7 +145,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     private void editUserInfo(final String field, final String value) {
         RequestParams params = new RequestParams();
         params.put("field", field);
-        params.put("topic_id", topic_id);
+        params.put("topic_id", item.topic_id);
         params.put("access_token", prefs.getAccessToken());
         cancelmDialog();
         showProgress(0, true);
@@ -199,6 +200,7 @@ public class TopicDisscussListActivity extends BaseActivity {
             @Override
             public void onSuccess(Discussion discussion) {
                 super.onSuccess(discussion);
+                cancelmDialog();
                 list = discussion.content.items;
                 List<Topic.TopicUser> list1 = discussion.content.topic.user;
                 image = list1;
@@ -218,8 +220,12 @@ public class TopicDisscussListActivity extends BaseActivity {
                 user_id = discussion.content.topic.user_id;
                 if (discussion.content.topic.is_followed.equals("0")) {
                     isAttentioned = false;
+                    if_join.setVisibility(View.GONE);
                 } else {
                     isAttentioned = true;
+                    if_join.setVisibility(View.VISIBLE);
+                    setRightText("发帖子",null);
+
                 }
                 /**如果是自己创建的小组，可修改头像，可点击修改相关信息
                  * * */

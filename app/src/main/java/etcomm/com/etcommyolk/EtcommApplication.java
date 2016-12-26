@@ -169,7 +169,7 @@ public class EtcommApplication extends Application {
     }
 
     public static String TOPIC_UPDATE() {
-        return BASE_URL + " topic/update";
+        return BASE_URL + "topic/update";
     }
    
 
