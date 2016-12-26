@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.adapter.CircleAdapter;
+import etcomm.com.etcommyolk.adapter.TopicDisscussListAdapter;
 import etcomm.com.etcommyolk.entity.Discussion;
 import etcomm.com.etcommyolk.entity.DisscussItems;
 import etcomm.com.etcommyolk.entity.GroupItems;
@@ -57,6 +58,8 @@ public class TopicDisscussListActivity extends BaseActivity {
     RelativeLayout root;
     @Bind(R.id.emptyview)
     View emptyview;
+    @Bind(R.id.if_join)
+    TextView if_join;
 
 
     public static final int PIC = 1;
@@ -82,11 +85,10 @@ public class TopicDisscussListActivity extends BaseActivity {
     private ArrayList<DisscussItems> list = new ArrayList<DisscussItems>();
     private ArrayList<DisscussItems> adaptList = new ArrayList<DisscussItems>();
     private List<Topic.TopicUser> image;
-    //    private TopicDisscussListAdapter mAdapter;
+    private TopicDisscussListAdapter mAdapter;
     private CircleAdapter circleAdapter;
     private Intent intent;
     boolean isAttentioned;
-    String topic_id;
     String user_id = "";
     String discuse;
     String activity_rank;
@@ -128,7 +130,7 @@ public class TopicDisscussListActivity extends BaseActivity {
         setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showToast("分享");
             }
         });
 
@@ -144,7 +146,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     private void editUserInfo(final String field, final String value) {
         RequestParams params = new RequestParams();
         params.put("field", field);
-        params.put("topic_id", topic_id);
+        params.put("topic_id", item.topic_id);
         params.put("access_token", prefs.getAccessToken());
         cancelmDialog();
         showProgress(0, true);
@@ -199,6 +201,7 @@ public class TopicDisscussListActivity extends BaseActivity {
             @Override
             public void onSuccess(Discussion discussion) {
                 super.onSuccess(discussion);
+                cancelmDialog();
                 list = discussion.content.items;
                 List<Topic.TopicUser> list1 = discussion.content.topic.user;
                 image = list1;
@@ -218,12 +221,24 @@ public class TopicDisscussListActivity extends BaseActivity {
                 user_id = discussion.content.topic.user_id;
                 if (discussion.content.topic.is_followed.equals("0")) {
                     isAttentioned = false;
+                    if_join.setVisibility(View.GONE);
                 } else {
                     isAttentioned = true;
+                    if_join.setVisibility(View.VISIBLE);
+                    setRightText("发帖子", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, AddTopicDisscussActivity.class);
+                            intent.putExtra("topic_id", item.topic_id);
+                            intent.putExtra("topic_name", item.name);
+                            startActivity(intent);
+                        }
+                    });
+
                 }
                 /**如果是自己创建的小组，可修改头像，可点击修改相关信息
                  * * */
-                if (item.user_id.equals(prefs.getUid())) {
+                if (discussion.content.topic.user_id.equals(prefs.getUid())) {
                     topic_discuss.setEnabled(true);
                     topic_image.setOnClickListener(new View.OnClickListener() {
                         @Override

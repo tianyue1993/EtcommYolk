@@ -111,10 +111,8 @@ public class SearchGroupActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupItems m = mAdapter.getItem(position - 1);
-                Bundle extras = new Bundle();
-                extras.putSerializable("GroupItems", m);
                 Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
-                intent.putExtras(extras);
+                intent.putExtra("GroupItems", m);
                 startActivity(intent);
             }
         });

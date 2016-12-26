@@ -181,7 +181,8 @@
         <activity
             android:name=".activity.SelectPicPopupWindowActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyleBottom"></activity>
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity android:name=".activity.AddTopicDisscussActivity"></activity>
     </application>
 
 </manifest>

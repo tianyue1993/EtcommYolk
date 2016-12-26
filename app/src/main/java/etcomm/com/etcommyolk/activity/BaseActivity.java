@@ -32,7 +32,7 @@ public class BaseActivity extends Activity {
     private ImageView leftTextView;
     //右边按钮
     private ImageView rightImageView;
-    private TextView rightTextView;
+    private TextView rightTextView ,rightText;
     //外部布局
     private RelativeLayout allRelativeLayout;
     String tag = getClass().getSimpleName();
@@ -120,6 +120,7 @@ public class BaseActivity extends Activity {
         leftTextView = (ImageView) findViewById(R.id.base_left);
         rightImageView = (ImageView) findViewById(R.id.base_right);
         rightTextView = (TextView) findViewById(R.id.text_base_right);
+        rightText= (TextView)findViewById(R.id.text_right);
         allRelativeLayout = (RelativeLayout) findViewById(R.id.all_base_layout);
         leftTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +190,23 @@ public class BaseActivity extends Activity {
         }
     }
 
+
+    /**
+     * 设置右边文字
+     */
+    public void setRightText(String string, View.OnClickListener onClickListener) {
+        if (rightText != null) {
+            if (rightText != null) {
+                rightText.setVisibility(View.VISIBLE);
+                if (!string.isEmpty()) {
+                    rightText.setText(string);
+                }
+            }
+            if (onClickListener != null) {
+                rightText.setOnClickListener(onClickListener);
+            }
+        }
+    }
 
     /**
      * 设置左边按钮
