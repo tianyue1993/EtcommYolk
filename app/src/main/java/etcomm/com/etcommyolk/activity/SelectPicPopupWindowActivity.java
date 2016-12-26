@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.io.File;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,26 +41,6 @@ public class SelectPicPopupWindowActivity extends Activity implements View.OnCli
     private void initView() {
         EtcommApplication.addActivity(this);
     }
-import java.io.File;
-
-import butterknife.Bind;
-import butterknife.OnClick;
-import etcomm.com.etcommyolk.R;
-
-public class SelectPicPopupWindowActivity extends BaseActivity implements
-        View.OnClickListener {
-    private static final String TAG = "SelectPicPopupWindowActivity";
-    @Bind(R.id.btn_take_photo)
-    Button btn_take_photo;
-    @Bind(R.id.btn_pick_photo)
-    Button btn_pick_photo;
-    @Bind(R.id.btn_cancel)
-    Button btn_cancel;
-    @Bind(R.id.pop_layout)
-    LinearLayout layout;
-    protected Bitmap photo;
-    protected File mCurrentPhotoFile;
-    private String filename;
 
     // 实现onTouchEvent触屏函数但点击屏幕时销毁本Activity
     @Override
@@ -75,10 +57,6 @@ public class SelectPicPopupWindowActivity extends BaseActivity implements
                 break;
             case R.id.btn_pick_photo:
                 backWithData(Preferences.PICMethod, "PICKPHOTO");
-//                backWithData(Preferences.PICMethod, "TAKEPHOTO");
-                break;
-            case R.id.btn_pick_photo:
-//                backWithData(Preferences.PICMethod, "PICKPHOTO");
                 break;
             case R.id.btn_cancel:
                 break;
@@ -88,11 +66,10 @@ public class SelectPicPopupWindowActivity extends BaseActivity implements
         finish();
     }
 
+    private void backWithData(String k, String v) {
+        Intent data = new Intent();
+        data.putExtra(k, v);
+        setResult(RESULT_OK, data);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_picpop_dialog);
-    }
 }

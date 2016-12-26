@@ -136,9 +136,9 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_personal_data);
-        setclickevent();
         initviewfromlayout();
         initView();
+        setclickevent();
     }
     //杂项
     private void initView() {

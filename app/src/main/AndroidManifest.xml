@@ -157,11 +157,6 @@
             android:name=".activity.SettingPersonalDataActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.SelectPicPopupWindowActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyleBottom" />
-        <activity
             android:name=".activity.ChangeNickNameActivity"
             android:launchMode="singleTop" />
         <activity
@@ -181,8 +176,6 @@
         <activity android:name=".activity.MyAccountActivity" />
         <activity android:name=".activity.MineFeedBackActivity" />
         <activity android:name=".activity.MyCollectionActivity"></activity>
-        <activity android:name=".activity.TopicDisscussListActivity" />
-        <activity android:name=".activity.AddNewTopicActivity" />
         <activity android:name=".activity.ActivityRanktActivity" />
         <activity
             android:name=".activity.SelectPicPopupWindowActivity"
