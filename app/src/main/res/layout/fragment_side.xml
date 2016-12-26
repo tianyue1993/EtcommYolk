@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_common_bg"
             android:text="优质小组1"
-            android:textColor="#666666"
+            android:textColor="@color/base_color"
             android:textSize="14sp" />
 
         <TextView

@@ -28,10 +28,11 @@ public class HealthAdapter extends YolkBaseAdapter<RecommendItems> {
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.item_health, null);
+            convertView = mInflater.inflate(R.layout.item_healht_news, null);
             viewHolder.healthtopic = (TextView) convertView.findViewById(R.id.healthtopic);
             viewHolder.health_image = (SimpleDraweeView) convertView.findViewById(R.id.health_image);
             viewHolder.readingamount = (TextView) convertView.findViewById(R.id.readingamount);
+            viewHolder.item_healthnews_sumary = (TextView) convertView.findViewById(R.id.item_healthnews_sumary);
             convertView.setTag(viewHolder);
 
         } else {
@@ -43,6 +44,7 @@ public class HealthAdapter extends YolkBaseAdapter<RecommendItems> {
             viewHolder.health_image.setImageURI(recommendactivity.image);
             viewHolder.healthtopic.setText(recommendactivity.title);
             viewHolder.readingamount.setText(recommendactivity.pv);
+            viewHolder.item_healthnews_sumary.setText(recommendactivity.desc);
         }
 
         return convertView;
@@ -52,6 +54,7 @@ public class HealthAdapter extends YolkBaseAdapter<RecommendItems> {
         com.facebook.drawee.view.SimpleDraweeView health_image;
         TextView healthtopic;
         TextView readingamount;
+        TextView item_healthnews_sumary;
 
     }
 }
