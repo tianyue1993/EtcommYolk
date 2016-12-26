@@ -65,7 +65,6 @@ public class PersonalProfileActivity extends BaseActivity {
     //说明文字
     @Bind(R.id.choosetext)
     TextView choosetext;
-    private Intent intent;
     private boolean isShow = true;
     private int usersex = 0;
 
@@ -86,8 +85,7 @@ public class PersonalProfileActivity extends BaseActivity {
                 prefs.setWeight(weight.getText().toString().trim());
                 prefs.setHeight(height.getText().toString().trim());
                 prefs.setBirthday(age.getText().toString().trim());
-                intent.setClass(mContext, TargetActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(mContext, TargetActivity.class));
                 break;
             case R.id.ll_age:
                 personal_age_rl();
