@@ -19,8 +19,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:src="@mipmap/ic_back"
             android:paddingRight="10dp"
+            android:src="@mipmap/ic_back"
             android:visibility="visible" />
 
         <ImageView
@@ -44,13 +44,23 @@
             android:textColor="#000000"
             android:visibility="gone" />
 
+        <ImageView
+            android:id="@+id/image_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
+            android:padding="5dp"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/text_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="55dp"
+            android:layout_marginRight="45dp"
             android:padding="5dp"
             android:textColor="#000000"
             android:visibility="gone" />
@@ -60,7 +70,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
             android:gravity="center"
+            android:maxLength="10"
+            android:paddingRight="10dp"
             android:singleLine="true"
             android:text="title"
             android:textColor="#000000"

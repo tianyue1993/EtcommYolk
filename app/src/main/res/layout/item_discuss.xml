@@ -3,7 +3,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="5dp">
 
     <TextView
@@ -80,7 +80,8 @@
         android:layout_marginLeft="@dimen/marginmiddle"
         android:layout_marginRight="@dimen/marginmiddle"
         android:layout_marginTop="@dimen/marginlittle"
-        android:background="#e4e4e4">
+        android:background="#e4e4e4"
+        android:visibility="gone">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/item_healthnews_image"

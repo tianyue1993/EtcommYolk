@@ -305,23 +305,32 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
             public void onSuccess(FindHome findHome) {
                 super.onSuccess(findHome);
                 cancelmDialog();
-                recommendactivity = findHome.content.recommend.get(0);
-                recommendhealth = findHome.content.recommend.get(1);
-                recommendwelfare = findHome.content.recommend.get(2);
-                //活动相关信息
-                activityImage.setImageURI(recommendactivity.image);
-                activityStatus.setText(recommendactivity.status);
-                participation.setText(recommendactivity.user_num + "人参与");
-                daterange.setText(recommendactivity.start_at + "——" + recommendactivity.end_at);
-                suggestActivityTopic.setText(recommendactivity.title);
-                //资讯阅读相关信息填充
-                healthImage.setImageURI(recommendhealth.image);
-                healthtopic.setText(recommendhealth.title);
-                readingamount.setText(recommendhealth.pv);
-                //福利相关信息
-                welfareImage.setImageURI(recommendwelfare.image);
-                welfaretopic.setText(recommendwelfare.title);
-                tvTime.setText(recommendwelfare.start_at + "——" + recommendwelfare.end_at);
+                for (RecommendItems items : findHome.content.recommend) {
+                    if (items.type.equals("activity")) {
+                        //活动相关信息
+                        recommendactivity = items;
+                        activityImage.setImageURI(items.image);
+                        activityStatus.setText(items.status);
+                        participation.setText(items.user_num + "人参与");
+                        daterange.setText(items.start_at + "——" + items.end_at);
+                        suggestActivityTopic.setText(items.title);
+                    }
+                    if (items.type.equals("health")) {
+                        //资讯阅读相关信息填充
+                        recommendhealth = items;
+                        healthImage.setImageURI(items.image);
+                        healthtopic.setText(items.title);
+                        readingamount.setText(items.pv);
+                    }
+                    if (items.type.equals("welfare")) {
+                        //福利相关信息
+                        recommendwelfare = items;
+                        welfareImage.setImageURI(items.image);
+                        welfaretopic.setText(items.title);
+                        tvTime.setText(items.start_at + "——" + items.end_at);
+                    }
+                }
+              
                 //是否显示爱康
                 if (findHome.content.app_module.get(0).name.equals("爱康")) {
                     AppMudle = 1;
@@ -386,7 +395,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
-        params.put("page_number", (page_number++) + "");
+        params.put("page", (page_number++) + "");
         Log.d("", "getFindHome: " + params.toString());
         cancelmDialog();
         showProgress(0, true);

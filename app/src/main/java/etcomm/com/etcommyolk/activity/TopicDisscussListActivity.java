@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.adapter.CircleAdapter;
+import etcomm.com.etcommyolk.adapter.TopicDisscussListAdapter;
 import etcomm.com.etcommyolk.entity.Discussion;
 import etcomm.com.etcommyolk.entity.DisscussItems;
 import etcomm.com.etcommyolk.entity.GroupItems;
@@ -84,7 +85,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     private ArrayList<DisscussItems> list = new ArrayList<DisscussItems>();
     private ArrayList<DisscussItems> adaptList = new ArrayList<DisscussItems>();
     private List<Topic.TopicUser> image;
-    //    private TopicDisscussListAdapter mAdapter;
+    private TopicDisscussListAdapter mAdapter;
     private CircleAdapter circleAdapter;
     private Intent intent;
     boolean isAttentioned;
@@ -129,7 +130,7 @@ public class TopicDisscussListActivity extends BaseActivity {
         setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showToast("分享");
             }
         });
 
@@ -224,12 +225,20 @@ public class TopicDisscussListActivity extends BaseActivity {
                 } else {
                     isAttentioned = true;
                     if_join.setVisibility(View.VISIBLE);
-                    setRightText("发帖子",null);
+                    setRightText("发帖子", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, AddTopicDisscussActivity.class);
+                            intent.putExtra("topic_id", item.topic_id);
+                            intent.putExtra("topic_name", item.name);
+                            startActivity(intent);
+                        }
+                    });
 
                 }
                 /**如果是自己创建的小组，可修改头像，可点击修改相关信息
                  * * */
-                if (item.user_id.equals(prefs.getUid())) {
+                if (discussion.content.topic.user_id.equals(prefs.getUid())) {
                     topic_discuss.setEnabled(true);
                     topic_image.setOnClickListener(new View.OnClickListener() {
                         @Override
