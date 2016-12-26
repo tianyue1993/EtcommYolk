@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/exit_btn"
+        style="@style/common_btn_style"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="53dp"
+        android:background="@mipmap/all_ok_button"
+        android:text="退出登录"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <RelativeLayout
+                android:id="@+id/setting_personal_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mine_item_bg"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/setting_personal_imageView1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marginlarge"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/setting_personal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/marginlarge"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/my_into" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/marginlittle"
+                    android:layout_toRightOf="@+id/setting_personal_imageView1"
+                    android:padding="8dp"
+                    android:text="个人资料"
+                    android:textColor="@color/setting_item_name"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_goal_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/mine_item_bg"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/setting_goal_imageView1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marginlarge"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/setting_goal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/marginlarge"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/my_into" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/marginlittle"
+                    android:layout_toRightOf="@+id/setting_goal_imageView1"
+                    android:padding="8dp"
+                    android:text="目标设置"
+                    android:textColor="@color/setting_item_name"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_changepassword_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/mine_item_bg"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/setting_changepasswordimageView1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marginlarge"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/setting_changepassword" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/marginlarge"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/my_into" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/marginlittle"
+                    android:layout_toRightOf="@+id/setting_changepasswordimageView1"
+                    android:padding="8dp"
+                    android:text="修改密码"
+                    android:textColor="@color/setting_item_name"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/setting_msgsetting_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/mine_item_bg"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/setting_msgsetting_imageView1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marginlarge"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/setting_msg_notify" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/marginlarge"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/my_into" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/marginlittle"
+                    android:layout_toRightOf="@+id/setting_msgsetting_imageView1"
+                    android:padding="8dp"
+                    android:text="消息提醒"
+                    android:textColor="@color/setting_item_name"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting_aboutus_rl"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/mine_item_bg"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/setting_aboutusimageView1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marginlarge"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/setting_aboutus" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/marginlarge"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/my_into" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/marginlittle"
+                    android:layout_toRightOf="@+id/setting_aboutusimageView1"
+                    android:padding="8dp"
+                    android:text="关于我们"
+                    android:textColor="@color/setting_item_name"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+</RelativeLayout>

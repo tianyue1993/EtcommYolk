@@ -2,6 +2,7 @@ package etcomm.com.etcommyolk.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -237,6 +238,14 @@ public class BaseActivity extends Activity {
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd(tag);
     }
+
+    //个人资料设置时使用的跳转后回调
+    protected void backWithData(String k, String v) {
+        Intent data = new Intent();
+        data.putExtra(k, v);
+        setResult(RESULT_OK, data);
+    }
+
 
     public void showProgress(int resId, boolean cancel) {
         mProgress = new ProgressDialog(this);

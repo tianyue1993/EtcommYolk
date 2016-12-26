@@ -83,6 +83,25 @@ public class ApiClient {
     public void toUserEdit(Context context,RequestParams entity, JsonResponseHandler handler){
         asyncHttpClient.post(context, EtcommApplication.toUserEdit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+    /**
+     * 修改密码
+     */
+    public void toChangePassword(Context context,RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.post(context, EtcommApplication.toChangePassword() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 上传用户头像
+     */
+    public void toUploadUserAvator(Context context,RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.post(context, EtcommApplication.toUserEdit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 意见反馈
+     */
+    public void toFeedBack(Context context,RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.post(context, EtcommApplication.toFeedBack() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
 
     /**
      * 企业邀请码效验
@@ -90,12 +109,38 @@ public class ApiClient {
     public void toSerialNumber(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.getSerialNumber() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+    /**
+     * 健康资讯-获取已收藏列表
+     */
+    public void toFavorite(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toFavorite() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 设置消息推送
+     */
+    public void toSetPush(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toSetPush() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 退出
+     */
+    public void toExit(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toExit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
 
     /**
      * 获取默认头像
      */
     public void getDefaultAvator(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.getDefaultAvator() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+
+    }
+
+    /**
+     * 检测版本更新
+     */
+    public void toUploadversion(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toUploadversion() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
 

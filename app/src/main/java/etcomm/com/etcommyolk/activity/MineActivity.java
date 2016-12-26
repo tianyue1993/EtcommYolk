@@ -1,5 +1,6 @@
 package etcomm.com.etcommyolk.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -89,15 +90,15 @@ public class MineActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.mine_signin_tv:
                 //积分
-                showToast("积分");
+                startActivity(new Intent(MineActivity.this, MyPointsDetailActivity.class));
                 break;
             case R.id.mine_minesetting_rl:
                 //设置
-                showToast("设置");
+                startActivity(new Intent(MineActivity.this, SettingActivity.class));
                 break;
             case R.id.mine_minecount_rl:
                 //账号
-                showToast("账号");
+                startActivity(new Intent(MineActivity.this, MyAccountActivity.class));
                 break;
             case R.id.mine_minecollect_rl:
                 //收藏
@@ -109,11 +110,11 @@ public class MineActivity extends BaseActivity {
                 break;
             case R.id.mine_minefeedback_rl:
                 //意见反馈
-                showToast("意见");
+                startActivity(new Intent(MineActivity.this, MineFeedBackActivity.class));
                 break;
             case R.id.mine_minedevice_rl:
                 //我的计步
-                showToast("计步");
+                showToast("花香氤");
                 break;
         }
     }

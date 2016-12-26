@@ -176,6 +176,36 @@ public class EtcommApplication extends Application {
      * 修改用户基本信息
      */
     public static String toUserEdit(){return  BASE_URL + "user/edit"; }
+    /**
+     * 退出登录
+     */
+    public static String toExit(){return  BASE_URL + "sign-in/sign-out"; }
+    /**
+     * 上传头像
+     */
+    public static String toUploadUserAvator(){return  BASE_URL + "user/avatar"; }
+    /**
+     * 检测版本更新
+     */
+    public static String toUploadversion(){return  BASE_URL + "version"; }
+
+    /**
+     * 修改密码
+     */
+    public static String toChangePassword(){return  BASE_URL + "user/change-password"; }
+    /**
+     * 设置消息推送
+     */
+    public static String toSetPush(){return  BASE_URL + "user/set-push"; }
+    /**
+     * 意见反馈
+     */
+    public static String toFeedBack(){return  BASE_URL + "feedback"; }
+    /**
+     * 健康资讯-获取已收藏列表
+     */
+    public static String toFavorite(){return  BASE_URL + "user/favorite"; }
+
 
 
     public static String LOGIN() {

@@ -12,6 +12,7 @@ public class GlobalSetting {
     private static GlobalSetting mSpInstance;
 
     private static final String PREFERENCE_NAME = "etcommyolk";
+    private static final String PREFERENCE_NAME_LOGIN = "etcommyolk_login";
     private static final String PREFERENCE_USER_ID = "user_id";
     private static final String PREFERENCE_SCORE = "preference_score";
     public static final String ACCESS_TOKEN = "access_token"; //保存token
@@ -48,6 +49,12 @@ public class GlobalSetting {
     private static final String ISLEVEL = "islevel"; //1 :属于分级权限 0：没有分级权限
     private static final String USER_AGE = "user_age"; //1 :属于分级权限 0：没有分级权限
     private static final String FIRSTSETUSERINFO = "isfirstsetuserinfo";// 是否第一次设置用户信息
+    private static final String USER_NAME = "user_name";// 是否第一次设置用户信息
+    private static final String USER_PWD = "user_pwd";// 是否第一次设置用户信息
+    private static final String USER_AVATAR = "user_avatar";// 是否第一次设置用户信息
+    private static final String ISPUSHMSG = "IsPushMsg";
+    private static final String ISPUSHMSGLIKE = "IsPushMsg_Like";
+    private static final String ISPUSHMSGCOMMENT = "IsPushMsg_Comment";
 
 
     private GlobalSetting(Context context) {
@@ -71,6 +78,69 @@ public class GlobalSetting {
         }
         return mPrefs;
     }
+    public SharedPreferences getSharedPreferencesLogin() {
+        if (mPrefs == null) {
+            mPrefs = mContext.getSharedPreferences(PREFERENCE_NAME_LOGIN,
+                    Context.MODE_PRIVATE);
+        }
+        return mPrefs;
+    }
+
+
+
+
+    public void clear(){
+        getSharedPreferences().edit().clear();
+        getSharedPreferences().edit().commit();
+    }
+    public void clear_Login(){
+        getSharedPreferencesLogin().edit().clear();
+        getSharedPreferencesLogin().edit().clear();
+    }
+
+    //下几项用户用户登录时使用
+    //用户名
+    public void saveLoginUserNmae(String value){
+        SharedPreferences.Editor editor = getSharedPreferencesLogin().edit();
+        editor.putString(USER_NAME, value);
+        editor.commit();
+    }
+
+    public String getLoginUserName(){
+        return getSharedPreferencesLogin().getString(USER_NAME, "");
+    }
+    //密码
+    public void saveLoginUserPwd(String value){
+        SharedPreferences.Editor editor = getSharedPreferencesLogin().edit();
+        editor.putString(USER_PWD, value);
+        editor.commit();
+    }
+
+    public String getLoginUserPwd(){
+        return getSharedPreferencesLogin().getString(USER_PWD, "");
+    }
+
+    //用户头像
+    public void saveLoginUserAvatar(String value){
+        SharedPreferences.Editor editor = getSharedPreferencesLogin().edit();
+        editor.putString(USER_AVATAR, value);
+        editor.commit();
+    }
+
+    public String getLoginUserAvatar(){
+        return getSharedPreferencesLogin().getString(USER_AVATAR, "");
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     private void saveBoolean(String key, boolean value) {
@@ -446,4 +516,33 @@ public class GlobalSetting {
     public boolean getFirstsetuserinfo(){
         return  getSharedPreferences().getBoolean(FIRSTSETUSERINFO, false);
     }
+    /**
+     * 用户年龄
+     */
+    public void setIsPushMsg(Boolean boo){
+        saveBoolean(ISPUSHMSG, boo);
+    }
+    public boolean getIsPushMsg(){
+        return  getSharedPreferences().getBoolean(ISPUSHMSG, true);
+    }
+    /**
+     * 用户年龄
+     */
+    public void setIsPushMsg_Like(Boolean boo){
+        saveBoolean(ISPUSHMSGLIKE, boo);
+    }
+    public boolean getIsPushMsg_Like(){
+        return  getSharedPreferences().getBoolean(ISPUSHMSGLIKE, true);
+    }
+    /**
+     * 用户年龄
+     */
+    public void setIsPushMsg_Comment(Boolean boo){
+        saveBoolean(ISPUSHMSGCOMMENT, boo);
+    }
+    public boolean getIsPushMsg_Comment(){
+        return  getSharedPreferences().getBoolean(ISPUSHMSGCOMMENT, true);
+    }
+
+
 }

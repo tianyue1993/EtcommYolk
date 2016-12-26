@@ -32,7 +32,13 @@ public class CommenHandler extends JsonResponseHandler {
     }
 
     public void onFailure(BaseException exception) {
+
     }
+
+    public void onAllow(Commen commen){
+
+    }
+
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
@@ -51,6 +57,7 @@ public class CommenHandler extends JsonResponseHandler {
                                 } else if (code == 10000) {
                                     exceptionCode();
                                 } else {
+                                    onAllow(JSON.parseObject(response.toString(), Commen.class));
                                     //请求异常,弹出提示
                                     onFailure(new BaseException("Unexpected response " + response, -1));
                                     Toast.makeText(EtcommApplication.getContext(), messege, Toast.LENGTH_SHORT).show();

@@ -2,14 +2,56 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="etcomm.com.etcommyolk">
 
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 二维码 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITyINFO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 自定义权限 -->
+    <uses-permission android:name="getui.permission.GetuiService.com.etcomm.dcare" />
 
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- 分享相关权限 -->
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
         android:name=".EtcommApplication"
@@ -85,7 +127,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".activity.TargetActivity" />
-        <activity android:name=".activity.PersonalProfileActivity"></activity>
+        <activity android:name=".activity.PersonalProfileActivity" />
         <activity
             android:name=".activity.MoreHealthActivity"
             android:launchMode="singleTop" />
@@ -102,8 +144,43 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".activity.TopicDisscussListActivity" />
-        <activity android:name=".activity.AddNewTopicActivity"></activity>
+        <activity
+            android:name=".activity.TopicDisscussListActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.AddNewTopicActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.SettingPersonalDataActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.SelectPicPopupWindowActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity
+            android:name=".activity.ChangeNickNameActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.SelectSexPopupWindowActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.MsgSettingActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activity.MyAccountActivity" />
+        <activity android:name=".activity.MineFeedBackActivity" />
+        <activity android:name=".activity.MyCollectionActivity"></activity>
     </application>
 
 </manifest>

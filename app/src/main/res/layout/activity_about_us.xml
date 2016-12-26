@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="etcomm.com.etcommyolk.activity.AboutUsActivity"
+    >
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@mipmap/aboutus_egg"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="78dp"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="蛋黄儿 V1.7"
+        android:id="@+id/aboutus_version"
+        android:layout_below="@+id/imageView"
+        android:textSize="19dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="版本更新"
+        android:id="@+id/version_update"
+        android:textSize="16dp"
+        android:layout_below="@+id/aboutus_version"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/marginmiddle"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="益体康  (北京)  科技有限公司"
+            android:textColor="@color/aboutus_text_light_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="All Rights Reserved"
+            android:textColor="@color/aboutus_text_light_color" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

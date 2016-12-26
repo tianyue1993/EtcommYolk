@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical" >
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="35dp"
+    android:minHeight="40dp"
+    android:paddingTop="2dp"
+    android:paddingRight="15dp"
+    android:paddingLeft="5dp"
+    android:layout_marginTop="@dimen/marginmiddle"
+    android:layout_marginRight="@dimen/marginlarge"
+    android:layout_marginLeft="@dimen/marginlarge"
+    android:paddingBottom="2dp"
+    android:background="@drawable/nickname_changed_et_bg"
+    >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/nickname_et"
+        android:maxLength="20"
+        android:inputType="text"
+        android:background="@null"
+        />
+    <Button
+        android:id="@+id/name_clear"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@mipmap/nickname_delete"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/nickname_et"
+        android:layout_alignEnd="@+id/nickname_et" />
+</RelativeLayout>
+
+</LinearLayout>

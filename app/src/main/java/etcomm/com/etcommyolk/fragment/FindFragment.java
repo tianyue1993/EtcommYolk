@@ -26,6 +26,7 @@ import java.util.Iterator;
 
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
 import etcomm.com.etcommyolk.activity.LoginActivity;
 import etcomm.com.etcommyolk.activity.MoreHealthActivity;
@@ -249,7 +250,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, MoreWealfeActivity.class));
                 break;
             case R.id.base_left:
-                startActivity(new Intent(mContext, LoginActivity.class));
+                startActivity(new Intent(mContext, MineActivity.class));
                 break;
             case R.id.base_right:
                 break;
