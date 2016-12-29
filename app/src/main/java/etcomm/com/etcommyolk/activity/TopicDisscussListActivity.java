@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -136,6 +137,21 @@ public class TopicDisscussListActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getList();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(tag);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(tag);
+    }
+
     public void initData() {
         topic_image.setImageURI(item.avatar);
         topic_discuss.setText(item.desc);
@@ -204,8 +220,6 @@ public class TopicDisscussListActivity extends BaseActivity {
         mAdapter = new TopicDisscussListAdapter(mContext, adaptList, mScreenWidth, item.topic_id, deleteOnClickListener, likeOrUnLikeClickListener);
         listView.setAdapter(mAdapter);
         listView.setDividerHeight(5);
-        getList();
-
         //点击角布局加载更多
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
