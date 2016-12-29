@@ -74,11 +74,9 @@ public class AroundFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("add")) {
-                if (intent.getExtras() != null) {
-                    GroupItems items = (GroupItems) intent.getExtras().getSerializable("item");
-                    adaptList.add(items);
-                    mAdapter.notifyDataSetChanged();
-                }
+                adaptList.clear();
+                page_number = 1;
+                getList();
             }
         }
     };
@@ -184,7 +182,7 @@ public class AroundFragment extends BaseFragment {
             public void onListItemClick(View view, int i) {
                 GroupItems m = mAdapter.getItem(i);
                 Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
-                intent.putExtra("GroupItems",m);
+                intent.putExtra("GroupItems", m);
                 startActivity(intent);
             }
         });
@@ -216,7 +214,7 @@ public class AroundFragment extends BaseFragment {
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
-        params.put("page", (page_number++) + "");
+        params.put("page", (page_number) + "");
         params.put("page_size", 1000 + "");
         params.put("type", 1 + "");//2为搜索全部，1为已关注
         Log.d("", "getList: " + params.toString());
@@ -241,7 +239,6 @@ public class AroundFragment extends BaseFragment {
                 cancelmDialog();
                 list = groupList.content.items;
                 if (list.size() > 0) {
-                    empty.setVisibility(View.GONE);
                     for (Iterator<GroupItems> iterator = list.iterator(); iterator.hasNext(); ) {
                         GroupItems disscussCommentItems = iterator.next();
                         adaptList.add(disscussCommentItems);
@@ -252,8 +249,12 @@ public class AroundFragment extends BaseFragment {
                     if (listView.getFooterViewsCount() > 0) {
                         listView.removeFooterView(footer);
                     }
-                    empty.setVisibility(View.VISIBLE);
 
+                }
+                if (adaptList.size() == 0) {
+                    empty.setVisibility(View.VISIBLE);
+                } else {
+                    empty.setVisibility(View.GONE);
                 }
             }
         });

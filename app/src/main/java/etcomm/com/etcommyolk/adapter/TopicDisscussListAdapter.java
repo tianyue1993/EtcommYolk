@@ -10,25 +10,35 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.loopj.android.http.RequestParams;
+import com.photoselector.model.PhotoModel;
+import com.photoselector.ui.PhotoPreviewActivity;
+import com.photoselector.util.CommonUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.activity.DisscussConentListActivity;
 import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
+import etcomm.com.etcommyolk.activity.TopicReportPopActivity;
+import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
+import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.DisscussItems;
-import etcomm.com.etcommyolk.utils.DensityUtil;
+import etcomm.com.etcommyolk.exception.BaseException;
+import etcomm.com.etcommyolk.handler.CommenHandler;
+import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
@@ -69,16 +79,15 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_discuss, null);
             holder = new ViewHolder();
-            holder.root = (RelativeLayout) convertView.findViewById(R.id.root);
+            holder.root = (LinearLayout) convertView.findViewById(R.id.root);
             holder.disscuss_content_tv = (TextView) convertView.findViewById(R.id.disscuss_content_tv);
-            holder.disscuss_delete_iv = (ImageView) convertView.findViewById(R.id.disscuss_delete_iv);
+            holder.disscuss_delete_iv = (TextView) convertView.findViewById(R.id.disscuss_delete_iv);
             holder.disscuss_like_iv = (ImageView) convertView.findViewById(R.id.disscuss_like_iv);
             holder.disscuss_like_tv = (TextView) convertView.findViewById(R.id.disscuss_like_tv);
             holder.disscuss_messages_tv = (TextView) convertView.findViewById(R.id.disscuss_messages_tv);
             holder.disscuss_messages_iv = (ImageView) convertView.findViewById(R.id.disscuss_messages_iv);
             holder.disscuss_pics_gridview = (GridView) convertView.findViewById(R.id.disscuss_pics_gridview);
             holder.disscuss_time_tv = (TextView) convertView.findViewById(R.id.disscuss_time_tv);
-            holder.disscuss_user_depart_tv = (TextView) convertView.findViewById(R.id.disscuss_user_depart_tv);
             holder.disscuss_user_name_tv = (TextView) convertView.findViewById(R.id.disscuss_user_name_tv);
             holder.disscuss_useravator = (SimpleDraweeView) convertView.findViewById(R.id.disscuss_useravator);
             holder.item_healthnews_sumary = (TextView) convertView.findViewById(R.id.item_healthnews_sumary);
@@ -91,9 +100,8 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             holder = (ViewHolder) convertView.getTag();
         }
         if (null != mInfo) {
-
             if (mInfo.share_type.equals("0")) {
-//用户发的帖子
+                //用户发的帖子
                 if (!StringUtils.isEmpty(mInfo.content)) {
                     holder.disscuss_content_tv.setVisibility(View.VISIBLE);
                 } else {
@@ -113,17 +121,16 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 if (mInfo.photos.size() > 0) {
                     holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
                 } else {
-//                    holder.item_healthnews_image.setImageResource(R.drawable.ic_header);
+                    holder.item_healthnews_image.setImageResource(R.mipmap.ic_header);
                 }
                 holder.share_health_news.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Bundle extras = new Bundle();
-////                        extras.putSerializable(Preferences.HealthNewsDetail, mInfo);
-//                        Intent intent = new Intent(mContext, WebviewDetailActivity.class);
-//                        intent.putExtra("IsFromTopic", true);
-//                        intent.putExtras(extras);
-//                        mContext.startActivity(intent);
+                        Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("RecommendItems", mInfo);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
                     }
                 });
 
@@ -175,17 +182,11 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 holder.share_health_news.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(mContext, CommonWebViewActivity.class);
-//                        intent.putExtra(Preferences.CommonWebViewUrl,
-//                                mInfo.getDetail_url());
-//                        intent.putExtra(Preferences.CommonWebViewTitle, "活动详情");
-//                        intent.putExtra("IsFromTopic", true);
-//                        intent.putExtra("topic_name", mInfo.getTitle());
-//                        intent.putExtra("image", mInfo.getPhotos().get(0).getThumb_image());
-//                        intent.putExtra("discuse", mInfo.getContent());
-//                        intent.putExtra("topic_id", mInfo.getShare_id());
-//                        intent.putExtra("url", mInfo.getShare_url());
-//                        mContext.startActivity(intent);
+                        Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("RecommendItems", mInfo);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
                     }
                 });
             }
@@ -206,10 +207,10 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 }
             });
             if (mInfo.is_like.equals("1")) {
-//                holder.disscuss_like_iv.setImageResource(R.drawable.liked);
+                holder.disscuss_like_iv.setImageResource(R.mipmap.liked);
                 holder.disscuss_like_tv.setTextColor(Color.parseColor("#e88439"));
             } else {
-//                holder.disscuss_like_iv.setImageResource(R.drawable.like);
+                holder.disscuss_like_iv.setImageResource(R.mipmap.like);
                 holder.disscuss_like_tv.setTextColor(Color.parseColor("#808080"));
             }
 
@@ -231,10 +232,10 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-//                    Intent intent = new Intent(mContext, DisscussConentListActivity.class);
-//                    intent.putExtra("disscuss_id", mInfo.getDiscussion_id());
-//                    intent.putExtra("topic_id", topic_id);
-//                    mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext, DisscussConentListActivity.class);
+                    intent.putExtra("disscuss_id", mInfo.discussion_id);
+                    intent.putExtra("topic_id", topic_id);
+                    mContext.startActivity(intent);
                 }
             });
             holder.disscuss_messages_tv.setOnClickListener(new OnClickListener() {
@@ -242,10 +243,10 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-//                    Intent intent = new Intent(mContext, DisscussConentListActivity.class);
-//                    intent.putExtra("disscuss_id", mInfo.getDiscussion_id());
-//                    intent.putExtra("topic_id", topic_id);
-//                    mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext, DisscussConentListActivity.class);
+                    intent.putExtra("disscuss_id", mInfo.discussion_id);
+                    intent.putExtra("topic_id", topic_id);
+                    mContext.startActivity(intent);
                 }
             });
             holder.disscuss_messages_tv.setText(mInfo.comment_number);
@@ -254,39 +255,42 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             String model = android.os.Build.MODEL;
             String brand = android.os.Build.BRAND;
             Log.i(tag, "model:" + model + " brand: " + brand);
-            if (model.contains("1SW")) {
-                Log.i(tag, "contains 1sw");
-                MarginLayoutParams source = (MarginLayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
-                source.width = mScreenWidth * 2 / 3;
-                source.height = mScreenWidth * 2 / 9 * column;
-                source.bottomMargin = DensityUtil.dip2px(mContext, 10);
-                source.topMargin = DensityUtil.dip2px(mContext, 10);
-                holder.disscuss_pics_gridview.setLayoutParams(source);
-                Log.i(tag, "setLayoutParams");
-            } else {
-                LayoutParams source = (LayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
-                source.width = mScreenWidth * 2 / 3;
-                source.height = mScreenWidth * 2 / 9 * column;
-                holder.disscuss_pics_gridview.setLayoutParams(source);
-
-                // }
-
-            }
+//            if (model.contains("1SW")) {
+//                Log.i(tag, "contains 1sw");
+//                MarginLayoutParams source = (MarginLayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
+//                source.width = mScreenWidth * 2 / 3;
+//                source.height = mScreenWidth * 2 / 9 * column;
+//                source.bottomMargin = DensityUtil.dip2px(mContext, 10);
+//                source.topMargin = DensityUtil.dip2px(mContext, 10);
+//                holder.disscuss_pics_gridview.setLayoutParams(source);
+//                Log.i(tag, "setLayoutParams");
+//            } else {
+//                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.FILL_PARENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT);
+//                LayoutParams source = (LayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
+//                source.width = mScreenWidth * 2 / 3;
+//                source.height = mScreenWidth * 2 / 9 * column;
+//                holder.disscuss_pics_gridview.setLayoutParams(source);
+//
+//                // }
+//
+//            }
 //            final DisscussPhotoGridAdapter adapter = new DisscussPhotoGridAdapter(mContext, mInfo.getPhotos(), mScreenWidth * 2 / 9 - DensityUtil.dip2px(mContext, 10));
 //            holder.disscuss_pics_gridview.setAdapter(adapter);
             holder.disscuss_pics_gridview.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Bundle bundle = new Bundle();
-//                    List<PhotoModel> photos = new ArrayList<PhotoModel>();
-//                    List<DisscussItems.DisscussPhotosItems> list = mInfo.photos;
-//                    for (int i = 0; i < list.size(); i++) {
-//                        photos.add(new PhotoModel(list.get(i).getImage()));
-//                    }
-//                    bundle.putSerializable("photos", (Serializable) photos);
-//                    bundle.putBoolean("ispicfromnet", true);
-//                    bundle.putInt(Preferences.TOPIC_PHOTO_ID, position);
-//                    CommonUtils.launchActivity(mContext, PhotoPreviewActivity.class, bundle);
+                    List<PhotoModel> photos = new ArrayList<PhotoModel>();
+                    List<DisscussItems.DisscussPhotosItems> list = mInfo.photos;
+                    for (int i = 0; i < list.size(); i++) {
+                        photos.add(new PhotoModel(list.get(i).image));
+                    }
+                    bundle.putSerializable("photos", (Serializable) photos);
+                    bundle.putBoolean("ispicfromnet", true);
+                    bundle.putInt(Preferences.TOPIC_PHOTO_ID, position);
+                    CommonUtils.launchActivity(mContext, PhotoPreviewActivity.class, bundle);
 
                 }
             });
@@ -294,10 +298,10 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             holder.disscuss_pics_gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Intent intent = new Intent(mContext, TopicReportPopActivity.class);
-//                    intent.putExtra("discussion_id", mInfo.getDiscussion_id());
-//                    intent.putExtra("type", "discussion");
-//                    mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext, TopicReportPopActivity.class);
+                    intent.putExtra("discussion_id", mInfo.discussion_id);
+                    intent.putExtra("type", "discussion");
+                    mContext.startActivity(intent);
                     return true;
                 }
             });
@@ -305,17 +309,16 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 @Override
                 public boolean onLongClick(View v) {
                     if (mInfo.share_type.equals("0")) {
-//                        Intent intent = new Intent(mContext, TopicReportPopActivity.class);
-//                        intent.putExtra("discussion_id", mInfo.getDiscussion_id());
-//                        intent.putExtra("type", "discussion");
-//                        mContext.startActivity(intent);
+                        Intent intent = new Intent(mContext, TopicReportPopActivity.class);
+                        intent.putExtra("discussion_id", mInfo.discussion_id);
+                        intent.putExtra("type", "discussion");
+                        mContext.startActivity(intent);
                     }
 
                     return true;
                 }
             });
             holder.disscuss_time_tv.setText(mInfo.created_at);
-            holder.disscuss_user_depart_tv.setText(mInfo.structure);
             holder.disscuss_user_name_tv.setText(mInfo.nick_name);
             holder.disscuss_useravator.setImageURI(mInfo.avatar);
         }
@@ -347,111 +350,118 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
     }
 
     protected void disscussdelete(final DisscussItems mInfo) {
-        Map<String, String> params = new HashMap<String, String>();
-//        params.put("discussion_id", mInfo.getDiscussion_id());
-//        params.put("access_token", SharePreferencesUtil.getToken(mContext));
-//        showProgress(0, true);
-//        Log.i(tag, "params: " + params.toString());
-//        DcareRestClient.volleyGet(Constants.DeleteDisscuss, params, new JsonHttpResponseHandler() {
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                try {
-//                    int code = response.getInt("code");
-//                    String message = response.getString("message");
-//                    Log.i(tag, "onSuccess  code: " + code + " message: " + message + "content: ");// response.getJSONObject("content").toString());
-//                    if (code == 0) {
-//                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-//                        if (deleteOnClickListener != null) {
-//                            deleteOnClickListener.delete(mInfo);
-//                        }
-//                        mList.remove(mInfo);
-//                        notifyDataSetChanged();
-//                        super.onSuccess(statusCode, headers, response);
-//                    } else {// code不为0 发生异常
-//                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                cancelmDialog();
-//            }
-//        });
+        RequestParams params = new RequestParams();
+        params.put("discussion_id", mInfo.discussion_id);
+        params.put("access_token", pres.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
+        Log.i(tag, "params: " + params.toString());
+        client.discussionDelete(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
+                if (deleteOnClickListener != null) {
+                    deleteOnClickListener.delete(mInfo);
+                }
+                mList.remove(mInfo);
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+        });
     }
 
     protected void disscussulike(final DisscussItems mInfo, final TextView disscuss_like_tv) {
-        Map<String, String> params = new HashMap<String, String>();
-//        params.put("discussion_id", mInfo.getDiscussion_id());
-//        params.put("access_token", SharePreferencesUtil.getToken(mContext));
-//        showProgress(0, true);
-//        Log.i(tag, "params: " + params.toString());
-//        DcareRestClient.volleyGet(Constants.UNLikeDisscuss, params, new JsonHttpResponseHandler() {
-//            @Override
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                try {
-//                    int code = response.getInt("code");
-//                    String message = response.getString("message");
-//                    Log.i(tag, "onSuccess  code: " + code + " message: " + message + "content: ");
-//                    if (code == 0) {
-//                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-//                        if (likeOrUnLikeClickListener != null) {
-//                            likeOrUnLikeClickListener.delete(false, mInfo);
-//                        }
-//                        notifyDataSetChanged();
-//                        super.onSuccess(statusCode, headers, response);
-//                    } else {// code不为0 发生异常
-//                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                cancelmDialog();
-//            }
-//        });
+        RequestParams params = new RequestParams();
+        params.put("discussion_id", mInfo.discussion_id);
+        params.put("access_token", pres.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
+        Log.i(tag, "params: " + params.toString());
+        client.discussionUnlike(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
+                if (likeOrUnLikeClickListener != null) {
+                    likeOrUnLikeClickListener.delete(false, mInfo);
+                }
+                notifyDataSetChanged();
+            }
+        });
     }
 
     protected void disscusslike(final DisscussItems mInfo, final TextView disscuss_like_tv) {
-        Map<String, String> params = new HashMap<String, String>();
-//        params.put("discussion_id", mInfo.getDiscussion_id());
-//        params.put("access_token", SharePreferencesUtil.getToken(mContext));
-//        showProgress(0, true);
-//        Log.i(tag, "params: " + params.toString());
-//        DcareRestClient.volleyGet(Constants.LikeDisscuss, params, new FastJsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, com.alibaba.fastjson.JSONObject response) {
-//                cancelmDialog();
-//                int code = response.getInteger("code");
-//                String message = response.getString("message");
-//                Log.i(tag, "onSuccess  code: " + code + " message: " + message + "content: " + response.getString("content"));
-//                if (code == 0) {
-//                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-//                    if (likeOrUnLikeClickListener != null) {
-//                        likeOrUnLikeClickListener.delete(true, mInfo);
-//                    }
-//                    notifyDataSetChanged();
-//                } else {// code不为0 发生异常
-//                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//
+        RequestParams params = new RequestParams();
+        params.put("discussion_id", mInfo.discussion_id);
+        params.put("access_token", pres.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
+        Log.i(tag, "params: " + params.toString());
+        client.discussionLike(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
+                if (likeOrUnLikeClickListener != null) {
+                    likeOrUnLikeClickListener.delete(true, mInfo);
+                }
+                notifyDataSetChanged();
+            }
+        });
     }
 
     private static class ViewHolder {
         TextView disscuss_time_tv, topic;
         SimpleDraweeView disscuss_useravator, item_healthnews_image;
         TextView disscuss_user_name_tv;
-        TextView disscuss_user_depart_tv;
         TextView disscuss_content_tv;
         GridView disscuss_pics_gridview;
         TextView disscuss_like_tv;
         TextView disscuss_messages_tv, item_healthnews_title, item_healthnews_sumary;
         ImageView disscuss_messages_iv;
-        ImageView disscuss_delete_iv;
+        TextView disscuss_delete_iv;
         ImageView disscuss_like_iv;
-        RelativeLayout share_health_news, root;
+        RelativeLayout share_health_news;
+        LinearLayout root;
 
     }
 

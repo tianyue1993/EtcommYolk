@@ -60,46 +60,49 @@ public class ApiClient {
     /**
      * 找回密码/注册页面 综合接口
      */
-    public void lostPwdverify(Context context,String url, RequestParams entity, JsonResponseHandler handler){
-        asyncHttpClient.post(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken() , entity, handler);
+    public void lostPwdverify(Context context, String url, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     /**
-     *  找回密码/注册 综合调用 设置密码
+     * 找回密码/注册 综合调用 设置密码
      */
-    public void newPwdverify(Context context,String url, RequestParams entity, JsonResponseHandler handler){
+    public void newPwdverify(Context context, String url, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     /**
      * 完善注册信息
      */
-    public void toRegisterUpdateInfo(Context context,RequestParams entity, JsonResponseHandler handler){
+    public void toRegisterUpdateInfo(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, EtcommApplication.toRegisterUpdateInfo() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 修改用户基本信息
      */
-    public void toUserEdit(Context context,RequestParams entity, JsonResponseHandler handler){
+    public void toUserEdit(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, EtcommApplication.toUserEdit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 修改密码
      */
-    public void toChangePassword(Context context,RequestParams entity, JsonResponseHandler handler){
+    public void toChangePassword(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, EtcommApplication.toChangePassword() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     /**
      * 上传用户头像
      */
-    public void toUploadUserAvator(Context context,RequestParams entity, JsonResponseHandler handler){
+    public void toUploadUserAvator(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, EtcommApplication.toUserEdit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 意见反馈
      */
-    public void toFeedBack(Context context,RequestParams entity, JsonResponseHandler handler){
+    public void toFeedBack(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, EtcommApplication.toFeedBack() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
@@ -109,18 +112,21 @@ public class ApiClient {
     public void toSerialNumber(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.getSerialNumber() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 健康资讯-获取已收藏列表
      */
     public void toFavorite(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toFavorite() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 设置消息推送
      */
     public void toSetPush(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toSetPush() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 退出
      */
@@ -142,7 +148,6 @@ public class ApiClient {
     public void toUploadversion(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toUploadversion() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
-
 
 
     /**
@@ -267,6 +272,77 @@ public class ApiClient {
      */
     public void topicUpdate(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(EtcommApplication.TOPIC_UPDATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 发布文字
+     */
+    public void createDiscussion(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.CREATE_DISCUSSION() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 上传图片
+     */
+    public void createDiscussionPic(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.CREATE_DISCUSSION_PIC() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 删除话题
+     */
+    public void discussionDelete(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.DISCUSSION_DELETE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 取消赞
+     */
+    public void discussionUnlike(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.DISCUSSION_UNLIKE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 赞
+     */
+    public void discussionLike(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.DISCUSSION_LIKE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 删除评论
+     */
+    public void commentDelete(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.COMMENT_DELETE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+
+    /**
+     * 获取评论列表
+     */
+    public void discussionComment(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.DISCUSSION_COMMENT() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 获取评论列表
+     */
+    public void commentCreate(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.COMMENT_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 获取评论列表
+     */
+    public void topicUser(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.TOPIC_USE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 话题删除
+     */
+    public void topicDelete(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.TOPIC_DELETE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     public void cancelRequest() {

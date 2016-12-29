@@ -82,13 +82,12 @@ public class GroupListAdapter extends YolkBaseAdapter<GroupItems> {
         return convertView;
     }
 
-    protected int attention(final GroupItems mInfo) {
+    protected void attention(final GroupItems mInfo) {
         RequestParams params = new RequestParams();
         params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
         params.put("topic_id", mInfo.topic_id);
         cancelmDialog();
         showProgress(0, true);
-        int code = -1;
         ApiClient.getInstance().Attention(mContext, params, new CommenHandler() {
             @Override
             public void onCancel() {
@@ -106,7 +105,6 @@ public class GroupListAdapter extends YolkBaseAdapter<GroupItems> {
                 }
                 //关注成功，刷新身边页面——添加关注小组到我的小组列表
                 Intent intent = new Intent();
-                intent.putExtra("item", mInfo);
                 intent.setAction("add");
                 mContext.sendBroadcast(intent);
                 notifyDataSetChanged();
@@ -118,7 +116,6 @@ public class GroupListAdapter extends YolkBaseAdapter<GroupItems> {
                 cancelmDialog();
             }
         });
-        return 0;
     }
 
     private static class ViewHolder {

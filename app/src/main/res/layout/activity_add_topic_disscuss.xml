@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/common_bg"
+    android:orientation="vertical"
     tools:context="etcomm.com.etcommyolk.activity.AddTopicDisscussActivity">
 
     <etcomm.com.etcommyolk.widget.ContainsEmojiEditText
@@ -23,6 +23,7 @@
         android:textCursorDrawable="@drawable/cursor_drawable" />
 
     <TextView
+        android:id="@+id/text_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -42,7 +43,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <GridView
             android:id="@+id/picgridview"

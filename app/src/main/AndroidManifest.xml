@@ -176,13 +176,27 @@
             android:launchMode="singleTop" />
         <activity android:name=".activity.MyAccountActivity" />
         <activity android:name=".activity.MineFeedBackActivity" />
-        <activity android:name=".activity.MyCollectionActivity"></activity>
+        <activity android:name=".activity.MyCollectionActivity" />
         <activity android:name=".activity.ActivityRanktActivity" />
         <activity
             android:name=".activity.SelectPicPopupWindowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleBottom" />
-        <activity android:name=".activity.AddTopicDisscussActivity"></activity>
+        <activity android:name=".activity.AddTopicDisscussActivity" />
+        <activity android:name=".activity.DisscussConentListActivity" />
+        <activity
+            android:name=".activity.TopicReportPopActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity android:name=".activity.TopicMemberActivity" />
+        <activity android:name=".activity.TopicDisscussReportActivity" />
+        <activity
+            android:name=".activity.TopicDiscussSettingActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity android:name=".activity.SharetoGroupActivity"></activity>
     </application>
 
 </manifest>

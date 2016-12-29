@@ -1,13 +1,24 @@
 package etcomm.com.etcommyolk.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,17 +28,25 @@ import android.widget.Toast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.adapter.CircleAdapter;
 import etcomm.com.etcommyolk.adapter.TopicDisscussListAdapter;
+import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.Discussion;
 import etcomm.com.etcommyolk.entity.DisscussItems;
 import etcomm.com.etcommyolk.entity.GroupItems;
@@ -35,6 +54,12 @@ import etcomm.com.etcommyolk.entity.Topic;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.handler.DicussionHandler;
+import etcomm.com.etcommyolk.utils.DcareUtils;
+import etcomm.com.etcommyolk.utils.GetPathFromUri4kitkat;
+import etcomm.com.etcommyolk.utils.GlobalSetting;
+import etcomm.com.etcommyolk.utils.Preferences;
+import etcomm.com.etcommyolk.utils.StringUtils;
+import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 import etcomm.com.etcommyolk.widget.HorizontalListView;
 
@@ -94,6 +119,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     String activity_rank;
     String topic_avator;
     private int attion;
+    protected Dialog deletedisscuss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,14 +156,425 @@ public class TopicDisscussListActivity extends BaseActivity {
         setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("分享");
+                Intent intent = new Intent(mContext, TopicDiscussSettingActivity.class);
+                intent.putExtra("id", user_id);
+                intent.putExtra("topic_id", item.topic_id);
+                intent.putExtra("isAttentioned", isAttentioned);
+                intent.putExtra("image", topic_avator);
+                intent.putExtra("discuse", discuse);
+                intent.putExtra("topic_name", item.name);
+                startActivityForResult(intent, Right);
+            }
+        });
+        TopicDisscussListAdapter.DeleteOnClickListener deleteOnClickListener = new TopicDisscussListAdapter.DeleteOnClickListener() {
+
+            @Override
+            public void delete(DisscussItems mInfo) {
+                // TODO Auto-generated method stub
+
+                if (adaptList.contains(mInfo)) {
+                    adaptList.remove(mInfo);
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+        TopicDisscussListAdapter.LikeOrUnLikeClickListener likeOrUnLikeClickListener = new TopicDisscussListAdapter.LikeOrUnLikeClickListener() {
+
+            @Override
+            public void delete(boolean islike, DisscussItems mInfo) {
+                for (int i = 0; i < adaptList.size(); i++) {
+                    DisscussItems d = adaptList.get(i);
+                    if (d.discussion_id == mInfo.discussion_id) {
+                        if (islike) {
+                            d.like = (Integer.parseInt(d.like) + 1) + "";
+                            d.is_like = "1";
+                        } else {
+                            d.like = (Integer.parseInt(d.like) - 1) + "";
+                            d.is_like = "0";
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+        int mScreenWidth;
+        WindowManager wm = getWindowManager();
+        int width = wm.getDefaultDisplay().getWidth();
+        mScreenWidth = width;
+        mAdapter = new TopicDisscussListAdapter(mContext, adaptList, mScreenWidth, item.topic_id, deleteOnClickListener, likeOrUnLikeClickListener);
+        listView.setAdapter(mAdapter);
+        listView.setDividerHeight(5);
+        getList();
+
+        //点击角布局加载更多
+        footer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!loadStatus && list.size() != 0) {
+                    getList();
+                }
             }
         });
 
+        //上拉listview加载更多监听
+        loadMoreListener = new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    if (loadMore && !loadStatus) {
+                        getList();
+                    }
+                    if (list.size() == 0) {
+                        listView.removeFooterView(footer);
+                    }
+                }
+            }
 
-        getList();
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                listView.setFirstItemIndex(firstVisibleItem);
+                if (firstVisibleItem != 1 && list.size() != 0) {
+                    loadMore = firstVisibleItem + visibleItemCount == totalItemCount;
+                } else {
+                    loadMore = false;
+                }
+            }
+        };
+        listView.setOnScrollListener(loadMoreListener);
+        listView.setOnRefreshListener(new DownPullRefreshListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (listView.getFooterViewsCount() > 0) {
+                    listView.removeFooterView(footer);
+                }
+                page_number = 1;
+                adaptList.clear();
+                getList();
+            }
+        });
+
+        attention_member.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, TopicMemberActivity.class);
+                intent.putExtra("topic_id", item.topic_id);
+                Log.d(tag, "attion==" + attion);
+                intent.putExtra("attion", attion);
+                startActivity(intent);
+            }
+        });
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_CANCELED) {
+            Log.i(tag, "resultCode Activity.RESULT_CANCELED  resultCode:" + resultCode);
+            return;
+        } else {
+            Log.i(tag, "resultCode Activity.RESULT_OK");
+            switch (requestCode) {
+                case TAKE_PHOTO:
+                    Log.i(tag, "onActivityResult  TAKE_PHOTO");
+                    String originalPath = null;
+                    Uri uri = null;
+                    if (data != null && data.getData() != null) {
+                        uri = data.getData();
+                    }
+                    // 一些机型无法从getData中获取uri，则需手动指定拍照后存储照片的Uri (魅族无法获取到URI)
+                    if (uri == null) {
+                        Log.i(tag, "uri  null");
+                        if (photoUri != null) {
+                            uri = photoUri;
+                        }
+                    }
+                    // 头像正常情况 下，需要剪裁
+                    tryCropProfileImage(uri);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        if (data != null) {
+            switch (requestCode) {
+                case PIC:
+                    String pic = data.getStringExtra(Preferences.PICMethod);
+                    Log.i(tag, "onActivityResult  PIC: " + pic);
+                    if (pic.equals("TAKEPHOTO")) {
+                        String state = Environment.getExternalStorageState();
+                        if (state.equals(Environment.MEDIA_MOUNTED)) {
+                            Intent takeintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            System.gc();
+                            SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyyMM_dd_HH_mm_ss");
+                            String filename = timeStampFormat.format(new Date());
+                            ContentValues values = new ContentValues();
+                            values.put(MediaStore.Images.Media.TITLE, filename);
+                            photoUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                            takeintent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                            Log.i(tag, "take_photo");
+                            startActivityForResult(takeintent, TAKE_PHOTO);
+                        } else {
+                            Toast.makeText(mContext, "没有SD卡", Toast.LENGTH_SHORT).show();
+                        }
+                    } else if (pic.equals("PICKPHOTO")) {
+                        doPickPhoto();
+                    }
+                    break;
+
+                case CODE_CAMERA_REQUEST:
+                    if (hasSdcard()) {
+                        File tempFile = new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME);
+                        cropRawPhoto(Uri.fromFile(tempFile));
+                    } else {
+                        Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case Crop_PICK_PHOTO_FROM_MEIZU:
+                    break;
+                case PICK_PHOTO_FROM_MEIZU:
+                    Log.i(tag, "PICK_PHOTO_FROM_MEIZU");
+                    photo = data.getParcelableExtra("data");
+                    if (photo == null) {
+                        Uri originalUri;
+                        if (data.getData() == null) {
+                            String filePath = data.getStringExtra("filePath");
+                            Log.i(tag, "filePath: " + filePath);
+                            originalUri = Uri.fromFile(new File(filePath));
+                        } else {
+                            originalUri = data.getData();
+                        }
+                        Log.i(tag, "originalUri: " + originalUri + "  " + originalUri.toString());
+                        String originalPath = uri2filePath(originalUri);
+                        Log.i(tag, "originalPath:  " + originalPath);
+                        originalPath = GetPathFromUri4kitkat.getPath(mContext, originalUri);
+                        Log.i(tag, "originalPath:  " + originalPath);
+                        tryCropProfileImage(originalUri);
+                    } else {
+                        mCurrentPhotoFile = new File(DcareUtils.getTmpCachePath() + "screenshot.png");
+                        try {
+                            saveBitmap(mCurrentPhotoFile.getAbsolutePath(), photo);
+                            onHeaderSelectedCallBack(photo);
+                            editUserInfo("avatar", mCurrentPhotoFile.getAbsolutePath());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    break;
+                case PICKPHOTO:
+                    Log.i(tag, "onActivityResult  PICKPHOTO");
+                    if (mCurrentPhotoFile != null && mCurrentPhotoFile.exists()) {
+                        mCurrentPhotoFile.delete();
+                    }
+
+                    photo = data.getParcelableExtra("data");
+                    if (photo == null) {
+                        // get photo url
+                        Uri originalUri;
+                        if (data.getData() == null) {
+                            String filePath = data.getStringExtra("filePath");
+                            originalUri = Uri.fromFile(new File(filePath));
+                        } else {
+                            originalUri = data.getData();
+                        }
+                        try {
+                            onLicenseSelectedCallBack(originalUri);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        mCurrentPhotoFile = new File(DcareUtils.getTmpCachePath() + "screenshot.png");
+                        try {
+                            saveBitmap(mCurrentPhotoFile.getAbsolutePath(), photo);
+
+                            onHeaderSelectedCallBack(photo);
+                            editUserInfo("avatar", mCurrentPhotoFile.getAbsolutePath());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                case TAKE_PHOTO:
+                    Log.i(tag, "onActivityResult  TAKE_PHOTO");
+                    if (resultCode == RESULT_OK) {
+                        String originalPath = null;
+                        Uri uri = null;
+                        if (data != null && data.getData() != null) {
+                            uri = data.getData();
+                        }
+                        // 一些机型无法从getData中获取uri，则需手动指定拍照后存储照片的Uri
+                        if (uri == null) {
+                            if (photoUri != null) {
+                                uri = photoUri;
+                            }
+                        }
+                        originalPath = GetPathFromUri4kitkat.getPath(mContext, uri);
+                        originalPath = uri2filePath(uri);
+                        if (StringUtils.isEmpty(originalPath)) {
+                            Log.i(tag, "originalPath:  " + originalPath);
+                            editUserInfo("avatar", originalPath);
+                        } else {
+                            Log.i(tag, "error  拍照失败  ");
+                            Toast.makeText(mContext, "拍照失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    break;
+                case TAKEPHOTO:
+                    Uri originalUri = data.getData();
+                    Log.i(tag, "onActivityResult  TAKEPHOTO URI: " + originalUri.toString());
+                    // onLicenseSelectedCallBack(originalUri);
+                    tryCropProfileImage(Uri.fromFile(mCurrentPhotoFile));
+                    break;
+                case CAMERA_PIC:
+                    Log.i(tag, "CAMERA_PIC");
+                    cropPhoto(Uri.fromFile(mUriFile));
+                    break;
+                case Right:
+                    String type = data.getStringExtra(Preferences.TOPICSET);
+                    if (type.equals("1")) {
+                        //取关
+                        if (user_id.equals(prefs.getUserId())) {
+                            int lefttextcolor;
+                            int righttextcolor;
+
+                            if (Build.VERSION.SDK_INT >= 23) {
+                                lefttextcolor = mContext.getColor(R.color.common_dialog_btn_textcolor);
+                                righttextcolor = mContext.getColor(R.color.common_dialog_btn_textcolor);
+                            } else {
+                                lefttextcolor = mContext.getResources().getColor(R.color.common_dialog_btn_textcolor);
+                                righttextcolor = mContext.getResources().getColor(R.color.common_dialog_btn_textcolor);
+                            }
+
+                            deletedisscuss = DialogFactory.getDialogFactory().showCommonDialog(mContext, "确认删除这个小组吗？", "取消", "确认", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    deletedisscuss.dismiss();
+                                }
+                            }, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (deletedisscuss != null && deletedisscuss.isShowing()) {
+                                        deletedisscuss.dismiss();
+                                        deleteTopic();
+                                    }
+                                }
+                            }, lefttextcolor, righttextcolor);
+
+                        } else {
+                            if (isAttentioned) {
+                                unfollow();
+                            } else {
+                                follow();
+                            }
+                        }
+
+
+                    } else if (type.equals("2")) {
+                        //举报
+                        showToast("举报");
+                    }
+                    break;
+            }
+        }
+    }
+
+
+    public void deleteTopic() {
+        RequestParams params = new RequestParams();
+        params.put("topic_id", item.topic_id);
+        params.put("access_token", prefs.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
+        client.topicDelete(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                showToast(commen.message);
+                mContext.sendBroadcast(new Intent(Preferences.REFRESH_NOTATTENTION));
+            }
+        });
+
+    }
+
+    public void follow() {
+        RequestParams params = new RequestParams();
+        params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
+        params.put("topic_id", item.topic_id);
+        cancelmDialog();
+        showProgress(0, true);
+        ApiClient.getInstance().Attention(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                Toast.makeText(mContext, "关注成功", Toast.LENGTH_SHORT).show();
+                //关注成功，刷新身边页面——添加关注小组到我的小组列表
+                Intent intent = new Intent();
+                intent.setAction("add");
+                mContext.sendBroadcast(intent);
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+        });
+
+    }
+
+    public void unfollow() {
+        RequestParams params = new RequestParams();
+        params.put("access_token", prefs.getAccessToken());
+        params.put("topic_id", item.topic_id);
+        cancelmDialog();
+        showProgress(0, true);
+        ApiClient.getInstance().UnAttention(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setAction("add");
+                mContext.sendBroadcast(intent);
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+        });
+
+    }
 
     /**
      * 用户自己创建的小组，小组头像和简介点击可修改，修改接口调用
@@ -196,6 +633,9 @@ public class TopicDisscussListActivity extends BaseActivity {
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
                 cancelmDialog();
+                listView.onRefreshComplete();
+                loadStatus = false;
+                loadingProgressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -289,7 +729,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                 if (list != null && list.size() > 0) {
                     if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 1) {
                         listView.addFooterView(footer);
-//                        listView.setAdapter(mAdapter);
+                        listView.setAdapter(mAdapter);
                     }
                     adaptList.addAll(list);
                 } else {
@@ -298,7 +738,192 @@ public class TopicDisscussListActivity extends BaseActivity {
                         listView.removeFooterView(footer);
                     }
                 }
+                mAdapter.notifyDataSetChanged();
+                loadStatus = false;
+                listView.onRefreshComplete();
+                loadingProgressBar.setVisibility(View.GONE);
+                loadingText.setText(getResources().getString(R.string.loadmore));
             }
         });
+    }
+
+
+    private void cropPhoto(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", true);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 50);
+        intent.putExtra("outputY", 50);
+        intent.putExtra("scale", true);
+        // intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intent.putExtra("return-data", true);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+        startActivityForResult(intent, CROP_PIC);
+    }
+
+    protected void onLicenseSelectedCallBack(Uri url) {
+
+        topic_image.setImageURI(url);
+        updateAvatorByUrl(url);
+    }
+
+    private void updateAvatorByUrl(Uri url) {
+        editUserInfo("avatar", getAbsoluteImagePath(url));
+    }
+
+    protected String getAbsoluteImagePath(final Uri uri) {
+        // can post image
+        final String[] proj = {MediaStore.Images.Media.DATA};
+        String path = GetPathFromUri4kitkat.getPath(mContext, uri);
+        if (!StringUtils.isEmpty(path)) {
+            return path;
+        }
+        @SuppressWarnings("deprecation")
+        Cursor cursor = managedQuery(uri, proj, // Which columns to return
+                null, // WHERE clause; which rows to return (all rows)
+                null, // WHERE clause selection arguments (none)
+                null); // Order-by clause (ascending by name)
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    protected void onHeaderSelectedCallBack(Bitmap bp) {
+        if (bp == null) {
+            Log.e(tag, "发生异常");
+        }
+        topic_image.setImageBitmap(bp);
+    }
+
+//
+
+
+    /**
+     * 把Uri转化成文件路径
+     */
+    private String uri2filePath(Uri uri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, proj, null, null, null);
+        // Cursor cursor = managedQuery(uri, proj, null, null, null);
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String path = cursor.getString(index);
+        return path;
+    }
+
+    protected void saveBitmap(String filePath, Bitmap bitmap) throws IOException {
+        if (bitmap != null) {
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap = compressImage(bitmap);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);// 图片设置为压缩一半
+            // 11.24 18：50
+            out.flush();
+            out.close();
+        }
+    }
+
+    protected Bitmap compressImage(Bitmap image) {
+        Log.i(tag, "压缩图片  把图片压缩到50k以下");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 100;
+        while (baos.toByteArray().length / 1024 > 50) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            baos.reset();// 重置baos即清空baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+            options -= 10;// 每次都减少10
+        }
+        Log.i(tag, "压缩图片" + baos.size());
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
+        return bitmap;
+    }
+
+    private boolean hasSdcard() {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            // 有存储的SDCard
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 裁剪原始的图片
+     */
+    public void cropRawPhoto(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+
+        // aspectX , aspectY :宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        // outputX , outputY : 裁剪图片宽高
+        intent.putExtra("outputX", 50);
+        intent.putExtra("outputY", 50);
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, CODE_RESULT_REQUEST);
+    }
+
+    private void tryCropProfileImage(Uri uri) {
+        try {
+            // start gallery to crop photo
+            Log.i(tag, "tryCropProfileImage: " + uri + "  " + uri.toString());
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.setDataAndType(uri, "image/*");
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("outputX", 50);
+            intent.putExtra("outputY", 50);
+            intent.putExtra("return-data", true);
+            Log.i(tag, "tryCropProfileImage  PICKPHOTO");
+            startActivityForResult(intent, SettingPersonalDataActivity.PICKPHOTO);// test
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void doPickPhoto() {
+        Log.i(tag, Build.BOARD + " " + Build.MODEL + " " + Build.BRAND + " ");
+        if (Build.BRAND.equalsIgnoreCase("Meizu")) {
+            Intent itentFromGallery = new Intent();
+            itentFromGallery.setType("image/*");
+            itentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(itentFromGallery, PICK_PHOTO_FROM_MEIZU);
+            return;
+        } else {
+
+        }
+
+        try {
+            // Launch picker to choose photo for selected contact
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_PICK);
+            intent.setData(Uri.parse("content://media/internal/images/media"));
+            intent.setType("image/*");
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("outputX", 50);
+            intent.putExtra("outputY", 50);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, SettingPersonalDataActivity.PICKPHOTO);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

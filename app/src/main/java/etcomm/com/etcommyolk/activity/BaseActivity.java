@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,7 +20,6 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 
 import etcomm.com.etcommyolk.ApiClient;
-import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
@@ -278,6 +278,19 @@ public class BaseActivity extends Activity {
     public void cancelmDialog() {
         if (mProgress != null && mProgress.isShowing()) {
             mProgress.dismiss();
+        }
+    }
+
+
+
+    /**
+     * 隐藏软键盘
+     */
+    protected void hideSoftKeyBoard() {
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
         }
     }
 

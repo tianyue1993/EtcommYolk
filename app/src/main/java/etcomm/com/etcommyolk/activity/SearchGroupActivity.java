@@ -1,8 +1,10 @@
 package etcomm.com.etcommyolk.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +57,17 @@ public class SearchGroupActivity extends Activity {
     private ArrayList<GroupItems> adaptList = new ArrayList<>();
     protected ArrayList<GroupItems> list = new ArrayList<GroupItems>();
     private GroupListAdapter mAdapter;
+    //关注成功，刷新身边页面————添加关注小组到我的小组列表
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("add")) {
+                adaptList.clear();
+                page_number = 1;
+                getList();
+            }
+        }
+    };
 
 
     @Override
@@ -62,6 +75,10 @@ public class SearchGroupActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_group);
         EtcommApplication.addActivity(this);
+        mContext = this;
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("add");
+        mContext.registerReceiver(receiver, filter);
         listView = (DownPullRefreshListView) findViewById(R.id.listview);
         back = (ImageView) findViewById(R.id.back);
         searchHealthnewEt = (ExEditText) findViewById(R.id.search_topic_et);
@@ -69,7 +86,6 @@ public class SearchGroupActivity extends Activity {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        mContext = this;
         footer = View.inflate(this, R.layout.loadmore, null);
         loadingProgressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
         loadingText = (TextView) footer.findViewById(R.id.title);
@@ -229,6 +245,14 @@ public class SearchGroupActivity extends Activity {
         });
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (receiver != null) {
+            mContext.unregisterReceiver(receiver);
+        }
+    }
 
     public void showProgress(int resId, boolean cancel) {
         mProgress = new ProgressDialog(this);

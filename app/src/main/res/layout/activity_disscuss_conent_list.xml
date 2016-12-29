@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="etcomm.com.etcommyolk.activity.DisscussConentListActivity">
+
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/comment_bottom_bar_bg"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <etcomm.com.etcommyolk.widget.ContainsEmojiEditText
+            android:id="@+id/comment_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marginsmall"
+            android:layout_weight="1"
+            android:background="@null"
+            android:cursorVisible="true"
+            android:hint="说点什么吧 ......"
+            android:maxLength="140"
+            android:paddingBottom="@dimen/marginmiddle"
+            android:textCursorDrawable="@drawable/cursor_drawable" />
+
+        <Button
+            android:id="@+id/comment_send"
+            style="@style/common_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:background="@color/common_org"
+            android:text="发布"
+            android:textColor="@color/commen_text_color" />
+    </LinearLayout>
+
+    <etcomm.com.etcommyolk.widget.DownPullRefreshListView
+        android:id="@+id/commmentpulllist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_alignParentTop="true" />
+
+    <include
+        android:id="@+id/emptyview"
+        layout="@layout/empty_disscussconment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar"
+        android:visibility="invisible" />
+</RelativeLayout>

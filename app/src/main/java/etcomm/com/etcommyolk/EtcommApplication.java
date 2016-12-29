@@ -26,7 +26,7 @@ public class EtcommApplication extends Application {
     /**
      * 是否是第一次默认设置
      * 针对MainActivity默认设置Home为显示页面
-     * <p/>
+     * <p>
      * 每一次从其他页面返回MainActivity可见页面时，都会先初始化一下Home的初始值
      * 无故增多网络请求次数，因此添加限定
      */
@@ -102,110 +102,148 @@ public class EtcommApplication extends Application {
 
     /**
      * 获取手机验证码
+     *
      * @return
      */
-    public static String getPhoneCode(){
+    public static String getPhoneCode() {
         return BASE_URL + "mobile-captcha/send";
     }
 
     /**
      * 验证手机验证码
+     *
      * @return
      */
-    public static String verifyPhoneCode(){
+    public static String verifyPhoneCode() {
         return BASE_URL + "mobile-captcha/validate";
     }
 
     /**
      * 获取邮箱验证码
+     *
      * @return
      */
-    public static String getMailCode(){
+    public static String getMailCode() {
         return BASE_URL + "email-captcha/send";
     }
 
     /**
      * 验证邮箱验证码
+     *
      * @return
      */
-    public static String verifyMailCode(){
+    public static String verifyMailCode() {
         return BASE_URL + "email-captcha/validate";
     }
 
     /**
      * 邮箱找回密码
+     *
      * @return
      */
-    public static String alterMailPwd(){
+    public static String alterMailPwd() {
         return BASE_URL + "email-forgot-password";
     }
 
     /**
      * 手机找回密码
+     *
      * @return
      */
-    public static String alterPhonePwd(){
+    public static String alterPhonePwd() {
         return BASE_URL + "mobile-forgot-password";
     }
 
     /**
      * 效验邀请码
      */
-    public static String getSerialNumber(){ return BASE_URL + "serial-number"; }
+    public static String getSerialNumber() {
+        return BASE_URL + "serial-number";
+    }
 
     /**
      * 邮箱注册
      */
-    public static String toMailRegister(){ return BASE_URL + "email-sign-up"; }
+    public static String toMailRegister() {
+        return BASE_URL + "email-sign-up";
+    }
 
     /**
      * 手机注册
      */
-    public static String toPhoneRegister(){ return BASE_URL + "mobile-sign-up"; }
+    public static String toPhoneRegister() {
+        return BASE_URL + "mobile-sign-up";
+    }
 
     /**
      * 获取默认头像
      */
-    public static String getDefaultAvator(){ return BASE_URL + "avatar"; }
+    public static String getDefaultAvator() {
+        return BASE_URL + "avatar";
+    }
 
     /**
      * 完善注册信息
      */
-    public static String toRegisterUpdateInfo(){return  BASE_URL + "user/update"; }
+    public static String toRegisterUpdateInfo() {
+        return BASE_URL + "user/update";
+    }
+
     /**
      * 修改用户基本信息
      */
-    public static String toUserEdit(){return  BASE_URL + "user/edit"; }
+    public static String toUserEdit() {
+        return BASE_URL + "user/edit";
+    }
+
     /**
      * 退出登录
      */
-    public static String toExit(){return  BASE_URL + "sign-in/sign-out"; }
+    public static String toExit() {
+        return BASE_URL + "sign-in/sign-out";
+    }
+
     /**
      * 上传头像
      */
-    public static String toUploadUserAvator(){return  BASE_URL + "user/avatar"; }
+    public static String toUploadUserAvator() {
+        return BASE_URL + "user/avatar";
+    }
+
     /**
      * 检测版本更新
      */
-    public static String toUploadversion(){return  BASE_URL + "version"; }
+    public static String toUploadversion() {
+        return BASE_URL + "version";
+    }
 
     /**
      * 修改密码
      */
-    public static String toChangePassword(){return  BASE_URL + "user/change-password"; }
+    public static String toChangePassword() {
+        return BASE_URL + "user/change-password";
+    }
+
     /**
      * 设置消息推送
      */
-    public static String toSetPush(){return  BASE_URL + "user/set-push"; }
+    public static String toSetPush() {
+        return BASE_URL + "user/set-push";
+    }
+
     /**
      * 意见反馈
      */
-    public static String toFeedBack(){return  BASE_URL + "feedback"; }
+    public static String toFeedBack() {
+        return BASE_URL + "feedback";
+    }
+
     /**
      * 健康资讯-获取已收藏列表
      */
-    public static String toFavorite(){return  BASE_URL + "user/favorite"; }
-
+    public static String toFavorite() {
+        return BASE_URL + "user/favorite";
+    }
 
 
     public static String LOGIN() {
@@ -279,6 +317,49 @@ public class EtcommApplication extends Application {
     public static String TOPIC_UPDATE() {
         return BASE_URL + "topic/update";
     }
-   
+
+    public static String CREATE_DISCUSSION() {
+        return BASE_URL + "discussion/create-discussion";// 讨论-发布(文字)
+    }
+
+
+    public static String CREATE_DISCUSSION_PIC() {
+        return BASE_URL + "discussion/create-image-base";// 讨论-发布(图片-base64)
+    }
+
+    public static String DISCUSSION_DELETE() {
+        return BASE_URL + "discussion/delete";// 删除讨论
+    }
+
+
+    public static String DISCUSSION_UNLIKE() {
+        return BASE_URL + "discussion/un-like"; // 取消赞
+    }
+
+    public static String DISCUSSION_LIKE() {
+        return BASE_URL + "discussion/like"; // 取消赞
+    }
+
+    public static String COMMENT_DELETE() {
+        return BASE_URL + "discussion-comment/delete"; // 评论-删除
+    }
+
+    public static String DISCUSSION_COMMENT() {
+        return BASE_URL + "discussion-comment";// 评论-列表
+    }
+
+    public static String COMMENT_CREATE() {
+        return BASE_URL + "discussion-comment/create";// 添加或者回复某人评论
+    }
+
+    public static String TOPIC_USE() {
+        return BASE_URL + "topic/topic-user";// 获取成员
+
+    }
+
+    public static String TOPIC_DELETE() {
+        return BASE_URL + "topic/delete"; // 话题删除
+
+    }
 
 }
