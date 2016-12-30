@@ -23,33 +23,29 @@ import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.LostPwdGetCodeHandler;
 import etcomm.com.etcommyolk.utils.StringUtils;
 
-public class LostPwdActivity extends BaseActivity implements TextWatcher, View.OnClickListener {
-    //跳转返回判断
-    private static final int TO_REQUEST_CODE = 3;
-    //输入手机号/邮箱
-    @Bind(R.id.lost_phone)
-    EditText lostPhone;
-    //输入验证码
-    @Bind(R.id.lost_code)
-    EditText lostCode;
-    //获取验证码
+public class MyAccountFinalActivity extends BaseActivity implements TextWatcher {
+    @Bind(R.id.final_type)
+    TextView finalType;
+    @Bind(R.id.final_phone)
+    EditText finalPhone;
+    @Bind(R.id.final_code)
+    EditText finalCode;
     @Bind(R.id.get_code)
     TextView getCode;
-    //下一步
-    @Bind(R.id.lost_commit)
-    Button lostCommit;
-    //找回方式
-    @Bind(R.id.lost_type)
-    TextView lostType;
+    @Bind(R.id.final_commit)
+    Button finalCommit;
+    @Bind(R.id.bound_explain)
+    TextView boundExplain;
     /**
      * 获取验证码方式 true 为手机验证码 false 为邮箱验证码
      */
     private boolean getCodeType = true;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_pwd);
+        setContentView(R.layout.activity_my_account_final);
         ButterKnife.bind(this);
         initView();
         initListener();
@@ -57,72 +53,53 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
 
     //杂项
     private void initView() {
+        intent = getIntent();
         EtcommApplication.addActivity(this);
-        setTitleTextView("找回密码", null);
-        getRightTextView().setText("邮箱找回");
-        getRightTextView().setVisibility(View.VISIBLE);
+        setTitleTextView(intent.getStringExtra("type"), null);
+        toSetInputType();
     }
 
     //添加监听
     private void initListener() {
-        getRightTextView().setOnClickListener(this);
-        lostPhone.addTextChangedListener(this);
-        lostCode.addTextChangedListener(this);
+        finalPhone.addTextChangedListener(this);
+        finalCode.addTextChangedListener(this);
     }
 
-    @OnClick({R.id.get_code, R.id.lost_commit})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.get_code:
-                //获取验证
-                toGetCode();
-                break;
-            case R.id.lost_commit:
-                //下一步
-                toNext();
-                break;
-            case R.id.text_base_right:
-                //切换找回方式
-                toSetInputType();
-                break;
 
-        }
-    }
     //找回方式
     private void toSetInputType() {
-        if (getRightTextView().getText().equals("邮箱找回")) {
+        if (intent.getStringExtra("type").contains("邮箱")) {
             //切换到邮箱
-            getRightTextView().setText("手机找回");
-            lostType.setText("邮　箱：");
+            finalType.setText("邮　箱");
+            boundExplain.setText("绑定邮箱后，下次登录可使用邮箱登录");
             getCodeType = false;
-            if (lostPhone.getText().toString().isEmpty()) {
-                lostPhone.setHint("请输入邮箱");
+            if (finalPhone.getText().toString().isEmpty()) {
+                finalPhone.setHint("请输入邮箱");
             } else {
-                lostPhone.setText("");
+                finalPhone.setText("");
             }
-            if (!lostCode.getText().toString().isEmpty()) {
-                lostCode.setText("");
+            if (!finalCode.getText().toString().isEmpty()) {
+                finalCode.setText("");
             }
         } else {
             //切换到手机
-            getRightTextView().setText("邮箱找回");
-            lostType.setText("手机号：");
+            finalType.setText("手机号");
             getCodeType = true;
-            if (lostPhone.getText().toString().isEmpty()) {
-                lostPhone.setHint("请输入手机号");
+            boundExplain.setText("绑定手机号后，下次登录可使用手机号登录");
+            if (finalPhone.getText().toString().isEmpty()) {
+                finalPhone.setHint("请输入手机号");
             } else {
-                lostPhone.setText("");
+                finalPhone.setText("");
             }
-            if (!lostCode.getText().toString().isEmpty()) {
-                lostCode.setText("");
+            if (!finalCode.getText().toString().isEmpty()) {
+                finalCode.setText("");
             }
-            getRightTextView().setText("邮箱找回");
         }
     }
 
     //下一步
     private void toNext() {
-        if (!StringUtils.isEmpty(lostCode.getText().toString().trim())) {
+        if (!StringUtils.isEmpty(finalCode.getText().toString().trim())) {
             toVerifyCode();
         } else {
             if (getCodeType) {
@@ -135,7 +112,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
 
     //获取验证码
     private void toGetCode() {
-        if (!StringUtils.isEmpty(lostPhone.getText().toString().trim())) {
+        if (!StringUtils.isEmpty(finalPhone.getText().toString().trim())) {
             toNSURLRequest();
         } else {
             if (getCodeType) {
@@ -149,7 +126,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
     //获取短信 邮箱验证码
     private void toNSURLRequest() {
         RequestParams object = new RequestParams();
-        object.put("receiver", lostPhone.getText().toString().trim());
+        object.put("receiver", finalPhone.getText().toString().trim());
         object.put("type", "forgot_password");
         //true 为手机验证码 false 为邮箱验证码
         String url;
@@ -178,8 +155,8 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
     //验证短信 邮箱验证码
     private void toVerifyCode() {
         RequestParams object = new RequestParams();
-        object.put("receiver", lostPhone.getText().toString().trim());
-        object.put("verify_code", lostCode.getText().toString().trim());
+        object.put("receiver", finalPhone.getText().toString().trim());
+        object.put("verify_code", finalCode.getText().toString().trim());
         object.put("type", "forgot_password");
         //true 为手机验证码 false 为邮箱验证码
         String url;
@@ -194,17 +171,14 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
                 showToast(commen.message);
-                Intent intent = new Intent(LostPwdActivity.this, ForgotPasswordActivity.class);
                 if (getCodeType) {
-                    intent.putExtra("type", "phone");
-                    intent.putExtra("input", lostPhone.getText().toString().trim());
-                    startActivityForResult(intent, TO_REQUEST_CODE);
+                    prefs.setMobile(finalPhone.getText().toString().trim());
                 } else {
-                    intent.putExtra("type", "mail");
-                    intent.putExtra("input", lostPhone.getText().toString().trim());
-                    startActivityForResult(intent, TO_REQUEST_CODE);
-                    startActivity(intent);
+                    prefs.setEmail(finalPhone.getText().toString().trim());
                 }
+                intent.putExtra("boo", false);
+                setResult(RESULT_OK, intent);
+                finish();
             }
 
             @Override
@@ -212,14 +186,6 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
                 super.onFailure(exception);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //回到登录页面
-        if (requestCode == TO_REQUEST_CODE) {
-            finish();
-        }
     }
 
     // 注册 刷新验证码 倒计时
@@ -246,10 +212,10 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (StringUtils.isEmpty(lostPhone.getText().toString().trim()) || StringUtils.isEmpty(lostCode.getText().toString().trim())) {
-            lostCommit.setBackgroundResource(R.mipmap.all_fil_button);
+        if (StringUtils.isEmpty(finalPhone.getText().toString().trim()) || StringUtils.isEmpty(finalCode.getText().toString().trim())) {
+            finalCommit.setBackgroundResource(R.mipmap.all_fil_button);
         } else {
-            lostCommit.setBackgroundResource(R.mipmap.all_ok_button);
+            finalCommit.setBackgroundResource(R.mipmap.all_ok_button);
         }
 
     }
@@ -257,5 +223,19 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @OnClick({R.id.get_code, R.id.final_commit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.get_code:
+                //获取验证
+                toGetCode();
+                break;
+            case R.id.final_commit:
+                //下一步
+                toNext();
+                break;
+        }
     }
 }

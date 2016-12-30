@@ -195,7 +195,6 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
         object.put("user_id", prefs.getUserId());
         object.put("nick_name", inputChoose.getText().toString().trim());
         object.put("type", "check");
-        Log.e("interface", object.toString());
         client.toRegisterUpdateInfo(this, object, new CommenHandler() {
 
             @Override
@@ -209,7 +208,6 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-                showToast("3213213121321");
             }
         });
     }

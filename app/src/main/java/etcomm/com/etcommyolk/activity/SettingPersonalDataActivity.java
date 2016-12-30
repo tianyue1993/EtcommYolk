@@ -738,9 +738,6 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
                     e1.printStackTrace();
                     return;
                 }
-                cancelmDialog();
-                Log.i(tag, "params: " + params.toString());
-
                 client.toUploadUserAvator(this, params, new CommenHandler(){
 
                     @Override
@@ -867,7 +864,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
         return bitmap;
     }
-
+    //图片操作
     private void doPickPhoto() {
         Log.i(tag, Build.BOARD + " " + Build.MODEL + " " + Build.BRAND + " ");
         if (Build.BRAND.equalsIgnoreCase("Meizu")) {
@@ -876,8 +873,6 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
             itentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(itentFromGallery, PICK_PHOTO_FROM_MEIZU);
             return;
-        } else {
-
         }
 
         try {

@@ -176,12 +176,18 @@
             android:launchMode="singleTop" />
         <activity android:name=".activity.MyAccountActivity" />
         <activity android:name=".activity.MineFeedBackActivity" />
-        <activity android:name=".activity.MyCollectionActivity"></activity>
+        <activity android:name=".activity.MyCollectionActivity" />
         <activity android:name=".activity.ActivityRanktActivity" />
         <activity
             android:name=".activity.SelectPicPopupWindowActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyleBottom"></activity>
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity android:name=".activity.MineSportsActivity" />
+        <activity android:name=".activity.MyAccountNextActivity" />
+        <activity android:name=".activity.MyAccountFinalActivity" />
+        <activity android:name=".activity.RankActivity" />
+        <activity android:name=".activity.PedometerActivity" />
+        <activity android:name=".activity.MineDeviceActivityNew"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.util.ArrayList;
 
+import me.chunyu.pedometerservice.PedometerCounterService;
+
 /**
  * Created by zuohr on 2016/12/8.
  * 进行gradle数据处理及相关参数引用
@@ -80,8 +82,15 @@ public class EtcommApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+        PedometerCounterService.initAppService(getApplicationContext());
         etcommApplication = this;
         initDoMain();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        PedometerCounterService.releaseAppService();
     }
 
     /**
@@ -205,6 +214,39 @@ public class EtcommApplication extends Application {
      * 健康资讯-获取已收藏列表
      */
     public static String toFavorite(){return  BASE_URL + "user/favorite"; }
+    /**
+     * 我的活动
+     */
+    public static String toMyActivity(){return  BASE_URL + "user/my-activity"; }
+    /**
+     * 每日签到
+     */
+    public static String toSignIn(){return  BASE_URL + "user/sign-in"; }
+
+    /**
+     * 每日排名
+     */
+    public static String toShowRank(){return  BASE_URL + "user/rank"; }
+    /**
+     * 天气
+     */
+    public static String toWeather(){return  BASE_URL + "weather"; }
+    /**
+     * 获取前七天的计步数据
+     */
+    public static String toPedometerWeek(){return  BASE_URL + "user/pedometer-two-months"; }
+    /**
+     * 解绑设备
+     */
+    public static String toBindOff(){return  BASE_URL + "device-bind/bind-off"; }
+    /**
+     * 绑定设备
+     */
+    public static String toBindOn(){return  BASE_URL + "device-bind/bind-on"; }
+    /**
+     * 按天同步设备
+     */
+    public static String toDateSync(){return  BASE_URL + "pedometer/date-sync"; }
 
 
 

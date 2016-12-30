@@ -94,7 +94,7 @@ public class ApiClient {
      * 上传用户头像
      */
     public void toUploadUserAvator(Context context,RequestParams entity, JsonResponseHandler handler){
-        asyncHttpClient.post(context, EtcommApplication.toUserEdit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+        asyncHttpClient.post(context, EtcommApplication.toUploadUserAvator() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
     /**
      * 意见反馈
@@ -116,6 +116,30 @@ public class ApiClient {
         asyncHttpClient.get(EtcommApplication.toFavorite() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
     /**
+     * 每日签到
+     */
+    public void toSignIn(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toSignIn() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 每日排名
+     */
+    public void toShowRank(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toShowRank() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 天气预报
+     */
+    public void toWeather(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toWeather() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 获取前七天的记步数据
+     */
+    public void toPedometerWeek(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toPedometerWeek() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
      * 设置消息推送
      */
     public void toSetPush(Context context, RequestParams entity, JsonResponseHandler handler) {
@@ -126,6 +150,12 @@ public class ApiClient {
      */
     public void toExit(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toExit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 我的活动
+     */
+    public void toMyActivity(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toMyActivity() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     /**
@@ -141,6 +171,13 @@ public class ApiClient {
      */
     public void toUploadversion(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toUploadversion() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 解绑设备
+     */
+    public void toBindOff(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toBindOff() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
 
@@ -247,10 +284,22 @@ public class ApiClient {
     }
 
     /**
+     * 绑定设备
+     */
+    public void toBindOn(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.toBindOn() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
      * 创建小组
      */
     public void TopicCreate(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(EtcommApplication.TOPIC_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 按天同步数据
+     */
+    public void toDateSync(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.toDateSync() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
 

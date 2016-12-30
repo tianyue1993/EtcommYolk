@@ -90,9 +90,7 @@ public class ChangeNickNameActivity extends BaseActivity {
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
-                if (field.equals("nick_name")) {
-                    prefs.setNickName(value);
-                }
+                prefs.setNickName(value);
                 backWithData(Preferences.SelectNickName, nickname_et.getText().toString());
                 finish();
             }

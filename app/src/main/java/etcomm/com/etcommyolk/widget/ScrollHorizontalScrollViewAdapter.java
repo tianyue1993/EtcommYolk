@@ -41,7 +41,6 @@ public class ScrollHorizontalScrollViewAdapter {
 			viewHolder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.activity_index_gallery_item, parent, false);
 			viewHolder.mImg = (SimpleDraweeView) convertView.findViewById(R.id.id_index_gallery_item_image);
-
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
