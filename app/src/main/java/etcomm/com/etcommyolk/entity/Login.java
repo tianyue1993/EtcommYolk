@@ -9,7 +9,7 @@ public class Login extends Entity {
     public Content content;
 
     public class Content {
-        public String id; //用户ID
+        public String user_id; //用户ID
         public String department_id; //组织结构ID
         public String serial_number_id;//激活码ID
         public String avatar; //用户头像

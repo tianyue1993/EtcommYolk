@@ -86,7 +86,6 @@ public class AddTopicDisscussActivity extends BaseActivity {
     };
     private Intent intent;
     private String topic_id;
-    private String topic_name;
     private int count = 0;
     protected String discuss_id;
     int curPicCount = 0;
@@ -153,7 +152,6 @@ public class AddTopicDisscussActivity extends BaseActivity {
         scwidth = dm.widthPixels;
         intent = getIntent();
         topic_id = intent.getStringExtra("topic_id");
-        topic_name = intent.getStringExtra("topic_name");
         medilist.add("0");
         picgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter = new AddTopicDisscussPhotoGridAdapter(mContext, medilist, scwidth, mDeleteOnClickListener);//
@@ -520,13 +518,15 @@ public class AddTopicDisscussActivity extends BaseActivity {
         params.put("discussion_id", discussion_id);
         params.put("order", String.valueOf(i + 1));
         params.put("image_data", image_data);
+        showProgress(0, true);
         Log.i(tag, "image_data.length: " + image_data.length() + "  image_data:" + image_data);
-        Log.i(tag, "image_data.length: " +params.toString());
+        Log.i(tag, "image_data.length: " + params.toString());
 
         client.createDiscussionPic(mContext, params, new CommenHandler() {
             @Override
             public void onCancel() {
                 super.onCancel();
+                cancelmDialog();
             }
 
             @Override
@@ -536,6 +536,7 @@ public class AddTopicDisscussActivity extends BaseActivity {
                     Message msg = mHandler.obtainMessage(StartPublishPic, i + 1, 0);
                     mHandler.sendMessage(msg);
                 } else {
+                    cancelmDialog();
                     Toast.makeText(mContext, "发布成功!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -545,6 +546,7 @@ public class AddTopicDisscussActivity extends BaseActivity {
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
                 mHandler.sendEmptyMessage(PublishPicFail);
+                cancelmDialog();
             }
         });
     }
@@ -556,11 +558,13 @@ public class AddTopicDisscussActivity extends BaseActivity {
         params.put("access_token", prefs.getAccessToken());
         params.put("content", topicdisscuss.getText().toString());
         cancelmDialog();
+        showProgress(0, true);
         Log.i(tag, "params: " + params.toString());
         client.createDiscussion(mContext, params, new CreateDiscussHandler() {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
 
             @Override
@@ -576,7 +580,9 @@ public class AddTopicDisscussActivity extends BaseActivity {
                 } else {
                     Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
                     finish();
+                    cancelmDialog();
                 }
+
             }
         });
     }

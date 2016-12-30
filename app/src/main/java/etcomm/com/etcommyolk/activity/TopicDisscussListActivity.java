@@ -16,10 +16,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
-import android.widget.EditText;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,7 +50,6 @@ import etcomm.com.etcommyolk.adapter.TopicDisscussListAdapter;
 import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.Discussion;
 import etcomm.com.etcommyolk.entity.DisscussItems;
-import etcomm.com.etcommyolk.entity.GroupItems;
 import etcomm.com.etcommyolk.entity.Topic;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.CommenHandler;
@@ -62,14 +61,15 @@ import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
+import etcomm.com.etcommyolk.widget.ExEditText;
 import etcomm.com.etcommyolk.widget.HorizontalListView;
 
 public class TopicDisscussListActivity extends BaseActivity {
-    GroupItems item;
+
     @Bind(R.id.topic_image)
     SimpleDraweeView topic_image;
     @Bind(R.id.topic_discuss)
-    EditText topic_discuss;
+    ExEditText topic_discuss;
     @Bind(R.id.attion_image)
     HorizontalListView image_list;
     @Bind(R.id.attion_count)
@@ -81,7 +81,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     @Bind(R.id.pulllistview)
     DownPullRefreshListView listView;
     @Bind(R.id.root)
-    RelativeLayout root;
+    RelativeLayout _root;
     @Bind(R.id.emptyview)
     View emptyview;
     @Bind(R.id.if_join)
@@ -110,17 +110,12 @@ public class TopicDisscussListActivity extends BaseActivity {
     private File mUriFile;
     private ArrayList<DisscussItems> list = new ArrayList<DisscussItems>();
     private ArrayList<DisscussItems> adaptList = new ArrayList<DisscussItems>();
-    private List<Topic.TopicUser> image;
     private TopicDisscussListAdapter mAdapter;
     private CircleAdapter circleAdapter;
-    private Intent intent;
-    boolean isAttentioned;
-    String user_id = "";
-    String discuse;
-    String activity_rank;
-    String topic_avator;
-    private int attion;
     protected Dialog deletedisscuss;
+    String topic_id;
+    String topic_name;
+    Topic topic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,61 +124,51 @@ public class TopicDisscussListActivity extends BaseActivity {
         ButterKnife.bind(this);
         EtcommApplication.addActivity(this);
         if (getIntent() != null) {
-            item = (GroupItems) getIntent().getSerializableExtra("GroupItems");
-            setTitleTextView(item.name, null);
+            topic_id = getIntent().getStringExtra("topic_id");
+            topic_name = getIntent().getStringExtra("topic_name");
+            setTitleTextView(topic_name, null);
         }
-        initData();
 
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         getList();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart(tag);
+
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd(tag);
-    }
 
     public void initData() {
-        topic_image.setImageURI(item.avatar);
-        topic_discuss.setText(item.desc);
-        attion_count.setText(item.follows);
+        if (topic != null) {
+            topic_image.setImageURI(topic.avatar);
+            topic_discuss.setText(topic.desc);
+            attion_count.setText(topic.user_number);
+            /**
+             *点击活动小组的活动图标，进入活动排名页面
+             **/
+            depart_rank.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, ActivityRanktActivity.class);
+                    intent.putExtra("activity_rank", topic.activity_rank);
+                    startActivity(intent);
+                }
+            });
 
-        /**
-         *点击活动小组的活动图标，进入活动排名页面
-         **/
-        depart_rank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ActivityRanktActivity.class);
-                intent.putExtra("activity_rank", item.activity_rank);
-                startActivity(intent);
-            }
-        });
+            setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (topic.is_activity.equals("1")) {
 
-        setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, TopicDiscussSettingActivity.class);
-                intent.putExtra("id", user_id);
-                intent.putExtra("topic_id", item.topic_id);
-                intent.putExtra("isAttentioned", isAttentioned);
-                intent.putExtra("image", topic_avator);
-                intent.putExtra("discuse", discuse);
-                intent.putExtra("topic_name", item.name);
-                startActivityForResult(intent, Right);
-            }
-        });
+                    }
+                    Intent intent = new Intent(mContext, TopicDiscussSettingActivity.class);
+                    intent.putExtra("id", topic.user_id);
+                    intent.putExtra("topic_id", topic_id);
+                    intent.putExtra("isAttentioned", topic.is_followed);
+                    intent.putExtra("detail_url", topic.detail_url);
+                    intent.putExtra("is_activity", topic.is_activity);
+                    startActivityForResult(intent, Right);
+                }
+            });
+        }
+
         TopicDisscussListAdapter.DeleteOnClickListener deleteOnClickListener = new TopicDisscussListAdapter.DeleteOnClickListener() {
-
             @Override
             public void delete(DisscussItems mInfo) {
                 // TODO Auto-generated method stub
@@ -195,7 +180,6 @@ public class TopicDisscussListActivity extends BaseActivity {
             }
         };
         TopicDisscussListAdapter.LikeOrUnLikeClickListener likeOrUnLikeClickListener = new TopicDisscussListAdapter.LikeOrUnLikeClickListener() {
-
             @Override
             public void delete(boolean islike, DisscussItems mInfo) {
                 for (int i = 0; i < adaptList.size(); i++) {
@@ -217,7 +201,7 @@ public class TopicDisscussListActivity extends BaseActivity {
         WindowManager wm = getWindowManager();
         int width = wm.getDefaultDisplay().getWidth();
         mScreenWidth = width;
-        mAdapter = new TopicDisscussListAdapter(mContext, adaptList, mScreenWidth, item.topic_id, deleteOnClickListener, likeOrUnLikeClickListener);
+        mAdapter = new TopicDisscussListAdapter(mContext, adaptList, mScreenWidth, topic_id, deleteOnClickListener, likeOrUnLikeClickListener);
         listView.setAdapter(mAdapter);
         listView.setDividerHeight(5);
         //点击角布局加载更多
@@ -266,17 +250,21 @@ public class TopicDisscussListActivity extends BaseActivity {
                 getList();
             }
         });
-
-        attention_member.setOnClickListener(new View.OnClickListener() {
+        //长按举报帖子
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, TopicMemberActivity.class);
-                intent.putExtra("topic_id", item.topic_id);
-                Log.d(tag, "attion==" + attion);
-                intent.putExtra("attion", attion);
-                startActivity(intent);
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                DisscussItems m = mAdapter.getItem(position - 1);
+                if (m.share_type.equals("0")) {
+                    Intent intent = new Intent(mContext, TopicReportPopActivity.class);
+                    intent.putExtra("discussion_id", m.discussion_id);
+                    intent.putExtra("type", "discussion");
+                    startActivity(intent);
+                }
+                return true;
             }
         });
+
     }
 
 
@@ -449,7 +437,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                     String type = data.getStringExtra(Preferences.TOPICSET);
                     if (type.equals("1")) {
                         //取关
-                        if (user_id.equals(prefs.getUserId())) {
+                        if (topic.user_id.equals(prefs.getUserId())) {
                             int lefttextcolor;
                             int righttextcolor;
 
@@ -477,7 +465,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                             }, lefttextcolor, righttextcolor);
 
                         } else {
-                            if (isAttentioned) {
+                            if (topic.is_followed.equals("1")) {
                                 unfollow();
                             } else {
                                 follow();
@@ -497,7 +485,7 @@ public class TopicDisscussListActivity extends BaseActivity {
 
     public void deleteTopic() {
         RequestParams params = new RequestParams();
-        params.put("topic_id", item.topic_id);
+        params.put("topic_id", topic_id);
         params.put("access_token", prefs.getAccessToken());
         cancelmDialog();
         showProgress(0, true);
@@ -528,7 +516,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     public void follow() {
         RequestParams params = new RequestParams();
         params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
-        params.put("topic_id", item.topic_id);
+        params.put("topic_id", topic_id);
         cancelmDialog();
         showProgress(0, true);
         ApiClient.getInstance().Attention(mContext, params, new CommenHandler() {
@@ -547,6 +535,9 @@ public class TopicDisscussListActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setAction("add");
                 mContext.sendBroadcast(intent);
+                adaptList.clear();
+                page_number = 1;
+                getList();
             }
 
             @Override
@@ -561,7 +552,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     public void unfollow() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
-        params.put("topic_id", item.topic_id);
+        params.put("topic_id", topic_id);
         cancelmDialog();
         showProgress(0, true);
         ApiClient.getInstance().UnAttention(mContext, params, new CommenHandler() {
@@ -579,6 +570,9 @@ public class TopicDisscussListActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setAction("add");
                 mContext.sendBroadcast(intent);
+                adaptList.clear();
+                page_number = 1;
+                getList();
             }
 
             @Override
@@ -597,7 +591,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     private void editUserInfo(final String field, final String value) {
         RequestParams params = new RequestParams();
         params.put("field", field);
-        params.put("topic_id", item.topic_id);
+        params.put("topic_id", topic_id);
         params.put("access_token", prefs.getAccessToken());
         cancelmDialog();
         showProgress(0, true);
@@ -621,7 +615,26 @@ public class TopicDisscussListActivity extends BaseActivity {
         }
 
         client.topicUpdate(mContext, params, new CommenHandler() {
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+
+            }
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
         });
+        getList();
     }
 
     /**
@@ -631,7 +644,7 @@ public class TopicDisscussListActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
         params.put("page_size", String.valueOf(page_size));
-        params.put("topic_id", item.topic_id);
+        params.put("topic_id", topic_id);
         params.put("page", String.valueOf(page_number++));
         Log.i(tag, "params: " + params.toString());
         cancelmDialog();
@@ -657,34 +670,26 @@ public class TopicDisscussListActivity extends BaseActivity {
                 super.onSuccess(discussion);
                 cancelmDialog();
                 list = discussion.content.items;
+                topic = discussion.content.topic;
                 List<Topic.TopicUser> list1 = discussion.content.topic.user;
-                image = list1;
-                circleAdapter = new CircleAdapter(mContext, image);
+                initData();
+                circleAdapter = new CircleAdapter(mContext, list1);
                 image_list.setAdapter(circleAdapter);
-                image = discussion.content.topic.user;
-                Log.d(tag, "image" + image.toString());
                 topic_discuss.setText(discussion.content.topic.desc + "");
                 if (discussion.content.topic.is_rank.equals("0")) {
                     depart_rank.setVisibility(View.GONE);
                 } else {
                     depart_rank.setVisibility(View.VISIBLE);
                 }
-                activity_rank = discussion.content.topic.activity_rank;
-                discuse = discussion.content.topic.desc + "";
-                attion = Integer.parseInt(discussion.content.topic.user_number);
-                user_id = discussion.content.topic.user_id;
                 if (discussion.content.topic.is_followed.equals("0")) {
-                    isAttentioned = false;
                     if_join.setVisibility(View.GONE);
                 } else {
-                    isAttentioned = true;
                     if_join.setVisibility(View.VISIBLE);
                     setRightText("发帖子", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(mContext, AddTopicDisscussActivity.class);
-                            intent.putExtra("topic_id", item.topic_id);
-                            intent.putExtra("topic_name", item.name);
+                            intent.putExtra("topic_id", topic_id);
                             startActivity(intent);
                         }
                     });
@@ -692,7 +697,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                 }
                 /**如果是自己创建的小组，可修改头像，可点击修改相关信息
                  * * */
-                if (discussion.content.topic.user_id.equals(prefs.getUid())) {
+                if (discussion.content.topic.user_id.equals(prefs.getUserId())) {
                     topic_discuss.setEnabled(true);
                     topic_image.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -730,10 +735,19 @@ public class TopicDisscussListActivity extends BaseActivity {
 
                 }
 
-                attion_count.setText(attion + "个成员   >");
-                topic_avator = discussion.content.topic.avatar;
+
+                attion_count.setText(topic.user_number + "个成员   >");
+                attention_member.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, TopicMemberActivity.class);
+                        intent.putExtra("topic_id", topic_id);
+                        intent.putExtra("user_number", topic.user_number);
+                        startActivity(intent);
+                    }
+                });
                 if (!discussion.content.topic.avatar.isEmpty()) {
-                    topic_image.setImageURI(topic_avator);
+                    topic_image.setImageURI(topic.avatar);
                 }
                 if (discussion.content.pages == 0) {
                     emptyview.setVisibility(View.VISIBLE);
@@ -752,6 +766,27 @@ public class TopicDisscussListActivity extends BaseActivity {
                         listView.removeFooterView(footer);
                     }
                 }
+
+
+                /**
+                 * 键盘隐藏的时候，如果小组内容为空，设置原文本
+                 */
+                _root.getViewTreeObserver().addOnGlobalLayoutListener(
+                        new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                if (isSave) {
+                                    prefs.saveHeigh(_root.getHeight());
+                                    isSave = false;
+                                }
+                                if (_root.getHeight() < prefs.getHeigh()) { // 说明键盘是弹出状态
+
+                                } else {
+                                    topic_discuss.setText(topic.desc);
+                                    topic_discuss.setCursorVisible(false);
+                                }
+                            }
+                        });
                 mAdapter.notifyDataSetChanged();
                 loadStatus = false;
                 listView.onRefreshComplete();

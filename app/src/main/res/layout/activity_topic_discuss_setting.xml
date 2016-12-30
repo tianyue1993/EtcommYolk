@@ -67,6 +67,31 @@
                 android:background="@drawable/mine_item_bg"
                 android:text="分享小组"
                 android:textColor="@color/btn_bkgrd_blue_selected" />
+
+            <LinearLayout
+                android:id="@+id/btn_going"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="2dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="20dip"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/mine_item_bg"
+                    android:text="报名活动"
+                    android:textColor="@color/btn_bkgrd_blue_selected" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <Button
@@ -78,8 +103,8 @@
             android:background="@drawable/pop_item_bg"
             android:minHeight="45dp"
             android:text="取消"
-            android:textStyle="bold"
-            android:textColor="@color/btn_bkgrd_blue_selected" />
+            android:textColor="@color/btn_bkgrd_blue_selected"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>

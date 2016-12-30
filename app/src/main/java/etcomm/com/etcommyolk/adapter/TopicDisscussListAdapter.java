@@ -38,6 +38,7 @@ import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.DisscussItems;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.CommenHandler;
+import etcomm.com.etcommyolk.utils.DensityUtil;
 import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
@@ -192,7 +193,7 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             }
 
             holder.disscuss_content_tv.setText(mInfo.content);
-            if (pres.getUid().equals(mInfo.user_id)) {
+            if (pres.getUserId().equals(mInfo.user_id)) {
                 holder.disscuss_delete_iv.setVisibility(View.VISIBLE);
             } else {
                 holder.disscuss_delete_iv.setVisibility(View.GONE);
@@ -255,29 +256,29 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             String model = android.os.Build.MODEL;
             String brand = android.os.Build.BRAND;
             Log.i(tag, "model:" + model + " brand: " + brand);
-//            if (model.contains("1SW")) {
-//                Log.i(tag, "contains 1sw");
-//                MarginLayoutParams source = (MarginLayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
-//                source.width = mScreenWidth * 2 / 3;
-//                source.height = mScreenWidth * 2 / 9 * column;
-//                source.bottomMargin = DensityUtil.dip2px(mContext, 10);
-//                source.topMargin = DensityUtil.dip2px(mContext, 10);
-//                holder.disscuss_pics_gridview.setLayoutParams(source);
-//                Log.i(tag, "setLayoutParams");
-//            } else {
-//                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.FILL_PARENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT);
-//                LayoutParams source = (LayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
-//                source.width = mScreenWidth * 2 / 3;
-//                source.height = mScreenWidth * 2 / 9 * column;
-//                holder.disscuss_pics_gridview.setLayoutParams(source);
-//
-//                // }
-//
-//            }
-//            final DisscussPhotoGridAdapter adapter = new DisscussPhotoGridAdapter(mContext, mInfo.getPhotos(), mScreenWidth * 2 / 9 - DensityUtil.dip2px(mContext, 10));
-//            holder.disscuss_pics_gridview.setAdapter(adapter);
+            if (model.contains("1SW")) {
+                Log.i(tag, "contains 1sw");
+                ViewGroup.MarginLayoutParams source = (ViewGroup.MarginLayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
+                source.width = mScreenWidth * 2 / 3;
+                source.height = mScreenWidth * 2 / 9 * column;
+                source.bottomMargin = DensityUtil.dip2px(mContext, 10);
+                source.topMargin = DensityUtil.dip2px(mContext, 10);
+                holder.disscuss_pics_gridview.setLayoutParams(source);
+                Log.i(tag, "setLayoutParams");
+            } else {
+                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.FILL_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams source = (LinearLayout.LayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
+                source.width = mScreenWidth * 2 / 3;
+                source.height = mScreenWidth * 2 / 9 * column;
+                holder.disscuss_pics_gridview.setLayoutParams(source);
+
+                // }
+
+            }
+            final DisscussPhotoGridAdapter adapter = new DisscussPhotoGridAdapter(mContext, mInfo.photos, mScreenWidth * 2 / 9 - DensityUtil.dip2px(mContext, 10));
+            holder.disscuss_pics_gridview.setAdapter(adapter);
             holder.disscuss_pics_gridview.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

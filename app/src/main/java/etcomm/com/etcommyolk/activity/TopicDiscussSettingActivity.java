@@ -30,6 +30,8 @@ public class TopicDiscussSettingActivity extends Activity {
     LinearLayout popLayout;
     String topic_id;
     Context mContext;
+    @Bind(R.id.btn_going)
+    LinearLayout btnGoing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +53,17 @@ public class TopicDiscussSettingActivity extends Activity {
     protected void initDatas() {
         Intent intent = getIntent();
         topic_id = intent.getStringExtra("topic_id");
-        boolean isAttentioned = intent.getBooleanExtra("isAttentioned", false);
         String id = intent.getStringExtra("id");
+        //首否是活动小组
+        if (intent.getStringExtra("is_activity").equals("1")) {
+            btnGoing.setVisibility(View.VISIBLE);
+        } else {
+            btnGoing.setVisibility(View.GONE);
+        }
         if (id.equals(GlobalSetting.getInstance(mContext).getUserId())) {
             btn_attention.setText("删除");
         } else {
-            if (isAttentioned) {
+            if (intent.getStringExtra("isAttentioned").equals("1")) {
                 btn_attention.setText("取消关注");
             } else {
                 btn_attention.setText("关注");
@@ -64,11 +71,12 @@ public class TopicDiscussSettingActivity extends Activity {
 
         }
 
+
         btn_report.setText("举报");
 
     }
 
-    @OnClick({R.id.btn_report, R.id.btn_share, R.id.btn_attention, R.id.btn_cancel})
+    @OnClick({R.id.btn_report, R.id.btn_share, R.id.btn_attention, R.id.btn_cancel, R.id.btn_going})
     public void onClick(View v) {
         Intent data = new Intent();
         switch (v.getId()) {
@@ -92,6 +100,12 @@ public class TopicDiscussSettingActivity extends Activity {
                 startActivity(shareintent);
                 break;
             case R.id.btn_cancel:
+                break;
+            case R.id.btn_going:
+                Intent intent1 = getIntent();
+                intent1.setClass(mContext, SportDetailActivity.class);
+                startActivity(intent1);
+                finish();
                 break;
             default:
                 break;

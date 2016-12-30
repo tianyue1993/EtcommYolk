@@ -345,6 +345,20 @@ public class ApiClient {
         asyncHttpClient.get(EtcommApplication.TOPIC_DELETE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
+    /**
+     * 优质小组
+     */
+    public void goodGroup(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.GOOD_GROUP() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 举报
+     */
+    public void Report(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.post(EtcommApplication.REPORT() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+
     public void cancelRequest() {
         asyncHttpClient.cancelAllRequests(true);
     }

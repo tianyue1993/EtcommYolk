@@ -28,23 +28,23 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="3dp"
-                fresco:placeholderImage="@mipmap/ic_header" />
+                fresco:placeholderImage="@mipmap/ic_header"
+                fresco:roundedCornerRadius="5dp" />
 
-            <EditText
+            <etcomm.com.etcommyolk.widget.ExEditText
                 android:id="@+id/topic_discuss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:background="@null"
-                android:cursorVisible="false"
                 android:enabled="false"
-                android:imeOptions="actionDone"
-                android:inputType="text|textMultiLine"
                 android:maxLength="20"
+                android:text="该创建者很懒，什么也没留下..."
                 android:textColor="#333333"
-                android:textColorHint="@color/black"
+                android:textCursorDrawable="@drawable/cursor_drawable"
                 android:textSize="15sp" />
+
         </LinearLayout>
 
         <RelativeLayout

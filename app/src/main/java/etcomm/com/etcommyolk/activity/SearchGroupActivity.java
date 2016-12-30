@@ -128,7 +128,9 @@ public class SearchGroupActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupItems m = mAdapter.getItem(position - 1);
                 Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
-                intent.putExtra("GroupItems", m);
+                intent.putExtra("topic_id", m.topic_id);
+                intent.putExtra("topic_name", m.name);
+                mContext.startActivity(intent);
                 startActivity(intent);
             }
         });

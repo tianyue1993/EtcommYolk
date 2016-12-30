@@ -11,9 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 
@@ -108,7 +106,7 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onSuccess(Login login) {
                     super.onSuccess(login);
-                    prefs.setUserId(login.content.id);
+                    prefs.setUserId(login.content.user_id);
                     prefs.setDepartmentId(login.content.department_id);
                     prefs.setCustomerId(login.content.customer_id);
                     prefs.setSerialNumberId(login.content.serial_number_id);

@@ -38,7 +38,7 @@ public class TopicMemberActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             topic_id = intent.getStringExtra("topic_id");
-            attion = intent.getIntExtra("attion", 0);
+            attion = intent.getIntExtra("user_number", 0);
         }
 
         setTitleTextView("小组成员（" + attion + "人）", null);

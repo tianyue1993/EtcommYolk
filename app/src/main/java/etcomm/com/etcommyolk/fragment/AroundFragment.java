@@ -32,14 +32,18 @@ import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.AddNewTopicActivity;
 import etcomm.com.etcommyolk.activity.SearchGroupActivity;
 import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
+import etcomm.com.etcommyolk.adapter.GoodGroupAdapter;
 import etcomm.com.etcommyolk.adapter.MyGroupListAdapter;
 import etcomm.com.etcommyolk.entity.Commen;
+import etcomm.com.etcommyolk.entity.GoodGroup;
 import etcomm.com.etcommyolk.entity.GroupItems;
 import etcomm.com.etcommyolk.entity.GroupList;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.handler.GroupListHandler;
+import etcomm.com.etcommyolk.handler.QuitGroupHandler;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
+import etcomm.com.etcommyolk.widget.HorizontalListView;
 
 public class AroundFragment extends BaseFragment {
     /**
@@ -66,9 +70,17 @@ public class AroundFragment extends BaseFragment {
     Context mContext;
     @Bind(R.id.to_see)
     TextView to_see;
+    @Bind(R.id.good_group)
+    HorizontalListView goodGroup;
+    @Bind(R.id.image)
+    ImageView image;
+    @Bind(R.id.text)
+    TextView text;
     private ArrayList<GroupItems> adaptList = new ArrayList<>();
     protected ArrayList<GroupItems> list = new ArrayList<GroupItems>();
     private MyGroupListAdapter mAdapter;
+    GoodGroupAdapter adapter;
+    private ArrayList<GoodGroup.QuitGroup> arrayList = new ArrayList<>();
     //关注成功，刷新身边页面————添加关注小组到我的小组列表
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -133,6 +145,9 @@ public class AroundFragment extends BaseFragment {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         getList();
+        getGoodgroup();
+        adapter = new GoodGroupAdapter(mContext, arrayList);
+        goodGroup.setAdapter(adapter);
         mAdapter = new MyGroupListAdapter(mContext, adaptList, new MyGroupListAdapter.mAttentioned() {
             @Override
             public void onAttentioned(GroupItems item) {
@@ -182,7 +197,8 @@ public class AroundFragment extends BaseFragment {
             public void onListItemClick(View view, int i) {
                 GroupItems m = mAdapter.getItem(i);
                 Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
-                intent.putExtra("GroupItems", m);
+                intent.putExtra("topic_id", m.topic_id);
+                intent.putExtra("topic_name", m.name);
                 startActivity(intent);
             }
         });
@@ -206,6 +222,40 @@ public class AroundFragment extends BaseFragment {
                 startActivity(new Intent(mContext, SearchGroupActivity.class));
                 break;
         }
+    }
+
+    public void getGoodgroup() {
+        RequestParams params = new RequestParams();
+        params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
+        ApiClient.getInstance().goodGroup(mContext, params, new QuitGroupHandler() {
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(GoodGroup commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                if (commen.content.size() > 0) {
+                    for (Iterator<GoodGroup.QuitGroup> iterator = commen.content.iterator(); iterator.hasNext(); ) {
+                        GoodGroup.QuitGroup disscussCommentItems = iterator.next();
+                        arrayList.add(disscussCommentItems);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
     }
 
     /**

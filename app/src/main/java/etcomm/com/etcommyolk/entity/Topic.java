@@ -16,6 +16,7 @@ public class Topic extends Entity {
     public String is_activity;
     public String activity_rank;
     public String is_rank;
+    public String detail_url;
 
 
     public class TopicUser {

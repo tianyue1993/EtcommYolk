@@ -197,6 +197,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleBottom" />
         <activity android:name=".activity.SharetoGroupActivity"></activity>
+        <activity android:name=".activity.SportDetailActivity"></activity>
     </application>
 
 </manifest>

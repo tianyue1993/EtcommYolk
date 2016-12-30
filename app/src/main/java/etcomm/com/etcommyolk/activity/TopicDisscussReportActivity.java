@@ -21,6 +21,9 @@ import com.loopj.android.http.RequestParams;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.entity.Commen;
+import etcomm.com.etcommyolk.exception.BaseException;
+import etcomm.com.etcommyolk.handler.CommenHandler;
 
 public class TopicDisscussReportActivity extends BaseActivity {
 
@@ -104,15 +107,39 @@ public class TopicDisscussReportActivity extends BaseActivity {
         showProgress(0, true);
         if (report_type.contains("discussion")) {
             //举报帖子
-            params.put("discussion_id", discussion_id);
+            params.put("id", discussion_id);
+            params.put("report_type", "Discussion");
         } else if (report_type.contains("topic")) {
             //举报小组
-            params.put("topic_id", topic_id);
+            params.put("id", topic_id);
+            params.put("report_type", "Topic");
         } else if (report_type.contains("conment")) {
             //举报评论
-            params.put("comment_id", comment_id);
+            params.put("id", comment_id);
+            params.put("report_type", "DiscussionComment");
         }
         Log.e(tag, "  params: " + params.toString());
+        client.Report(mContext, params, new CommenHandler() {
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                showToast(commen.message);
+                finish();
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+        });
 
     }
 

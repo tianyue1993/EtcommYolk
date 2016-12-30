@@ -14,7 +14,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        fresco:placeholderImage="@mipmap/ic_header" />
+        fresco:placeholderImage="@mipmap/ic_header"
+        fresco:roundedCornerRadius="5dp" />
 
 
     <Button
