@@ -79,14 +79,7 @@ public class TargetActivity extends BaseActivity {
                         public void onSuccess(Commen commen) {
                             super.onSuccess(commen);
                             showToast(commen.message);
-//                            editor.putString(Preferences.UserAge, intent.getStringExtra(Preferences.UserAge));
-//                            editor.putString(Preferences.UserHeight, intent.getStringExtra(Preferences.UserWeight));
-//                            editor.putString(Preferences.UserSex, "" + intent.getIntExtra(Preferences.UserSex, 1));// //1男，2女
-//                            editor.putString(Preferences.UserWeight, intent.getStringExtra(Preferences.UserWeight));
-//                            editor.putString(Preferences.NICK_NAME, intent.getStringExtra(Preferences.UserNickName));
-//                            editor.putString(Preferences.PedometerTarget, "" + progressbar.getProgress() * 1000 + 1000);
-                            Intent intent = new Intent(mContext, MainActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(mContext, MainActivity.class));
                             finish();
                         }
 

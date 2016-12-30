@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="etcomm.com.etcommyolk.activity.MyCollectionActivity">
+    tools:context="etcomm.com.etcommyolk.activity.MineSportsActivity">
+
 
     <etcomm.com.etcommyolk.widget.DownPullRefreshListView
         android:id="@+id/collectpulllist"

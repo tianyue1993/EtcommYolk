@@ -102,11 +102,11 @@ public class MineActivity extends BaseActivity {
                 break;
             case R.id.mine_minecollect_rl:
                 //收藏
-                showToast("收藏");
+                startActivity(new Intent(MineActivity.this, MyCollectionActivity.class));
                 break;
             case R.id.mine_minesport_rl:
                 //活动
-                showToast("活动");
+                startActivity(new Intent(MineActivity.this, MineSportsActivity.class));
                 break;
             case R.id.mine_minefeedback_rl:
                 //意见反馈

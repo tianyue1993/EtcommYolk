@@ -16,6 +16,11 @@ public class RecommendItems extends Entity {
     public String detail_url;
     public String pv;//浏览量
     public String desc;
+    public String activity_id;
+    public String customer_id;
+    public String deadline;
+    public String number;
+
 
     @Override
     public String toString() {

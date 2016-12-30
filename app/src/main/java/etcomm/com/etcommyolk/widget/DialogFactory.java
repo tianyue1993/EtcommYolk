@@ -371,23 +371,44 @@ public class DialogFactory {
         return customDialog;
     }
 
-//    public Dialog showSignedDialog(Context mContext, String days, String score) {
-//        // TODO Auto-generated method stub
-//        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_signin, null);
-//        final Dialog customDialog = new Dialog(mContext, R.style.commonDialog);
-//        WindowManager.LayoutParams localLayoutParams = customDialog.getWindow().getAttributes();
-//        customDialog.onWindowAttributesChanged(localLayoutParams);
-//        customDialog.setCanceledOnTouchOutside(true);
-//        customDialog.setCancelable(true);
-//        customDialog.setContentView(view);
-//        TextView tips_button = (TextView) view.findViewById(R.id.tips_button);
-//        tips_button.setText(PointsRule.getPointsByDay(days));
-//        TextView signin_content = (TextView) view.findViewById(R.id.signin_content);
-//        signin_content.setText(days);
-//        customDialog.show();
-//        return customDialog;
-//
-//    }
+    /**
+     * 每日签到对话框
+     * @param mContext
+     * @param days
+     * @param score
+     * @return
+     */
+    public Dialog showSignedDialog(Context mContext, String days, String score) {
+        // TODO Auto-generated method stub
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_signin, null);
+        final Dialog customDialog = new Dialog(mContext, R.style.commonDialog);
+        WindowManager.LayoutParams localLayoutParams = customDialog.getWindow().getAttributes();
+        customDialog.onWindowAttributesChanged(localLayoutParams);
+        customDialog.setCanceledOnTouchOutside(true);
+        customDialog.setCancelable(true);
+        customDialog.setContentView(view);
+        TextView tips_button = (TextView) view.findViewById(R.id.tips_button);
+        tips_button.setText(getPointsByDay(days));
+        TextView signin_content = (TextView) view.findViewById(R.id.signin_content);
+        signin_content.setText(days);
+        customDialog.show();
+        return customDialog;
+    }
+
+    /**
+     * 每日签到，连续签到，获取积分规则
+     */
+    public static String getPointsByDay(String day){
+        if(StringUtils.isEmpty(day)){
+            day ="1";
+        }
+        int d = Integer.valueOf(day);
+        if(d>=8){
+            return "+5";
+        }
+        return "+2";
+    }
+
 
     public Dialog showSettingDialog(Context context, String title, String msg, String leftbtnStr, String rightbtnStr, OnClickListener leftBtnClickListener, OnClickListener rightBtnClickListener, int leftTextColor, int rightTextColor) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_ui, null);

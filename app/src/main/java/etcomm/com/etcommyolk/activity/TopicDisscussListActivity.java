@@ -63,31 +63,12 @@ public class TopicDisscussListActivity extends BaseActivity {
 
 
     public static final int PIC = 1;
-    private static final int TAKE_PHOTO = 10;
-    public static final int PICK_PHOTO_FROM_MEIZU = 16;
-    public static final int Crop_PICK_PHOTO_FROM_MEIZU = 17;
-    private static final int CAMERA_PIC = 21;
-    private static final int CODE_CAMERA_REQUEST = 30;
-    private static final int CODE_RESULT_REQUEST = 33;
-    protected static final int ToTakePhoto = 0;
-    public static final int TAKEPHOTO = 11;
-    public static final int PICKPHOTO = 12;
-    private static final int CROP_PIC = 22;
-    private static final int Right = 3;
-    private static final int LongClick = 4;
-    protected Bitmap photo;
-    protected File mCurrentPhotoFile;
-    private Uri photoUri;
-    private boolean isSave = true;
     /* 头像文件 */
-    private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
-    private File mUriFile;
     private ArrayList<DisscussItems> list = new ArrayList<DisscussItems>();
     private ArrayList<DisscussItems> adaptList = new ArrayList<DisscussItems>();
     private List<Topic.TopicUser> image;
     private TopicDisscussListAdapter mAdapter;
     private CircleAdapter circleAdapter;
-    private Intent intent;
     boolean isAttentioned;
     String user_id = "";
     String discuse;
@@ -238,7 +219,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                 }
                 /**如果是自己创建的小组，可修改头像，可点击修改相关信息
                  * * */
-                if (discussion.content.topic.user_id.equals(prefs.getUid())) {
+                if (item.user_id.equals(prefs.getUserId())) {
                     topic_discuss.setEnabled(true);
                     topic_image.setOnClickListener(new View.OnClickListener() {
                         @Override
