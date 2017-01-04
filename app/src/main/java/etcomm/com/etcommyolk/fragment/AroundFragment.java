@@ -30,6 +30,7 @@ import butterknife.OnClick;
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.AddNewTopicActivity;
+import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.activity.SearchGroupActivity;
 import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
 import etcomm.com.etcommyolk.adapter.GoodGroupAdapter;
@@ -209,6 +210,7 @@ public class AroundFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.base_left:
+                startActivity(new Intent(mContext, MineActivity.class));
                 break;
             case R.id.add_topic:
                 startActivity(new Intent(mContext, AddNewTopicActivity.class));
@@ -293,7 +295,6 @@ public class AroundFragment extends BaseFragment {
                         GroupItems disscussCommentItems = iterator.next();
                         adaptList.add(disscussCommentItems);
                     }
-                    mAdapter.notifyDataSetChanged();
                 } else {
                     showToast("已无更多内容");
                     if (listView.getFooterViewsCount() > 0) {
@@ -306,6 +307,7 @@ public class AroundFragment extends BaseFragment {
                 } else {
                     empty.setVisibility(View.GONE);
                 }
+                mAdapter.notifyDataSetChanged();
             }
         });
     }

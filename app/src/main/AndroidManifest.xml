@@ -57,7 +57,7 @@
     <application
         android:name=".EtcommApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -198,6 +198,14 @@
             android:theme="@style/MyDialogStyleBottom" />
         <activity android:name=".activity.SharetoGroupActivity"></activity>
         <activity android:name=".activity.SportDetailActivity"></activity>
+        <activity android:name=".activity.ExamineReportActivity" />
+        <activity android:name=".activity.TopicWebviewlActivity" />
+
+
+        <!-- 设置友盟分享的id -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="586b4e15aed17943a3001bd8"></meta-data>
     </application>
 
 </manifest>

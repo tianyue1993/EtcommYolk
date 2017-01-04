@@ -386,9 +386,15 @@ public class EtcommApplication extends Application {
     }
 
     public static String REPORT() {
-        return BASE_URL + "topic/report"; //举报
+        return BASE_URL + "common/report"; //举报
 
     }
+
+    public static String SHARE() {
+        return BASE_URL + "common/share"; //举报
+
+    }
+
 
 
 }

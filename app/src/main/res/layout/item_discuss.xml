@@ -68,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_below="@+id/disscuss_userinfo_li"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/marginmiddle"
         android:layout_marginRight="@dimen/marginmiddle"
         android:layout_marginTop="@dimen/marginlittle"

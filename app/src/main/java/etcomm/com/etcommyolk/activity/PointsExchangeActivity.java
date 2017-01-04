@@ -76,7 +76,7 @@ public class PointsExchangeActivity extends BaseActivity {
             public void onSuccess(PointsExchange exchange) {
                 super.onSuccess(exchange);
                 cancelmDialog();
-                list = exchange.content.model;
+                list = exchange.content.items;
                 totalpoints = Integer.parseInt(exchange.content.my_score);
                 if (!StringUtils.isEmpty(prefs.getScore()) && Integer.valueOf(prefs.getScore()) == totalpoints) {
                 } else {

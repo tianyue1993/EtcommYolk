@@ -33,7 +33,7 @@ import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.DisscussConentListActivity;
 import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
 import etcomm.com.etcommyolk.activity.TopicReportPopActivity;
-import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
+import etcomm.com.etcommyolk.activity.TopicWebviewlActivity;
 import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.DisscussItems;
 import etcomm.com.etcommyolk.exception.BaseException;
@@ -127,10 +127,13 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 holder.share_health_news.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(mContext, WebviewDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("RecommendItems", mInfo);
-                        intent.putExtras(bundle);
+                        Intent intent = new Intent(mContext, TopicWebviewlActivity.class);
+                        intent.putExtra("type", "health");
+                        intent.putExtra("topic_name", mInfo.title);
+                        intent.putExtra("image", mInfo.photos.get(0).thumb_image);
+                        intent.putExtra("discuse", mInfo.content);
+                        intent.putExtra("topic_id", mInfo.share_id);
+                        intent.putExtra("url", mInfo.share_url);
                         mContext.startActivity(intent);
                     }
                 });
@@ -183,10 +186,13 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 holder.share_health_news.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(mContext, WebviewDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("RecommendItems", mInfo);
-                        intent.putExtras(bundle);
+                        Intent intent = new Intent(mContext, TopicWebviewlActivity.class);
+                        intent.putExtra("type", "activity");
+                        intent.putExtra("topic_name", mInfo.title);
+                        intent.putExtra("image", mInfo.photos.get(0).thumb_image);
+                        intent.putExtra("discuse", mInfo.content);
+                        intent.putExtra("topic_id", mInfo.share_id);
+                        intent.putExtra("url", mInfo.share_url);
                         mContext.startActivity(intent);
                     }
                 });

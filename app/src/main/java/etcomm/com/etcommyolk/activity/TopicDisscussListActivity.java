@@ -128,7 +128,6 @@ public class TopicDisscussListActivity extends BaseActivity {
             topic_name = getIntent().getStringExtra("topic_name");
             setTitleTextView(topic_name, null);
         }
-
         getList();
 
     }
@@ -154,15 +153,15 @@ public class TopicDisscussListActivity extends BaseActivity {
             setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (topic.is_activity.equals("1")) {
-
-                    }
                     Intent intent = new Intent(mContext, TopicDiscussSettingActivity.class);
                     intent.putExtra("id", topic.user_id);
                     intent.putExtra("topic_id", topic_id);
                     intent.putExtra("isAttentioned", topic.is_followed);
                     intent.putExtra("detail_url", topic.detail_url);
                     intent.putExtra("is_activity", topic.is_activity);
+                    intent.putExtra("discuse", topic.desc);
+                    intent.putExtra("topic_name", topic_name);
+                    intent.putExtra("image", topic.avatar);
                     startActivityForResult(intent, Right);
                 }
             });
@@ -675,7 +674,6 @@ public class TopicDisscussListActivity extends BaseActivity {
                 initData();
                 circleAdapter = new CircleAdapter(mContext, list1);
                 image_list.setAdapter(circleAdapter);
-                topic_discuss.setText(discussion.content.topic.desc + "");
                 if (discussion.content.topic.is_rank.equals("0")) {
                     depart_rank.setVisibility(View.GONE);
                 } else {
@@ -712,9 +710,9 @@ public class TopicDisscussListActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             topic_discuss.setText("");
-                            topic_discuss.setSelection(topic_discuss.getText().toString().length());
-                            topic_discuss.setCursorVisible(true);
-                            topic_discuss.requestFocus();
+//                            topic_discuss.setSelection(topic_discuss.getText().toString().length());
+//                            topic_discuss.setCursorVisible(true);
+//                            topic_discuss.requestFocus();
                         }
                     });
                     /**
@@ -735,9 +733,8 @@ public class TopicDisscussListActivity extends BaseActivity {
 
                 }
 
-
                 attion_count.setText(topic.user_number + "个成员   >");
-                attention_member.setOnClickListener(new View.OnClickListener() {
+                image_list.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, TopicMemberActivity.class);

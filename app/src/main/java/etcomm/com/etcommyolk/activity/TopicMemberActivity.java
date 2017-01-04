@@ -28,7 +28,7 @@ public class TopicMemberActivity extends BaseActivity {
     protected static final String tag = TopicMemberActivity.class.getSimpleName();
 
     private String topic_id;
-    private int attion;
+    private String attion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class TopicMemberActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             topic_id = intent.getStringExtra("topic_id");
-            attion = intent.getIntExtra("user_number", 0);
+            attion = intent.getStringExtra("user_number");
         }
 
         setTitleTextView("小组成员（" + attion + "人）", null);

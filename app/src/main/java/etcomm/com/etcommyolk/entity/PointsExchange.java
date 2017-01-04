@@ -14,7 +14,7 @@ public class PointsExchange extends Entity {
     public class Content {
         public String pages;
 
-        public ArrayList<PointsExchangeItems> model;
+        public ArrayList<PointsExchangeItems> items;
 
         public String my_score;
 

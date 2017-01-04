@@ -78,9 +78,10 @@ public class TopicDiscussSettingActivity extends Activity {
 
     @OnClick({R.id.btn_report, R.id.btn_share, R.id.btn_attention, R.id.btn_cancel, R.id.btn_going})
     public void onClick(View v) {
-        Intent data = new Intent();
+
         switch (v.getId()) {
             case R.id.btn_attention: // 取关
+                Intent data = new Intent();
                 data.putExtra(Preferences.TOPICSET, "1");
                 setResult(RESULT_OK, data);
                 break;
@@ -91,12 +92,9 @@ public class TopicDiscussSettingActivity extends Activity {
                 startActivity(intent);
                 break;
             case R.id.btn_share:
-                Intent shareintent = new Intent(mContext, SharetoGroupActivity.class);
-                shareintent.putExtra("topic_id", topic_id);
+                Intent shareintent = getIntent();
+                shareintent.setClass(mContext, SharetoGroupActivity.class);
                 shareintent.putExtra("type", "topic");
-                shareintent.putExtra("discuse", getIntent().getStringExtra("discuse"));
-                shareintent.putExtra("image", getIntent().getStringExtra("image"));
-                shareintent.putExtra("topic_name", getIntent().getStringExtra("topic_name"));
                 startActivity(shareintent);
                 break;
             case R.id.btn_cancel:

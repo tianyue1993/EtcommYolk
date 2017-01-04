@@ -70,6 +70,9 @@ public class GroupListAdapter extends YolkBaseAdapter<GroupItems> {
             if (mInfo.is_followed.equals("1")) {
                 viewHolder.attention.setText("已关注");
                 viewHolder.attention.setEnabled(false);
+            } else {
+                viewHolder.attention.setText("关注");
+                viewHolder.attention.setEnabled(true);
             }
             viewHolder.attention.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -26,13 +26,14 @@ import java.util.Iterator;
 
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.activity.ExamineReportActivity;
 import etcomm.com.etcommyolk.activity.MineActivity;
-import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
-import etcomm.com.etcommyolk.activity.LoginActivity;
 import etcomm.com.etcommyolk.activity.MoreHealthActivity;
 import etcomm.com.etcommyolk.activity.MoreSportsActivity;
 import etcomm.com.etcommyolk.activity.MoreWealfeActivity;
 import etcomm.com.etcommyolk.activity.PointsExchangeActivity;
+import etcomm.com.etcommyolk.activity.SearchGroupActivity;
+import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
 import etcomm.com.etcommyolk.adapter.SportsAdapter;
 import etcomm.com.etcommyolk.entity.FindHome;
 import etcomm.com.etcommyolk.entity.FindList;
@@ -214,7 +215,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RecommendItems recommendItems = mAdapter.getItem(position - 1);
+                RecommendItems recommendItems = mAdapter.getItem(position - 2);
                 Intent intent = new Intent(mContext, WebviewDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("RecommendItems", recommendItems);
@@ -235,9 +236,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.group:
                 if (AppMudle == 0) {
-                    showToast("小组");
+                    startActivity(new Intent(mContext, SearchGroupActivity.class));
                 } else {
-                    showToast("爱康");
+                    startActivity(new Intent(mContext, ExamineReportActivity.class));
                 }
                 break;
             case R.id.tv_more_activity:
@@ -331,7 +332,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                         tvTime.setText(items.start_at + "——" + items.end_at);
                     }
                 }
-              
+
                 //是否显示爱康
                 if (findHome.content.app_module.get(0).name.equals("爱康")) {
                     AppMudle = 1;

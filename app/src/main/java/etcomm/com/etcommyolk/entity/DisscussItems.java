@@ -1,6 +1,7 @@
 package etcomm.com.etcommyolk.entity;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -35,10 +36,12 @@ public class DisscussItems extends Entity {
     public String title;
 
     public String detail_url;
+
+    public String share_url;
     public List<DisscussPhotosItems> photos;
 
 
-    public class DisscussPhotosItems {
+    public class DisscussPhotosItems implements Serializable {
         public String discussion_image_id;
         public String image;
         public String thumb_image;
