@@ -1,26 +1,26 @@
 [
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\view_photopreview.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\view_photopreview.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\view_photopreview.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\view_photopreview.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\layout_photoitem.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\layout_photoitem.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\layout_album.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\layout_album.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\view_camera.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\view_camera.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\view_camera.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\view_camera.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\layout_album.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\layout_album.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\layout_photoitem.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\layout_photoitem.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_photopreview.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_photopreview.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_photopreview.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_photopreview.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_photoselector.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_photoselector.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_photoselector.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_photoselector.xml"
     }
 ]
