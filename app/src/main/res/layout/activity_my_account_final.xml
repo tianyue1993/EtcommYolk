@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/login_input_bac"
+        android:layout_marginTop="48dp"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/linearLayout2">
+
+
+        <TextView
+            android:id="@+id/final_type"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="手机号："
+            />
+
+        <EditText
+            android:id="@+id/final_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="输入手机号"
+            android:background="@null"
+            android:gravity="left|center"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:layout_marginLeft="40dp"
+        android:background="@mipmap/login_input_bac"
+        android:id="@+id/linearLayout3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="验证码："
+            />
+
+        <EditText
+            android:id="@+id/final_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="输入验证码"
+            android:gravity="left|center"
+            android:singleLine="true"
+            android:inputType="number"
+            android:background="@null"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/get_code"
+            android:layout_toLeftOf="@+id/final_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取验证码"
+            android:textColor="#F7B23f"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/bound_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="绑定邮箱后，下次登录可使用邮箱登录"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/final_commit"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="下一步"
+        android:textSize="22dp"
+        android:textColor="@color/white"
+        android:background="@mipmap/all_fil_button"
+        android:layout_marginBottom="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

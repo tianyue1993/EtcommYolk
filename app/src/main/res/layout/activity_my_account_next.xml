@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="etcomm.com.etcommyolk.activity.MyAccountNextActivity">
+
+    <RelativeLayout
+        android:id="@+id/get_show_change"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:background="#EEEEEE">
+
+        <TextView
+            android:id="@+id/get_show_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            />
+
+        <TextView
+            android:id="@+id/get_show_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13666666666"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+        <TextView
+            android:id="@+id/type_show_f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="更换手机号"
+            android:textColor="#F5A828"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

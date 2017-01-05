@@ -6,6 +6,7 @@
     android:background="@color/white">
 
     <RelativeLayout
+        android:id="@+id/change_phone"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#EEEEEE">
@@ -33,7 +34,7 @@
 
         <Button
             android:id="@+id/acc_phone_button"
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="30dp"
             android:background="@mipmap/account_button"
             android:layout_centerVertical="true"
@@ -41,15 +42,13 @@
             android:textColor="#F5A828"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:visibility="gone"
             android:layout_marginRight="10dp"
             />
-
-
-
-
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/change_email"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -77,7 +76,7 @@
 
         <Button
             android:id="@+id/acc_mail_button"
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="30dp"
             android:background="@mipmap/account_button"
             android:layout_centerVertical="true"
@@ -86,6 +85,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             />
 
 

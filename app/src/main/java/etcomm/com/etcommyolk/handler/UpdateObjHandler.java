@@ -15,7 +15,7 @@ import etcomm.com.etcommyolk.entity.UpdateObj;
 import etcomm.com.etcommyolk.exception.BaseException;
 
 /**
- * Created by Hello on 2016/12/24.
+ * Created by zuoh on 2016/12/24.
  */
 public class UpdateObjHandler extends JsonResponseHandler {
 

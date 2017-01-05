@@ -53,5 +53,51 @@ public class InterfaceUtils {
     }
 
 
+    /**
+     * 比较版本号
+     *
+     * @param versionServer
+     * @param versionLocal
+     * @return 0, 相同, 服务器版本大返回1。服务器版本小返回-1
+     */
+    public static int compareVersion(String versionServer, String versionLocal) {
+
+        if (StringUtils.isBlank(versionServer) || StringUtils.isBlank(versionLocal)) {
+            return 0;
+        }
+        if (versionLocal.equals(versionServer)) {
+            return 0;
+        }
+
+        String[] version1Array = versionServer.split("\\.");
+        String[] version2Array = versionLocal.split("\\.");
+
+        int index = 0;
+        int minLen = Math.min(version1Array.length, version2Array.length);
+        int diff = 0;
+
+        while (index < minLen && (diff = Integer.parseInt(version1Array[index]) - Integer.parseInt(version2Array[index])) == 0) {
+            index++;
+        }
+
+        if (diff == 0) {
+            for (int i = index; i < version1Array.length; i++) {
+                if (Integer.parseInt(version1Array[i]) > 0) {
+                    return 1;
+                }
+            }
+
+            for (int i = index; i < version2Array.length; i++) {
+                if (Integer.parseInt(version2Array[i]) > 0) {
+                    return -1;
+                }
+            }
+
+            return 0;
+        } else {
+            return diff > 0 ? 1 : -1;
+        }
+    }
+
 
 }

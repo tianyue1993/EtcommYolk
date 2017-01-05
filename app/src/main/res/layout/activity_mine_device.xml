@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:background="#F6F6F5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/searchbluedevices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/search_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/marginmiddle"
+                android:layout_marginTop="50dp"
+                android:src="@mipmap/my_getstep" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="正在搜索您的手环"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginmiddle"
+                android:singleLine="true"
+                android:text="请确认手环已开启，并且靠近您的手机" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginmiddle"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marginmiddle"
+                    android:singleLine="true"
+                    android:text="设备型号"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/marginlarge"
+                    android:text="连接设备"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+
+            <ListView
+                android:id="@+id/listview"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/bindeddevice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="@dimen/height_alert_title"
+            android:visibility="invisible"
+            >
+
+            <RelativeLayout
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                android:background="@mipmap/ped_device_bac"
+                android:minHeight="@dimen/height_alert_title" >
+
+                <TextView
+                    android:id="@+id/device_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marginmiddle"
+                    android:singleLine="true"
+                    android:text="设备号"
+                    android:textColor="#A9A9A8"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/device_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/marginlarge"
+                    android:text="已断开连接"
+                    android:textColor="#A9A9A8"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/unbinddevice"
+                style="@style/common_btn_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/marginlargehuge"
+                android:background="@mipmap/synchrodata_bac"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="0dp"
+                android:text="取消绑定"
+                android:textColor="@color/title_text_color" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

@@ -16,7 +16,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.adapter.HealthAdapter;
 import etcomm.com.etcommyolk.entity.FindHome;
 import etcomm.com.etcommyolk.entity.RecommendItems;
 import etcomm.com.etcommyolk.exception.BaseException;
@@ -32,7 +34,7 @@ public class MyCollectionActivity extends BaseActivity {
     @Bind(R.id.collectpulllist)
     DownPullRefreshListView collectpulllist;
     private ArrayList<RecommendItems> list = new ArrayList<RecommendItems>();
-//    private HealthNewsListAdapter mHealthAdapter;
+    private HealthAdapter mHealthAdapter;
     protected int page_size = 6;
     protected int page_number = 1;
 
@@ -47,6 +49,7 @@ public class MyCollectionActivity extends BaseActivity {
     }
 
     protected void initView() {
+        EtcommApplication.addActivity(this);
         setTitleTextView("我的收藏", null);
         setRightImage(R.mipmap.arout_search, new View.OnClickListener() {
             @Override
@@ -92,20 +95,20 @@ public class MyCollectionActivity extends BaseActivity {
                 getHealthList(true, page_size, page_number);
             }
         });
-
+        mHealthAdapter = new HealthAdapter(this, list);
         //条目点击进入webview详情
         collectpulllist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                RecommendItems recommendItems = mAdapter.getItem(position - 1);
-//                Intent intent = new Intent(mContext, WebviewDetailActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("RecommendItems", recommendItems);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                RecommendItems recommendItems = mHealthAdapter.getItem(position - 1);
+                Intent intent = new Intent(mContext, WebviewDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("RecommendItems", recommendItems);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
-
+        getHealthList(true, page_size, page_number);
     }
 
     //获取列表
@@ -120,11 +123,12 @@ public class MyCollectionActivity extends BaseActivity {
             @Override
             public void onSuccess(FindHome healthNewsItems) {
                 super.onSuccess(healthNewsItems);
-                List<RecommendItems> lists = healthNewsItems.content.recommend;
+                List<RecommendItems> lists = healthNewsItems.content.items;
                 if (lists != null && lists.size() > 0) {
                     if (isRefresh) {
                         list.clear();
                         list.addAll(lists);
+                        collectpulllist.setAdapter(mHealthAdapter);
                     } else {
                         for (Iterator<RecommendItems> iterator = lists.iterator(); iterator.hasNext(); ) {
                             RecommendItems disscussCommentItems = (RecommendItems) iterator.next();
@@ -133,15 +137,22 @@ public class MyCollectionActivity extends BaseActivity {
                             }
                         }
                     }
-//                    mHealthAdapter.notifyDataSetChanged();
+                    mHealthAdapter.notifyDataSetChanged();
                 } else {
                     showToast("暂无更多资讯");
-                }
+                }loadStatus = false;
+                collectpulllist.onRefreshComplete();
+                loadingProgressBar.setVisibility(View.GONE);
+                loadingText.setText(getResources().getString(R.string.loadmore));
             }
 
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
+                collectpulllist.onRefreshComplete();
+                loadStatus = false;
+                loadingProgressBar.setVisibility(View.GONE);
             }
         });
     }

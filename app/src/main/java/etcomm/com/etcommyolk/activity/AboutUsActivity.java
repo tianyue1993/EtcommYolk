@@ -31,6 +31,7 @@ import etcomm.com.etcommyolk.entity.UpdateObj;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.UpdateObjHandler;
 import etcomm.com.etcommyolk.utils.StringUtils;
+import etcomm.com.etcommyolk.utils.UpdateCheckUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 
 /**
@@ -43,8 +44,8 @@ public class AboutUsActivity extends BaseActivity {
     @Bind(R.id.version_update)
     TextView versionUpdate;
     protected String apkurl;
-    private Dialog noticeDialog;
     private BroadcastReceiver receiver;
+    private Dialog noticeDialog;
     private boolean flag = true;
 
 
@@ -102,10 +103,14 @@ public class AboutUsActivity extends BaseActivity {
                     System.out.println(longVersionOnServer[0] + ",,,," + longVersionOnClient[0] + ",,," + longVersionOnServer[1] + ",,,," + longVersionOnClient[1]);
                     if (longVersionOnServer[0] > 0 && longVersionOnClient[0] > 0) {// 粗略检测version值合法性
                         if (longVersionOnServer[0] > longVersionOnClient[0]) {
-                            showNoticeDialog(dec);
+
+                            UpdateCheckUtils.getInstanse().lookVersion(AboutUsActivity.this, true, commen);
+
+//                            showNoticeDialog(dec);
                             return;
                         } else if (longVersionOnServer[0] == longVersionOnClient[0] && longVersionOnServer[1] > longVersionOnClient[1]) {
-                            showNoticeDialog(dec);
+                            UpdateCheckUtils.getInstanse().lookVersion(AboutUsActivity.this, true, commen);
+//                            showNoticeDialog(dec);
                             return;
                         } else {
                             Log.i(tag, "版本没有更新 ");

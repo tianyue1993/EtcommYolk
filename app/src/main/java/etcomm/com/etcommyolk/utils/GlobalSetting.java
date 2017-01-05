@@ -3,6 +3,8 @@ package etcomm.com.etcommyolk.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.joda.time.DateTime;
+
 
 public class GlobalSetting {
 
@@ -55,6 +57,20 @@ public class GlobalSetting {
     private static final String ISPUSHMSG = "IsPushMsg";
     private static final String ISPUSHMSGLIKE = "IsPushMsg_Like";
     private static final String ISPUSHMSGCOMMENT = "IsPushMsg_Comment";
+    private static final String MACADDRESS = "bluetoothmacaddress"; //地址
+    private static final String BLUEDEVICENAME = "bindedbluetoothname";//蓝牙硬件名称
+    private static final String BLUEDEVICERSSI = "bluetoothrssi";//蓝牙唯一
+    private static final String ISHAVERECEIVEUNREADDATA = "isHaveReceiveUnReadData"; //是否有新推送消息
+    private static final String IFSOFTPEDOMETERON = "isSoftpedometerOn"; //app计步是否开启
+    private static final String ACTIONBLUECONN = "com.etcomm.dcare.ActionBlueConn";//获取蓝牙连接状态
+    private static final String USERSTEPLEIGHT = "userstepleight";//获取蓝牙连接状态
+    private static final String DAYMILE = "daymile"; //里程
+    private static final String DAYCALORIES = "daycalories"; //卡路里
+    private static final String DAYSECONDS = "dayseconds"; // 时间
+    private static final String DATSTEPS = "daysteps"; // 步数
+    private static final String ACTIONBLUESTEP = "com.etcomm.dcare.ActionBlueSteps";//获取蓝牙计步数据
+    private static final String SPSETTINGSREANLOINGON = "isscreenlongon";//运动时，屏幕常量
+    private static final String SOFTPEDONMTERSENSITIVITY = "softPedometerSensitivity"; //app计步灵敏度
 
 
     private GlobalSetting(Context context) {
@@ -137,7 +153,12 @@ public class GlobalSetting {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
         editor.putBoolean(key, value);
         editor.commit();
+    }
 
+    private void saveFloat(String key, Float value) {
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putFloat(key, value);
+        editor.commit();
     }
 
     private void saveString(String key, String value) {
@@ -579,6 +600,138 @@ public class GlobalSetting {
     public void saveHeigh(int realName) {
         saveInt("heigh", realName);
     }
+
+    /**
+     * 计步相关
+     */
+    /**
+     * 地址
+     */
+    public String getMacAddress(){
+        return getSharedPreferences().getString(MACADDRESS, "");
+    }
+    public void setMacAddress(String string){
+        saveString(MACADDRESS, string);
+    }
+    /**
+     * 硬件名称
+     */
+    public String getBlueDeviceName(){
+        return getSharedPreferences().getString(BLUEDEVICENAME, "");
+    }
+
+    public void setBlueDeviceName(String string){
+        saveString(BLUEDEVICENAME, string);
+    }
+    /**
+     * 硬件唯一
+     */
+    public int getBlueDeviceRssi(){
+        return getSharedPreferences().getInt(BLUEDEVICERSSI, 0);
+    }
+    public void setBlueDeviceRssi(int i){
+        saveInt(BLUEDEVICERSSI, i);
+    }
+    /**
+     * 是否有新消息推送
+     */
+    public Boolean getHaveReceiveUnReadData(){
+        return getSharedPreferences().getBoolean(ISHAVERECEIVEUNREADDATA, false);
+    }
+    public void setHaveReceiveUnReadData(boolean boo){
+        saveBoolean(ISHAVERECEIVEUNREADDATA, boo);
+    }
+    /**
+     * APP计步是否开启
+     */
+    public boolean isSoftPedometerOn() {
+        return getSharedPreferences().getBoolean(IFSOFTPEDOMETERON, true);
+    }
+
+    public void setIfSoftPedometerOn(boolean boo){
+        saveBoolean(IFSOFTPEDOMETERON, boo);
+    }
+    /**
+     * 蓝牙连接状态
+     */
+    public boolean getBlueConn() {
+        return getSharedPreferences().getBoolean(ACTIONBLUECONN, true);
+    }
+
+    public void saveBlueConn(Boolean realName) {
+        saveBoolean(ACTIONBLUECONN, realName);
+    }
+
+    /**
+     * 蓝牙数据
+     */
+    public String getBlueData() {
+        return getSharedPreferences().getString(ACTIONBLUESTEP, "");
+    }
+
+    public void saveBlueData(String realName) {
+        saveString(ACTIONBLUESTEP, realName);
+    }
+
+    /**
+     * 默认计步设置-常亮设置
+     */
+    public void setIsScreenLongOn(boolean isScreenOn) {
+       saveBoolean(SPSETTINGSREANLOINGON, isScreenOn);
+    }
+
+    public boolean isScreenLongOn() {
+        return getSharedPreferences().getBoolean(SPSETTINGSREANLOINGON, false);
+    }
+
+    public void setSoftPedometerSensitivity(int s) {
+        saveInt(SOFTPEDONMTERSENSITIVITY, s);
+    }
+
+    public int getSoftPedometerSensitivity() {
+        return getSharedPreferences().getInt(SOFTPEDONMTERSENSITIVITY, 5);
+    }
+
+
+
+    /**
+     * 用户一步距离
+     */
+    public String getUserStepLeight(){
+        return getSharedPreferences().getString(USERSTEPLEIGHT, "66");
+    }
+
+    // 临时存储软件计步数据
+    public void saveTmpStep(Context context, float todayTotalSteps, float todayTotalMiles, float todayTotalSeconds, float todayTotalCaliries) {
+        String nowTime = new DateTime().toString("yyyyMMdd");
+        String uid = getUserId();
+        saveFloat(nowTime + "-" + uid + DATSTEPS, todayTotalSteps);
+        saveFloat(nowTime + "-" + uid + DAYMILE, todayTotalMiles);
+        saveFloat(nowTime + "-" + uid + DAYSECONDS, todayTotalSeconds);
+        saveFloat(nowTime + "-" + uid + DAYCALORIES, todayTotalCaliries);
+    }
+
+    // 临时获取软件计步数据
+    public float getTmpStep(Context context, String date) {
+        return getSharedPreferences().getFloat(date + "-" + getUserId() + DATSTEPS, 0);
+    }
+
+    // 临时获取软件计步里程
+    public float getTmpMiles(Context context, String date) {
+        return getSharedPreferences().getFloat(date + "-" + getUserId() + DAYMILE, 0);
+    }
+
+    // 临时获取软件计步秒数
+    public float getTmpSeconds(Context context, String date) {
+        return getSharedPreferences().getFloat(date + "-" + getUserId() + DAYSECONDS, 0);
+    }
+
+    // 临时获取软件计步卡路里
+    public float getTmpCaliries(Context context, String date) {
+        return getSharedPreferences().getFloat(date + "-" + getUserId() + DAYCALORIES, 0);
+    }
+
+
 
 
 }

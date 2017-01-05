@@ -15,6 +15,7 @@ public class UpdateObj extends Entity  {
         public String description;//": "第一个版本", //描述
         public String file;//": "http://113.59.227.10:81/upload/android/Dcare.apk", //地址
         public String created_at;//": "2016-01-18 13:21:46" //更新时间
+        public String force;//强制更新
     }
 
 }

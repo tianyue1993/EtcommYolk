@@ -35,6 +35,8 @@ public class BaseActivity extends Activity {
     private TextView rightTextView ,rightText;
     //外部布局
     private RelativeLayout allRelativeLayout;
+    //标题布局
+    private RelativeLayout titleRelativeLayout;
     String tag = getClass().getSimpleName();
     Context mContext;
     public GlobalSetting prefs;
@@ -122,6 +124,7 @@ public class BaseActivity extends Activity {
         rightTextView = (TextView) findViewById(R.id.text_base_right);
         rightText= (TextView)findViewById(R.id.text_right);
         allRelativeLayout = (RelativeLayout) findViewById(R.id.all_base_layout);
+        titleRelativeLayout = (RelativeLayout) findViewById(R.id.base_layout);
         leftTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,6 +231,7 @@ public class BaseActivity extends Activity {
      */
     public void setTitleTextView(String string, View.OnClickListener onClickListener) {
         if (title != null) {
+            titleRelativeLayout.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
             if (string != null) {
                 title.setText(string);

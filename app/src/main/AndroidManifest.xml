@@ -206,6 +206,22 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="586b4e15aed17943a3001bd8"></meta-data>
+=======
+        <activity android:name=".activity.MineSportsActivity" />
+        <activity android:name=".activity.MyAccountNextActivity" />
+        <activity android:name=".activity.MyAccountFinalActivity" />
+        <activity android:name=".activity.RankActivity" />
+        <activity android:name=".activity.PedometerActivity" />
+        <activity android:name=".activity.MineDeviceActivity" />
+        <activity
+            android:name=".activity.TrendRecordActivity"
+            android:label="@string/title_activity_trend_record"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service android:name=".service.StepDataUploadService" />
+
+        <activity android:name=".activity.MsgListActivity"></activity>
+>>>>>>> a2378aaccfe5afe1495f56b0d7efff1c4fbc3b94
     </application>
 
 </manifest>

@@ -94,10 +94,12 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
                      * 设置用户没有选择头像的时候，默认选中第一个头像
                      */
                     prefs.setAvatar(mMan.get(0));
+                    prefs.saveLoginUserAvatar(mMan.get(0));
                     prefs.setGender("1");
 
                 } else {
                     prefs.setAvatar(mMan.get(0));
+                    prefs.saveLoginUserAvatar(mMan.get(0));
                     prefs.setGender("2");
                 }
 
@@ -124,9 +126,11 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
             public void onClick(int index) {
                 if (isMan) {
                     prefs.setAvatar(mMan.get(index));
+                    prefs.saveLoginUserAvatar(mMan.get(index));
                     prefs.setGender("1");
                 } else {
-                    prefs.setAvatar(mMan.get(index));
+                    prefs.setAvatar(mWeMen.get(index));
+                    prefs.saveLoginUserAvatar(mWeMen.get(index));
                     prefs.setGender("2");
                 }
 
@@ -195,7 +199,6 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
         object.put("user_id", prefs.getUserId());
         object.put("nick_name", inputChoose.getText().toString().trim());
         object.put("type", "check");
-        Log.e("interface", object.toString());
         client.toRegisterUpdateInfo(this, object, new CommenHandler() {
 
             @Override
@@ -209,7 +212,6 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-                showToast("3213213121321");
             }
         });
     }

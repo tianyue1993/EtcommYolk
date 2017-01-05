@@ -93,7 +93,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
         if (getRightTextView().getText().equals("邮箱找回")) {
             //切换到邮箱
             getRightTextView().setText("手机找回");
-            lostType.setText("邮　箱");
+            lostType.setText("邮　箱：");
             getCodeType = false;
             if (lostPhone.getText().toString().isEmpty()) {
                 lostPhone.setHint("请输入邮箱");
@@ -106,7 +106,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
         } else {
             //切换到手机
             getRightTextView().setText("邮箱找回");
-            lostType.setText("手机号");
+            lostType.setText("手机号：");
             getCodeType = true;
             if (lostPhone.getText().toString().isEmpty()) {
                 lostPhone.setHint("请输入手机号");
