@@ -1,26 +1,26 @@
 [
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_down_current.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_down_current.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_down_current.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_down_current.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\activity_alpha_action_in.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\activity_alpha_action_in.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_up_current.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_up_current.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_down.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_down.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\activity_alpha_action_in.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\activity_alpha_action_in.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\pb_default.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\pb_default.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_up.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_up.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_up.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_up.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_down.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_down.xml"
     },
     {
-        "merged": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\translate_up_current.xml",
-        "source": "F:\\ASWork\\new\\new\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\translate_up_current.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\debug\\anim\\pb_default.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\anim\\pb_default.xml"
     }
 ]

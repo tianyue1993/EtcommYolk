@@ -734,7 +734,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                 }
 
                 attion_count.setText(topic.user_number + "个成员   >");
-                image_list.setOnClickListener(new View.OnClickListener() {
+                attention_member.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, TopicMemberActivity.class);

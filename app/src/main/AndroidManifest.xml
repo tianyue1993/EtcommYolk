@@ -206,7 +206,6 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="586b4e15aed17943a3001bd8"></meta-data>
-=======
         <activity android:name=".activity.MineSportsActivity" />
         <activity android:name=".activity.MyAccountNextActivity" />
         <activity android:name=".activity.MyAccountFinalActivity" />
@@ -221,7 +220,6 @@
         <service android:name=".service.StepDataUploadService" />
 
         <activity android:name=".activity.MsgListActivity"></activity>
->>>>>>> a2378aaccfe5afe1495f56b0d7efff1c4fbc3b94
     </application>
 
 </manifest>
