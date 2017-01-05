@@ -1,6 +1,5 @@
 package etcomm.com.etcommyolk.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,64 +24,51 @@ import android.widget.Toast;
 import com.loopj.android.http.RequestParams;
 import com.umeng.analytics.MobclickAgent;
 
-
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.DeviceBind;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.DeviceBindHandler;
 import etcomm.com.etcommyolk.service.StepDataUploadService;
 import etcomm.com.etcommyolk.utils.Preferences;
-import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.SwitchButton;
 import me.chunyu.pedometerservice.PedometerCounterService;
 
 public class PedometerActivity extends BaseActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pedometer);
-    }
-
-
-    boolean isCheck = false; // 软件计步状态
     @Bind(R.id.pedometer_switch)
     SwitchButton pedometer_switch;
     @Bind(R.id.screenlongon_switch)
     SwitchButton screenlongon_switch;
-    @Bind(R.id.tv1)
-    TextView tv1;
-    @Bind(R.id.pedometer_tv1)
-    TextView pedometer_tv1;
-    @Bind(R.id.pedometer_device_rl)
-    RelativeLayout pedometer_device_rl;
-    @Bind(R.id.setting_submit_rl)
-    RelativeLayout setting_submit_rl;
     @Bind(R.id.pedometer_plus)
     ImageView pedometer_plus;
     @Bind(R.id.pedometer_sensitivity)
     TextView pedometer_sensitivity;
     @Bind(R.id.pedometer_minus)
     ImageView pedometer_minus;
-    @Bind(R.id.pedometer_device_imageView1)
-    ImageView pedometer_device_imageView1;
-    @Bind(R.id.wrist_device_control_tv)
-    TextView wrist_device_control_tv;
-    @Bind(R.id.app_sensitivity_rl)
-    RelativeLayout app_sensitivityrl;
-    @Bind(R.id.device_imageView1)
-    ImageView device_imageView1;
-    @Bind(R.id.app_sensitivity_tv)
-    TextView app_sensitivitytv;
-    @Bind(R.id.setting_screenon_rl)
-    RelativeLayout setting_screenon_rl;
-    @Bind(R.id.setting_screenon_imageView1)
-    ImageView setting_screenon_imageView1;
-    @Bind(R.id.setting_pedometer_imageView1)
-    ImageView setting_pedometer_imageView1;
+    @Bind(R.id.pedometer_device_rl)
+    RelativeLayout pedometer_device_rl;
+    @Bind(R.id.setting_submit_rl)
+    Button setting_submit_rl;
+    @Bind(R.id.synchronization_image)
+    ImageView synchronizationImage;
+    @Bind(R.id.synchronization_text)
+    TextView synchronizationText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pedometer);
+        ButterKnife.bind(this);
+        initView();
+    }
+
+
+    boolean isCheck = false; // 软件计步状态
     private Dialog coDialog;
 
     @Override
@@ -100,12 +87,6 @@ public class PedometerActivity extends BaseActivity {
         MobclickAgent.onPageStart(tag);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd(tag);
-    }
 
     @OnClick({R.id.pedometer_plus, R.id.pedometer_minus, R.id.setting_submit_rl, R.id.pedometer_device_rl})
     public void onClick(View view) {
@@ -159,7 +140,7 @@ public class PedometerActivity extends BaseActivity {
                 break;
             case R.id.pedometer_device_rl: // 计步设备管理
                 if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-                    startActivity(new Intent(PedometerActivity.this, MineDeviceActivityNew.class));
+                    startActivity(new Intent(PedometerActivity.this, MineDeviceActivity.class));
                 } else {
                     showToast("您的安卓系统版本过低，不支持此功能！");
                 }
@@ -170,6 +151,7 @@ public class PedometerActivity extends BaseActivity {
     }
 
     private void initView() {
+        EtcommApplication.addActivity(this);
         setTitleTextView("计步设置", null);
         pedometer_sensitivity.setText((prefs.getSoftPedometerSensitivity()) + "");
 
@@ -270,7 +252,7 @@ public class PedometerActivity extends BaseActivity {
                                 public void onClick(View v) {
                                     // TODO Auto-generated method stub
                                     coDialog.dismiss();
-                                    startActivity(new Intent(mContext, MineDeviceActivityNew.class));
+                                    startActivity(new Intent(mContext, MineDeviceActivity.class));
                                 }
                             }, Color.BLACK, Color.BLACK);
 
@@ -337,9 +319,7 @@ public class PedometerActivity extends BaseActivity {
             // TODO Auto-generated method stub
             switch (msg.what) {
                 case 0:
-                    // showToast("000000000");
-                    // pedometer_switch.setChecked(isCheck);
-                    startActivity(new Intent(PedometerActivity.this,MineDeviceActivityNew.class));
+                    startActivity(new Intent(PedometerActivity.this, MineDeviceActivity.class));
                     if (coDialog != null) {
                         coDialog.dismiss();
                     }
@@ -413,7 +393,6 @@ public class PedometerActivity extends BaseActivity {
         customDialog.show();
         return customDialog;
     }
-
 
 
 }

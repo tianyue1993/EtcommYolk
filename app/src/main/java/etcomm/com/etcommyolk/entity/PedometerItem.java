@@ -17,7 +17,7 @@ public class PedometerItem extends Entity {
 
         public String type;
         public String device_mac;
-        public ArrayList<PedometerData> target;
+        public ArrayList<PedometerData> data;
 
         public class PedometerData{
 

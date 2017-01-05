@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.adapter.CircleAdapter;
-import etcomm.com.etcommyolk.adapter.TopicDisscussListAdapter;
 import etcomm.com.etcommyolk.entity.Discussion;
 import etcomm.com.etcommyolk.entity.DisscussItems;
 import etcomm.com.etcommyolk.entity.GroupItems;
@@ -67,7 +66,6 @@ public class TopicDisscussListActivity extends BaseActivity {
     private ArrayList<DisscussItems> list = new ArrayList<DisscussItems>();
     private ArrayList<DisscussItems> adaptList = new ArrayList<DisscussItems>();
     private List<Topic.TopicUser> image;
-    private TopicDisscussListAdapter mAdapter;
     private CircleAdapter circleAdapter;
     boolean isAttentioned;
     String user_id = "";

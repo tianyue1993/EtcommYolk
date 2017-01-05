@@ -2,6 +2,7 @@ package etcomm.com.etcommyolk.widget;
 
 import android.animation.TypeEvaluator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.activity.TrendRecordActivity;
 import etcomm.com.etcommyolk.entity.PedometerItem;
+import etcomm.com.etcommyolk.service.StepDataUploadService;
 import etcomm.com.etcommyolk.utils.StringUtils;
 
 
@@ -79,12 +82,11 @@ public class StepPageDataView extends RelativeLayout {
                             @Override
                             public void onClick(View v) {
                                 // 先上传首页数据
-//                                Intent service = new Intent(mContext, StepDataUploadService.class);
-//                                service.putExtra("isexit", true);
-//                                mContext.startService(service);
-//                                Intent intent = new Intent(mContext, TrendRecordActivity.class);
-//                                intent.putExtra("Token", SharePreferencesUtil.getToken(mContext));
-//                                mContext.startActivity(intent);
+                                Intent service = new Intent(mContext, StepDataUploadService.class);
+                                service.putExtra("isexit", true);
+                                mContext.startService(service);
+                                Intent intent = new Intent(mContext, TrendRecordActivity.class);
+                                mContext.startActivity(intent);
 
                             }
                         });

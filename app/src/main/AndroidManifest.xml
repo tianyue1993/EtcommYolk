@@ -182,14 +182,21 @@
             android:name=".activity.SelectPicPopupWindowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleBottom" />
-        <activity android:name=".activity.AddTopicDisscussActivity"></activity>
-            android:theme="@style/MyDialogStyleBottom" />
+        <activity android:name=".activity.AddTopicDisscussActivity" />
         <activity android:name=".activity.MineSportsActivity" />
         <activity android:name=".activity.MyAccountNextActivity" />
         <activity android:name=".activity.MyAccountFinalActivity" />
         <activity android:name=".activity.RankActivity" />
         <activity android:name=".activity.PedometerActivity" />
-        <activity android:name=".activity.MineDeviceActivityNew"></activity>
+        <activity android:name=".activity.MineDeviceActivity" />
+        <activity
+            android:name=".activity.TrendRecordActivity"
+            android:label="@string/title_activity_trend_record"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service android:name=".service.StepDataUploadService" />
+
+        <activity android:name=".activity.MsgListActivity"></activity>
     </application>
 
 </manifest>

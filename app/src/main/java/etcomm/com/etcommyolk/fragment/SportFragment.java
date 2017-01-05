@@ -48,15 +48,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.activity.MineActivity;
+import etcomm.com.etcommyolk.activity.MsgListActivity;
 import etcomm.com.etcommyolk.activity.RankActivity;
 import etcomm.com.etcommyolk.entity.Commen;
-import etcomm.com.etcommyolk.service.StepDataUploadService;
-import etcomm.com.etcommyolk.service.data.DataPerDayFromWrist;
 import etcomm.com.etcommyolk.entity.DaySignUp;
-import etcomm.com.etcommyolk.service.data.Device5MinData;
-import etcomm.com.etcommyolk.service.data.DeviceDailyData;
 import etcomm.com.etcommyolk.entity.PedometerItem;
 import etcomm.com.etcommyolk.entity.Weather;
 import etcomm.com.etcommyolk.exception.BaseException;
@@ -64,6 +61,10 @@ import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.handler.DaySignUpHandler;
 import etcomm.com.etcommyolk.handler.PedometerItemHandler;
 import etcomm.com.etcommyolk.handler.WeatherHandler;
+import etcomm.com.etcommyolk.service.StepDataUploadService;
+import etcomm.com.etcommyolk.service.data.DataPerDayFromWrist;
+import etcomm.com.etcommyolk.service.data.Device5MinData;
+import etcomm.com.etcommyolk.service.data.DeviceDailyData;
 import etcomm.com.etcommyolk.service.db.DatabaseHelper;
 import etcomm.com.etcommyolk.utils.ACache;
 import etcomm.com.etcommyolk.utils.BluetoothUtils;
@@ -133,6 +134,10 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
      * 进入排行页面
      */
     private ImageView in_rank;
+    /**
+     * 进入我的页面
+     */
+    private ImageView in_mine;
 
     static final int IS_TODAY = 0x09;
     private static final String tag = SportFragment.class.getSimpleName();
@@ -366,36 +371,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.i(tag, "onCreate");
-        if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            // 判断系统是否支持蓝牙连接
-            mBluetoothUtils = new BluetoothUtils(getActivity());
-        }
-        acache = ACache.get(mContext);
-        registerReceiver();
-        registerDeviceReceiver();
-        localsp = getActivity().getPreferences(Context.MODE_PRIVATE);
-        mSuggestSteps = Integer.parseInt(prefs.getPedometerTarget());
-        try {
-            daoDevice5MinData = DatabaseHelper.getHelper(mContext).getDao(Device5MinData.class);
-            daoDeviceDailyData = DatabaseHelper.getHelper(mContext).getDao(DeviceDailyData.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (daoDeviceDailyData == null || daoDevice5MinData == null) {
-            Log.e(tag, "daoDeviceDailyData null    or   daoDevice5MinData null");
-        }
-        super.onCreate(savedInstanceState);
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                signin();
-            }
-        }, 1000);
-    }
     //每日签到
     protected void signin() {
         RequestParams params = new RequestParams();
@@ -532,8 +507,9 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
         switcher = (AutoTextView) layout.findViewById(R.id.switcher);
-        msg_iv = (ImageView) layout.findViewById(R.id.base_left);
+        msg_iv = (ImageView) layout.findViewById(R.id.base_right);
         in_rank = (ImageView) layout.findViewById(R.id.in_rank);
+        in_mine = (ImageView) layout.findViewById(R.id.base_left);
         currank_li = (LinearLayout) layout.findViewById(R.id.currank_li);
         userrank = (TextView) layout.findViewById(R.id.userrank);
         userrank_tv = (TextView) layout.findViewById(R.id.userrank_tv);
@@ -546,6 +522,12 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                 intent.putExtra("islevel", prefs.getIslevel());
                 intent.putExtra("token", prefs.getAccessToken());
                 startActivity(intent);
+            }
+        });
+        msg_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext,MsgListActivity.class));
             }
         });
         walk_page_leftcircle = (ImageView) layout.findViewById(R.id.walk_page_leftcircle);
@@ -759,6 +741,31 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
     String strMile = "";// UI 攀登公里数显示
 
     private void initData() {
+        if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            // 判断系统是否支持蓝牙连接
+            mBluetoothUtils = new BluetoothUtils(getActivity());
+        }
+        acache = ACache.get(mContext);
+        registerReceiver();
+        registerDeviceReceiver();
+        localsp = getActivity().getPreferences(Context.MODE_PRIVATE);
+        mSuggestSteps = Integer.parseInt(prefs.getPedometerTarget());
+        try {
+            daoDevice5MinData = DatabaseHelper.getHelper(mContext).getDao(Device5MinData.class);
+            daoDeviceDailyData = DatabaseHelper.getHelper(mContext).getDao(DeviceDailyData.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (daoDeviceDailyData == null || daoDevice5MinData == null) {
+            Log.e(tag, "daoDeviceDailyData null    or   daoDevice5MinData null");
+        }
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                signin();
+            }
+        }, 1000);
         /**
          *  暂时存储计步 方便后续使用 固定时间的值
          *  第一时间清除老数据
@@ -775,7 +782,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             } else {
                 wrist_status.setText("未连接");
             }
-
             /**
              * 蓝牙获取到的设备号判断当前设备
              */
@@ -786,7 +792,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                 /**
                  * 开启记步动态监听服务器 实现动态更新首页记步数据
                  */
-//                getActivity().startService(new Intent(mContext, BluetoothService.class));
             } else if (prefs.getMacAddress().length() > 5 && org.apache.commons.lang3.StringUtils.startsWithIgnoreCase(prefs.getMacAddress(), "F4:06:A5")) {
                 //判断为敏狐手环
                 /**
@@ -834,14 +839,19 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             object.distance_text = (strMile);
         }
 
+        in_mine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MineActivity.class));
+            }
+        });
+
         Log.i(tag, "add " + object.toString());
         pedometerlist.add(object);
-        LogUtil.e("kkWalk", ">>>>>>>>>>>>>>>>getTwoMonthDataFromNet before");
         /**
-         * 注释掉的网络请求 在新记步算法确定前一切走本地
+         * 网络请求
          */
         getTwoMonthDataFromNet();
-        LogUtil.e("kkWalk", "<<<<<<<<<getTwoMonthDataFromNet after");
     }
 
     /**
@@ -860,11 +870,11 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                 /**
                  * 需要第一次加载时存储的步数
                  */
-                curStep = Integer.valueOf(pedometerItem.content.target.get(pedometerItem.content.target.size() - 1).step);
+                curStep = Integer.valueOf(pedometerItem.content.data.get(pedometerItem.content.data.size() - 1).step);
 
                 // 返回八天数据，今天在这个当日当回数据的基础上计步
 
-                List<PedometerItem.Pedometer.PedometerData> li = pedometerItem.content.target;
+                List<PedometerItem.Pedometer.PedometerData> li = pedometerItem.content.data;
                 if (li != null && li.size() > 0) {
                     PedometerItem.Pedometer.PedometerData PedometerData = null;
                     for (int i = 0; i < li.size(); i++) {
@@ -890,15 +900,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             }
         });
     }
-
-    /**
-     * 计步传入步数参数
-     */
-    private int stepCountInt;
-    /**
-     * 计步传入计步时间参数
-     */
-    private long stepTimeFloat;
 
     /**
      * 春雨计步算法

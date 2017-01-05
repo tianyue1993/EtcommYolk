@@ -11,16 +11,16 @@
 
         <etcomm.com.etcommyolk.widget.CircleSeekBar
             android:id="@+id/circleseekbar"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             app:wheel_can_touch="false"
             app:wheel_cur_process="0"
             app:wheel_max_process="100"
-            app:wheel_pointer_radius="11.5dp"
-            app:wheel_reached_width="22dp"
-            app:wheel_unreached_color="#e0dfdf"
-            app:wheel_unreached_width="22dp" />
+            app:wheel_pointer_radius="11dp"
+            app:wheel_reached_width="24dp"
+            app:wheel_unreached_color="#EEEEEE"
+            app:wheel_unreached_width="28dp" />
 
         <LinearLayout
             android:id="@+id/time_step_target_li"

@@ -121,5 +121,6 @@
     <string name="loadmore">加载更多</string>
     <string name="title_activity_mine">MineActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_trend_record">TrendRecordActivity</string>
 
 </resources>

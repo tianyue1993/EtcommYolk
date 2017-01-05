@@ -7,12 +7,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.entity.Login;
+import etcomm.com.etcommyolk.exception.BaseException;
+import etcomm.com.etcommyolk.handler.LoginHandler;
 
 /**
  * zuoh
@@ -67,6 +71,59 @@ public class MineActivity extends BaseActivity {
     private void initView() {
         setTitleTextView("我的", null);
         EtcommApplication.addActivity(this);
+
+        RequestParams params = new RequestParams();
+
+        client.toUserProfile(this, params, new LoginHandler(){
+
+            @Override
+            public void onSuccess(Login login) {
+                super.onSuccess(login);
+                prefs.setUserId(login.content.user_id);
+                prefs.setDepartmentId(login.content.department_id);
+                prefs.setCustomerId(login.content.customer_id);
+                prefs.setSerialNumberId(login.content.serial_number_id);
+                prefs.setNickName(login.content.nick_name);
+                prefs.setRealName(login.content.real_name);
+                prefs.setAccessToken(login.content.access_token);
+                prefs.setBirthday(login.content.birthday);
+                prefs.setBirthYear(login.content.birth_year);
+                prefs.setHeight(login.content.height);
+                prefs.setGender(login.content.gender);
+                prefs.setWeight(login.content.weight);
+                prefs.setAvatar(login.content.avatar);
+                prefs.setMobile(login.content.mobile);
+                prefs.setJobNumber(login.content.job_number);
+                prefs.setScore(login.content.score);
+                prefs.setTotalScore(login.content.total_score);
+                prefs.setTotalscore(login.content.total_score);
+                prefs.setPedometerTarget(login.content.pedometer_target);
+                prefs.setPedometerDistance(login.content.pedometer_distance);
+                prefs.setPedometerTime(login.content.pedometer_time);
+                prefs.setPedometerConsume(login.content.pedometer_consume);
+                prefs.setIsLeader(login.content.is_leader);
+                prefs.setCreatedAt(login.content.created_at);
+                prefs.setIsSign(login.content.is_sign);
+                prefs.setCustomerImage(login.content.customer_image);
+                prefs.setInfoStatus(login.content.info_status);
+                prefs.setIsLike(login.content.is_like);
+                prefs.setIsComment(login.content.is_comment);
+                prefs.setIsComment(login.content.islevel);
+                //
+                userPhoto.setImageURI(login.content.avatar);
+                userName.setText(login.content.nick_name);
+                totalTvMileage.setText(login.content.pedometer_distance);
+                totalTvMotiontimes.setText(login.content.pedometer_time);
+                totalIvCaliries.setText(login.content.pedometer_consume);
+                mineSigninTv.setText("可用积分 : " + login.content.score);
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+            }
+        });
+
     }
 
     /**
@@ -114,7 +171,7 @@ public class MineActivity extends BaseActivity {
                 break;
             case R.id.mine_minedevice_rl:
                 //我的计步
-                showToast("花香氤");
+                startActivity(new Intent(MineActivity.this, PedometerActivity.class));
                 break;
         }
     }

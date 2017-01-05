@@ -666,7 +666,6 @@ public class GlobalSetting {
         saveFloat(nowTime + "-" + uid + DAYMILE, todayTotalMiles);
         saveFloat(nowTime + "-" + uid + DAYSECONDS, todayTotalSeconds);
         saveFloat(nowTime + "-" + uid + DAYCALORIES, todayTotalCaliries);
-
     }
 
     // 临时获取软件计步数据

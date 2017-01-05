@@ -66,7 +66,7 @@ public class ChangeNickNameActivity extends BaseActivity {
                     showToast(R.string.nick_name_error);
                     return;
                 }
-                if (nickname.contains("昵称")) {
+                if (intent.getStringExtra("type").contains("昵称")) {
                     editUserInfo("nick_name", nickname_et.getText().toString());
                 } else {
                     editUserInfo("real_name", nickname_et.getText().toString());

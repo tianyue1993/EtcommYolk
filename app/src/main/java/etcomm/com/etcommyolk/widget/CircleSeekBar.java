@@ -302,10 +302,8 @@ public class CircleSeekBar extends View {
         mCurProcess = a.getInt(R.styleable.CircleSeekBar_wheel_cur_process, 0);
         if (mCurProcess > mMaxProcess) mCurProcess = mMaxProcess;
         mReachedColor = a.getColor(R.styleable.CircleSeekBar_wheel_reached_color, getColor(R.color.def_reached_color));
-        mUnreachedColor = a.getColor(R.styleable.CircleSeekBar_wheel_unreached_color,
-                getColor(R.color.def_wheel_color));
-        mUnreachedWidth = a.getDimension(R.styleable.CircleSeekBar_wheel_unreached_width,
-                getDimen(R.dimen.def_wheel_width));
+        mUnreachedColor = a.getColor(R.styleable.CircleSeekBar_wheel_unreached_color, getColor(R.color.def_wheel_color));
+        mUnreachedWidth = a.getDimension(R.styleable.CircleSeekBar_wheel_unreached_width, getDimen(R.dimen.def_wheel_width));
         isHasReachedCornerRound = a.getBoolean(R.styleable.CircleSeekBar_wheel_reached_has_corner_round, true);
         mReachedWidth = a.getDimension(R.styleable.CircleSeekBar_wheel_reached_width, mUnreachedWidth);
         mPointerColor = a.getColor(R.styleable.CircleSeekBar_wheel_pointer_color, getColor(R.color.def_pointer_color));

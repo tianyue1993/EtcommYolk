@@ -212,8 +212,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(Login login) {
                 super.onSuccess(login);
                 prefs.saveLoginUserNmae(registeredPhone.getEditText().getText().toString().trim());
-                prefs.saveLoginUserNmae(registerPassword.getEditText().getText().toString().trim());
-                prefs.setUserId(login.content.id);
+                prefs.saveLoginUserPwd(registerPassword.getEditText().getText().toString().trim());
+                prefs.setUserId(login.content.user_id);
                 prefs.setDepartmentId(login.content.department_id);
                 prefs.setCustomerId(login.content.customer_id);
                 prefs.setSerialNumberId(login.content.serial_number_id);

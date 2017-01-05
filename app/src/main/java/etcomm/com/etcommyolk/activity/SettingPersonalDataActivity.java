@@ -791,23 +791,6 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         return cursor.getString(column_index);
     }
 
-    // 获取状态栏的高度
-    private int getStatusBarHeight() {
-        int x = 0;
-        int statusBarHeight = 0;
-        try {
-            Class<?> c = Class.forName("com.android.internal.R$dimen");
-            Object obj = c.newInstance();
-            java.lang.reflect.Field field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight = getResources().getDimensionPixelSize(x);
-            return statusBarHeight;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return statusBarHeight;
-    }
-
     protected void onHeaderSelectedCallBack(Bitmap bp) {
         if (bp == null) {
             Log.e(tag, "发生异常");
@@ -893,20 +876,6 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         }
     }
 
-    private void doTakePhoto() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            Intent takeintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyyMM_dd_HH_mm_ss");
-            String filename = timeStampFormat.format(new Date());
-            photoUri = Uri.fromFile(new File(filename));
-            takeintent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            Log.i(tag, "startActivityForResult TAKE_PHOTO");
-            startActivityForResult(takeintent, TAKE_PHOTO);
-        } else {
-            Toast.makeText(mContext, "没有SD卡", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
@@ -918,18 +887,6 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         }
     }
 
-    private void takePic() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        mUriFile = new File(Environment.getExternalStorageDirectory() + "/dcare/" + System.currentTimeMillis() + ".jpg");
-        try {
-            mUriFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.i(tag, "takePic mUriFile:" + mUriFile.getAbsolutePath());
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mUriFile));
-        startActivityForResult(intent, CAMERA_PIC);
-    }
 
     private void cropPhoto(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -946,33 +903,5 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         intent.putExtra("noFaceDetection", true);
         startActivityForResult(intent, CROP_PIC);
     }
-
-    // ////魅族
-    /**
-     * 用于截取大图
-     *
-     * @param ctx
-     * @param uri
-     * @param outputX
-     * @param outputY
-     * @param requestCode
-     */
-    public static void cropImageUri(Activity ctx, Uri uri, int outputX, int outputY, int requestCode, boolean scale) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");// 发送裁剪信号
-        intent.putExtra("outputX", outputX);// 裁剪区的宽
-        intent.putExtra("outputY", outputY);// 裁剪区的高
-        intent.putExtra("aspectX", 1);// X方向上的比例
-        intent.putExtra("aspectY", 1);// Y方向上的比例
-        intent.putExtra("scale", scale);// 是否保留比例
-        // intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//直接输出文件
-        intent.putExtra("return-data", true); // 是否返回数据
-        // intent.putExtra("outputFormat",
-        // Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", true); // 关闭人脸检测
-        ctx.startActivityForResult(intent, requestCode);
-    }
-
 
 }

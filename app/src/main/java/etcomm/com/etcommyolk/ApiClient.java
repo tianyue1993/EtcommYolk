@@ -65,6 +65,13 @@ public class ApiClient {
     }
 
     /**
+     * 部门排名
+     */
+    public void toRank(Context context,String url, RequestParams entity, JsonResponseHandler handler){
+        asyncHttpClient.get(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
      *  找回密码/注册 综合调用 设置密码
      */
     public void newPwdverify(Context context,String url, RequestParams entity, JsonResponseHandler handler){
@@ -114,6 +121,12 @@ public class ApiClient {
      */
     public void toFavorite(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toFavorite() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 趋势页面链接接口
+     */
+    public void toTrendsUrl(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toTrendsUrl() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
     /**
      * 每日签到
@@ -178,6 +191,12 @@ public class ApiClient {
      */
     public void toBindOff(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toBindOff() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 获取用户基本信息[我的模块使用]
+     */
+    public void toUserProfile(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toUserProfile() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
 
@@ -281,6 +300,19 @@ public class ApiClient {
      */
     public void CheckCreate(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.CHECK_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+    /**
+     * 消息推送
+     */
+    public void toNews(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toNews() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
+    }
+
+    /**
+     * 删除某一条推送消息
+     */
+    public void toNewsDelete(Context context, RequestParams entity, JsonResponseHandler handler) {
+        asyncHttpClient.get(EtcommApplication.toNewsDelete() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     /**

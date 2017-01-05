@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
@@ -47,7 +48,9 @@
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:maxHeight="50dp"
-                android:maxWidth="50dp" />
+                android:maxWidth="50dp"
+                fresco:roundAsCircle="true"
+                fresco:roundedCornerRadius="180dp" />
         </RelativeLayout>
 
         <View
@@ -85,16 +88,16 @@
                 android:visibility="visible" />
 
 
-                <TextView
-                    android:id="@+id/personal_username_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:padding="8dp"
-                    android:text="田余乐"
-                    android:textColor="@color/settingpersoninfo_item_value"
-                    android:textSize="17sp" />
+            <TextView
+                android:id="@+id/personal_username_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:padding="8dp"
+                android:text="田余乐"
+                android:textColor="@color/settingpersoninfo_item_value"
+                android:textSize="17sp" />
 
         </RelativeLayout>
 
@@ -132,8 +135,8 @@
                 android:id="@+id/personal_nickname_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:padding="8dp"
                 android:text="蒙奇奇"
                 android:textColor="@color/settingpersoninfo_item_value"
@@ -173,8 +176,8 @@
                 android:id="@+id/personal_sex_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:padding="8dp"
                 android:text="女"
                 android:textColor="@color/settingpersoninfo_item_value"
@@ -215,8 +218,8 @@
                 android:id="@+id/personal_height_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:padding="8dp"
                 android:text="168cm"
                 android:textColor="@color/settingpersoninfo_item_value"
@@ -260,8 +263,8 @@
                 android:id="@+id/personal_weight_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:padding="8dp"
                 android:text="56kg"
                 android:textColor="@color/settingpersoninfo_item_value"
@@ -305,8 +308,8 @@
                 android:id="@+id/personal_age_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:padding="8dp"
                 android:text="1986年"
                 android:textColor="@color/settingpersoninfo_item_value"
@@ -322,8 +325,7 @@
         android:layout_marginTop="2dp"
         android:background="@color/white"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"

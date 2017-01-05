@@ -65,7 +65,7 @@ public class CommenHandler extends JsonResponseHandler {
                             } else {
                                 onFailure(new BaseException("Unexpected response " + response, -1));
                             }
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             onFailure(new BaseException(-1, e));
                         }
                     }

@@ -11,10 +11,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
@@ -50,6 +49,9 @@ public class LoginActivity extends Activity {
     //注册
     @Bind(R.id.login_register)
     TextView loginRegister;
+    //登录头像
+    @Bind(R.id.login_pic)
+    SimpleDraweeView loginPic;
     //对话框
     private ProgressDialog mProgress;
     //存储
@@ -73,24 +75,15 @@ public class LoginActivity extends Activity {
         }
         prefs = GlobalSetting.getInstance(this);
         client = ApiClient.getInstance();
-    }
-
-
-    private void showProgress(int resId, boolean cancel) {
-        mProgress = new ProgressDialog(this);
-        if (resId <= 0) {
-            mProgress.setMessage(R.string.loading_data, cancel);
-        } else {
-            mProgress.setMessage(resId, cancel);
+        if (!prefs.getLoginUserAvatar().equals("")) {
+            loginPic.setImageURI(prefs.getLoginUserAvatar());
         }
-        mProgress.show();
+        if (!prefs.getLoginUserName().equals("")) {
+            loginName.setText(prefs.getLoginUserName());
+        }
+
     }
 
-    private void cancelmDialog() {
-        if (mProgress != null && mProgress.isShowing()) {
-            mProgress.dismiss();
-        }
-    }
 
 
     /**
@@ -108,7 +101,7 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onSuccess(Login login) {
                     super.onSuccess(login);
-                    prefs.setUserId(login.content.id);
+                    prefs.setUserId(login.content.user_id);
                     prefs.setDepartmentId(login.content.department_id);
                     prefs.setCustomerId(login.content.customer_id);
                     prefs.setSerialNumberId(login.content.serial_number_id);
@@ -170,13 +163,13 @@ public class LoginActivity extends Activity {
                 toShowHidePwd();
                 break;
             case R.id.forget_pwd:
-                startActivity(new Intent(this,LostPwdActivity.class));
+                startActivity(new Intent(this, LostPwdActivity.class));
                 break;
             case R.id.login:
                 toLogin();
                 break;
             case R.id.login_register:
-                startActivity(new Intent(this,RegisterActivity.class));
+                startActivity(new Intent(this, RegisterActivity.class));
                 break;
         }
     }
