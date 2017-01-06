@@ -192,7 +192,8 @@
         <!-- 设置友盟分享的id -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="586b4e15aed17943a3001bd8" />
+            android:value="586b4e15aed17943a3001bd8"></meta-data>
+
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的个推key -->

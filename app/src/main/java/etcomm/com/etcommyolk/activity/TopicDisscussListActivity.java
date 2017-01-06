@@ -563,6 +563,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                 cancelmDialog();
                 showToast(commen.message);
                 mContext.sendBroadcast(new Intent(Preferences.REFRESH_NOTATTENTION));
+                finish();
             }
         });
 

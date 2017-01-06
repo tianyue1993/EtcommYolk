@@ -106,7 +106,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void receive_msg_data() {
-
+        baseRight.setImageResource(R.mipmap.icon_msg_unread);
     }
 
     @Override
@@ -125,6 +125,11 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
             list.clear();
             getFindHome();
             getFindHome();
+        }
+        if (prefs.getHaveReceiveUnReadData()) {
+            baseRight.setImageResource(R.mipmap.icon_msg_unread);
+        } else {
+            baseRight.setImageResource(R.mipmap.ic_messege);
         }
 
     }

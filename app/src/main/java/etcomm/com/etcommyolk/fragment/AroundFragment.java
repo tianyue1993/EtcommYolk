@@ -112,7 +112,7 @@ public class AroundFragment extends BaseFragment {
 
     @Override
     public void receive_msg_data() {
-
+        baseRight.setImageResource(R.mipmap.icon_msg_unread);
     }
 
     @Override
@@ -152,6 +152,13 @@ public class AroundFragment extends BaseFragment {
             page_number = 1;
             getList();
             getGoodgroup();
+        }
+
+
+        if (prefs.getHaveReceiveUnReadData()) {
+            baseRight.setImageResource(R.mipmap.icon_msg_unread);
+        } else {
+            baseRight.setImageResource(R.mipmap.ic_messege);
         }
     }
 

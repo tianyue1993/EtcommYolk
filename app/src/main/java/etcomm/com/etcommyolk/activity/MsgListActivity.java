@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
-import com.umeng.analytics.MobclickAgent;
 import com.yydcdut.sdlv.Menu;
 import com.yydcdut.sdlv.MenuItem;
 import com.yydcdut.sdlv.SlideAndDragListView;
