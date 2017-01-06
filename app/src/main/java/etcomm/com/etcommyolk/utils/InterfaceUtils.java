@@ -49,7 +49,8 @@ public class InterfaceUtils {
      * @return
      */
     public static String getClientId(Context context){
-        return PushManager.getInstance().getClientid(context.getApplicationContext());
+        String string = PushManager.getInstance().getClientid(context.getApplicationContext());
+        return string;
     }
 
 

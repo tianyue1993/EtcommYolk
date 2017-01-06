@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.igexin.sdk.PushManager;
 import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
@@ -51,6 +52,8 @@ public class ChangePasswordActivity extends BaseActivity {
     Button btnNext;
     //数据库获取的UserID
     String user_id;
+    //个推CID
+    private String client_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class ChangePasswordActivity extends BaseActivity {
     private void initView() {
         EtcommApplication.addActivity(this);
         setTitleTextView("修改密码", null);
+        client_id = PushManager.getInstance().getClientid(getApplicationContext());
     }
 
 
@@ -113,6 +117,7 @@ public class ChangePasswordActivity extends BaseActivity {
                     params.put("old_password", oldPwd.getText().toString());
                     params.put("password", newPwd.getText().toString());
                     params.put("repeat_password", renewPwd.getText().toString());
+                    params.put("client_id", client_id);
 
                     client.toChangePassword(this, params, new CommenHandler() {
 

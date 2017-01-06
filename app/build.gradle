@@ -12,7 +12,12 @@ android {
         versionName "1.0"
         // 不让gradle自动生成不同屏幕分辨率的png图
         generatedDensities = []
-        manifestPlaceholders = [serverDoMain: "http://113.59.227.10:96/"]
+        manifestPlaceholders = [
+                serverDoMain  : "http://113.59.227.10:96/",
+                PUSH_APPID    : "DzC8LxNlDLAJ4NBFpgmE11",
+                PUSH_APPKEY   : "hFpxGLeO3j5Y1YqguIGiz3",
+                PUSH_APPSECRET: "vQH7vwTLdRAJScR9oMC4u4"
+        ]
     }
 
     aaptOptions {
@@ -70,9 +75,13 @@ android {
             versionName "1.0"
             // 不让gradle自动生成不同屏幕分辨率的png图
             generatedDensities = []
-            manifestPlaceholders = [serverDoMain: "http://113.59.227.10:96/"]
+            manifestPlaceholders = [
+                    serverDoMain  : "http://113.59.227.10:96/",
+                    PUSH_APPID    : "0BcOFrNp0v5st21u6CiJa3",
+                    PUSH_APPKEY   : "SJyAp0uFaq84XOK0qzKYq",
+                    PUSH_APPSECRET: "NeHZ5whoa891tbNacFUvP1"
+            ]
         }
-
 
 
     }
@@ -109,6 +118,5 @@ dependencies {
     compile files('libs/ormlite-android-4.48.jar')
     compile files('libs/commons-lang3-3.1.jar')
     compile project(':DcarePhotoSelector')
-
 
 }

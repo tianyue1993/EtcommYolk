@@ -211,7 +211,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(Login login) {
                 super.onSuccess(login);
-                prefs.saveLoginUserNmae(registeredPhone.getEditText().getText().toString().trim());
+                prefs.saveLoginUserName(registeredPhone.getEditText().getText().toString().trim());
                 prefs.saveLoginUserPwd(registerPassword.getEditText().getText().toString().trim());
                 prefs.setUserId(login.content.user_id);
                 prefs.setDepartmentId(login.content.department_id);
@@ -240,6 +240,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 prefs.setIsSign(login.content.is_sign);
                 prefs.setCustomerImage(login.content.customer_image);
                 prefs.setInfoStatus(login.content.info_status);
+                //用户信息完整性
+                if (login.content.info_status.equals("1")) {
+                    prefs.saveInfoState(true);
+                }else {
+                    prefs.saveInfoState(false);
+                }
                 prefs.setIsLike(login.content.is_like);
                 prefs.setIsComment(login.content.is_comment);
                 prefs.setIsComment(login.content.islevel);

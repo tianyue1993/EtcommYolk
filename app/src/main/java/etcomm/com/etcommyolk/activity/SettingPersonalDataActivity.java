@@ -247,7 +247,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
 
         if (choosetext.getText().toString().equals("选择年龄")) {
             if (editage != "") {
-                editUserInfo("birth_year", editage);
+                editUserInfo("birthday", editage);
                 prefs.setBirthYear(editage);
                 personal_age_tv.setText(Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(editage) + "岁");
                 wl_pickerweight.setSeletion(0);
@@ -310,7 +310,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
 
     // 身高设置
     void personal_height_rl() {
-        choosetext.setText("选择年龄");
+        choosetext.setText("选择身高");
         if (isShow) {
             layout_wl.setVisibility(View.VISIBLE);
             wl_pickerage.setVisibility(View.GONE);

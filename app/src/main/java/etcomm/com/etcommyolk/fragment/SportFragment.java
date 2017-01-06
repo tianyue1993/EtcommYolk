@@ -98,7 +98,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
     }
 
 
-
     final String TAG = "WalkPageFragment";
     protected Dialog dialog;
 
@@ -271,6 +270,12 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
      */
     private boolean hasAskEnableBlueTooth = false;
 
+
+    @Override
+    public void receive_msg_data() {
+            msg_iv.setImageResource(R.mipmap.icon_msg_unread);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -304,7 +309,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                 }
             }
         }
-
         if (prefs.getHaveReceiveUnReadData()) {
             msg_iv.setImageResource(R.mipmap.icon_msg_unread);
         } else {
@@ -316,8 +320,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
         // bindSer();
         if (!StringUtils.isEmpty(prefs.getMacAddress())) {
             if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-                final boolean mIsBluetoothOn = mBluetoothUtils.isBluetoothOn();
-                final boolean mIsBluetoothLePresent = mBluetoothUtils.isBluetoothLeSupported();
                 if (!isNotAskToOpenBlue) {
                     isNotAskToOpenBlue = true;
                     mBluetoothUtils.askUserToEnableBluetoothIfNeeded();

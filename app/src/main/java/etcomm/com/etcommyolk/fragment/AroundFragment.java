@@ -110,6 +110,11 @@ public class AroundFragment extends BaseFragment {
     }
 
     @Override
+    public void receive_msg_data() {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
