@@ -14,7 +14,7 @@ public class MyExchange extends Entity {
     public class Content {
         public String pages;
 
-        public ArrayList<PointsExchangeItems> model;
+        public ArrayList<PointsExchangeItems> items;
 
     }
 
