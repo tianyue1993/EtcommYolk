@@ -170,11 +170,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             object.put("type", "email_sign_up");
             url = EtcommApplication.verifyMailCode();
         }
-
+        cancelmDialog();
+        showProgress(0, true);
         client.lostPwdverify(this, url, object, new EfficacyCodeHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 if (commen.code != 0) {
                     showToast(commen.message);
                 }else {
@@ -185,6 +194,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
@@ -207,10 +217,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         object.put("sn", regInvitationCode.getText().toString().trim());
         object.put("device_id", InterfaceUtils.readDeviceId(this));
         object.put("client_id", InterfaceUtils.getClientId(this));
+        cancelmDialog();
+        showProgress(0, true);
         client.lostPwdverify(this, url, object, new RegisterHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
             @Override
             public void onSuccess(Login login) {
                 super.onSuccess(login);
+                cancelmDialog();
                 prefs.saveLoginUserName(registeredPhone.getEditText().getText().toString().trim());
                 prefs.saveLoginUserPwd(registerPassword.getEditText().getText().toString().trim());
                 prefs.setUserId(login.content.user_id);
@@ -256,6 +276,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
@@ -293,13 +314,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         } else {
             object.put("type", "email_sign_up");
             url = EtcommApplication.getMailCode();
+
         }
+        cancelmDialog();
+        showProgress(0, true);
         client.lostPwdverify(this, url, object, new EfficacyCodeHandler() {
 
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 if (commen.code != 0) {
                     showToast(commen.message);
                 }else {
@@ -310,6 +340,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
@@ -322,12 +353,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         RequestParams object = new RequestParams();
         object.put("serial_number", regInvitationCode.getText().toString().trim());
         object.put("parent_id", 0);
+        cancelmDialog();
         client.toSerialNumber(this, object, new ActivationCodeHandler() {
 
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(StructureContent commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 if (commen.code == 0) {
                     //获得部门ID
                     structure_id = commen.content.structure.get(0).getStructure_id();
@@ -339,6 +377,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

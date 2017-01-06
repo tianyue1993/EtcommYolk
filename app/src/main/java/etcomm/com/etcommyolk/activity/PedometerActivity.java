@@ -338,12 +338,20 @@ public class PedometerActivity extends BaseActivity {
     protected void unBindDeviceNet() {// 后台同步解绑操作
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
         client.toBindOff(this, params, new DeviceBindHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(DeviceBind deviceBind) {
                 super.onSuccess(deviceBind);
-
+                cancelmDialog();
                 if (deviceBind.code == 0) {
                     if (deviceBind.content.status.equals("0")) {
                         showToast("解绑成功");
@@ -365,6 +373,7 @@ public class PedometerActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

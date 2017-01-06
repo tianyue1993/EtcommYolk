@@ -97,6 +97,23 @@ public class LoginActivity extends Activity {
     }
 
 
+    private void showProgress(int resId, boolean cancel) {
+        mProgress = new ProgressDialog(this);
+        if (resId <= 0) {
+            mProgress.setMessage(R.string.loading_data, cancel);
+        } else {
+            mProgress.setMessage(resId, cancel);
+        }
+        mProgress.show();
+    }
+
+    private void cancelmDialog() {
+        if (mProgress != null && mProgress.isShowing()) {
+            mProgress.dismiss();
+        }
+    }
+
+
     /**
      * 登录
      */
@@ -107,11 +124,20 @@ public class LoginActivity extends Activity {
             object.put("password", loginPwd.getText().toString().trim());
             object.put("client_id", InterfaceUtils.getClientId(this));
             object.put("device_id", InterfaceUtils.readDeviceId(this));
+            cancelmDialog();
+            showProgress(0, true);
             client.invokeLogin(this, object, new LoginHandler() {
+
+                @Override
+                public void onCancel() {
+                    super.onCancel();
+                    cancelmDialog();
+                }
 
                 @Override
                 public void onSuccess(Login login) {
                     super.onSuccess(login);
+                    cancelmDialog();
                     prefs.saveLoginUserName(loginName.getText().toString().trim());
                     prefs.saveLoginUserAvatar(login.content.avatar);
                     prefs.setUserId(login.content.user_id);
@@ -141,20 +167,25 @@ public class LoginActivity extends Activity {
                     prefs.setIsSign(login.content.is_sign);
                     prefs.setCustomerImage(login.content.customer_image);
                     prefs.setInfoStatus(login.content.info_status);
+                    prefs.setIsLike(login.content.is_like);
+                    prefs.setIsComment(login.content.is_comment);
+                    prefs.setIsComment(login.content.islevel);
                     //用户信息完整性
                     if (login.content.info_status.equals("1")) {
                         prefs.saveInfoState(true);
                     } else {
                         prefs.saveInfoState(false);
+                        Intent intent = new Intent(LoginActivity.this, ChoosePictureActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return;
                     }
-                    prefs.setIsLike(login.content.is_like);
-                    prefs.setIsComment(login.content.is_comment);
-                    prefs.setIsComment(login.content.islevel);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
 
                 @Override
                 public void onFailure(BaseException exception) {
+                    cancelmDialog();
                     super.onFailure(exception);
                 }
             });

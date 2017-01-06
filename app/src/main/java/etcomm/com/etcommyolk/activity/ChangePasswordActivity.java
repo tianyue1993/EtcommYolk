@@ -118,12 +118,20 @@ public class ChangePasswordActivity extends BaseActivity {
                     params.put("password", newPwd.getText().toString());
                     params.put("repeat_password", renewPwd.getText().toString());
                     params.put("client_id", client_id);
-
+                    cancelmDialog();
+                    showProgress(0, true);
                     client.toChangePassword(this, params, new CommenHandler() {
+
+                        @Override
+                        public void onCancel() {
+                            super.onCancel();
+                            cancelmDialog();
+                        }
 
                         @Override
                         public void onSuccess(Commen commen) {
                             super.onSuccess(commen);
+                            cancelmDialog();
                             showToast(commen.message);
                             startActivity(new Intent(ChangePasswordActivity.this, LoginActivity.class));
                             finish();
@@ -132,6 +140,7 @@ public class ChangePasswordActivity extends BaseActivity {
                         @Override
                         public void onFailure(BaseException exception) {
                             super.onFailure(exception);
+                            cancelmDialog();
                         }
                     });
 

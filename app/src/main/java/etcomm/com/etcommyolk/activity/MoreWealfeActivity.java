@@ -159,6 +159,7 @@ public class MoreWealfeActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
                 listView.onRefreshComplete();
                 loadStatus = false;
                 loadingProgressBar.setVisibility(View.GONE);

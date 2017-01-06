@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.limxing.library.AlertView;
+import com.limxing.library.OnConfirmeListener;
+import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 
@@ -17,9 +20,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.entity.Commen;
+import etcomm.com.etcommyolk.exception.BaseException;
+import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.widget.WheelView;
 
-public class PersonalProfileActivity extends BaseActivity {
+public class PersonalProfileActivity extends BaseActivity implements OnConfirmeListener {
     //用户头像
     @Bind(R.id.iv_avator)
     SimpleDraweeView ivAvator;
@@ -118,7 +124,7 @@ public class PersonalProfileActivity extends BaseActivity {
             ivAvator.setImageURI(prefs.getAvatar());
         }
         setTitleTextView("个人资料", null);
-        age.setText("1980");
+        age.setText("1980/1/1");
         if (usersex == 1) {
             // 男
             weight.setText("65");
@@ -226,42 +232,45 @@ public class PersonalProfileActivity extends BaseActivity {
     // 年龄设置
     void personal_age_rl() {
         choosetext.setText("生　日：");
-        if (isShow) {
-            layout_wl.setVisibility(View.VISIBLE);
-            wl_pickerage.setVisibility(View.VISIBLE);
-            wl_pickerheight.setVisibility(View.GONE);
-            wl_pickerweight.setVisibility(View.GONE);
-            isShow = false;
-            ArrayList<String> ageList = new ArrayList<String>();
-            for (int i = 0; i < 71; i++) {
-                int age = i + 1930;
-                ageList.add(age + "");
-            }
-            wl_pickerage.setOffset(1);
-            wl_pickerage.setItems(ageList);
+//        if (isShow) {
 
-            int age1 = Integer.parseInt(age.getText().toString());
-            if (age1 != 0) {
-                wl_pickerage.setSeletion(age1 - 1930);
-            } else {
-                wl_pickerage.setSeletion(50);
-            }
+            new AlertView("选择年龄", PersonalProfileActivity.this, 1991, 2100, PersonalProfileActivity.this).show();
 
-            wl_pickerage.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-                @Override
-                public void onSelected(int selectedIndex, String item) {
-                    Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
-                    age.setText(item);
-                }
-            });
-
-        } else {
-            isShow = true;
-            wl_pickerweight.setSeletion(0);
-            wl_pickerage.setSeletion(0);
-            wl_pickerheight.setSeletion(0);
-            layout_wl.setVisibility(View.GONE);
-        }
+//            layout_wl.setVisibility(View.VISIBLE);
+//            wl_pickerage.setVisibility(View.VISIBLE);
+//            wl_pickerheight.setVisibility(View.GONE);
+//            wl_pickerweight.setVisibility(View.GONE);
+//            isShow = false;
+//            ArrayList<String> ageList = new ArrayList<String>();
+//            for (int i = 0; i < 71; i++) {
+//                int age = i + 1930;
+//                ageList.add(age + "");
+//            }
+//            wl_pickerage.setOffset(1);
+//            wl_pickerage.setItems(ageList);
+//
+//            int age1 = Integer.parseInt(age.getText().toString());
+//            if (age1 != 0) {
+//                wl_pickerage.setSeletion(age1 - 1930);
+//            } else {
+//                wl_pickerage.setSeletion(50);
+//            }
+//
+//            wl_pickerage.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+//                @Override
+//                public void onSelected(int selectedIndex, String item) {
+//                    Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
+//                    age.setText(item);
+//                }
+//            });
+//
+//        } else {
+//            isShow = true;
+//            wl_pickerweight.setSeletion(0);
+//            wl_pickerage.setSeletion(0);
+//            wl_pickerheight.setSeletion(0);
+//            layout_wl.setVisibility(View.GONE);
+//        }
     }
 
     private void cancel() {
@@ -281,4 +290,12 @@ public class PersonalProfileActivity extends BaseActivity {
         layout_wl.setVisibility(View.GONE);
     }
 
+    @Override
+    public void result(String s) {
+        String day = "";
+        day = s.replace("年","/").replace("月","/").replace("日","");
+//        day = s.replace("月","/");
+//        day = s.replace("日","");
+        age.setText(day);
+    }
 }

@@ -108,12 +108,20 @@ public class MineSportsActivity extends BaseActivity {
         params.put("access_token", prefs.getAccessToken());
         params.put("page_size", String.valueOf(page_size));
         params.put("page", String.valueOf(page_number));
+        cancelmDialog();
+        showProgress(0, true);
         client.toMyActivity(this, params, new FindHomeHandler() {
 
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(FindHome findHome) {
                 super.onSuccess(findHome);
+                cancelmDialog();
                 List<RecommendItems> lists = findHome.content.items;
                 if (lists != null && lists.size() > 0) {
                     if (isRefresh) {

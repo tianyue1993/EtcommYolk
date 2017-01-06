@@ -259,12 +259,20 @@ public class RankActivity extends BaseActivity {
         } else {
             httpurl = EtcommApplication.toStructureRank();
         }
-
+        cancelmDialog();
+        showProgress(0, true);
         client.toRank(this, httpurl, params, new CommenHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 String content = commen.content;
                 if (usrstructure == 0) {
                     userurl = content;
@@ -279,6 +287,7 @@ public class RankActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
 

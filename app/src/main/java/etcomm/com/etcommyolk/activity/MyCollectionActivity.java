@@ -117,12 +117,20 @@ public class MyCollectionActivity extends BaseActivity {
         params.put("access_token", prefs.getAccessToken());
         params.put("page_size", String.valueOf(page_size));
         params.put("page_number", String.valueOf(page_number));
+        cancelmDialog();
+        showProgress(0, true);
         client.toFavorite(this, params, new FindHomeHandler() {
 
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(FindHome healthNewsItems) {
                 super.onSuccess(healthNewsItems);
+                cancelmDialog();
                 List<RecommendItems> lists = healthNewsItems.content.items;
                 if (lists != null && lists.size() > 0) {
                     if (isRefresh) {
