@@ -73,18 +73,23 @@ public class SettingActivity extends BaseActivity {
                 }, mContext.getResources().getColor(R.color.black), mContext.getResources().getColor(R.color.black));
                 break;
             case R.id.setting_personal_rl:
+                //个人资料
                 startActivity(new Intent(SettingActivity.this, SettingPersonalDataActivity.class));
                 break;
             case R.id.setting_goal_rl:
+                //目标设置
                 startActivity(new Intent(SettingActivity.this, TargetActivity.class));
                 break;
             case R.id.setting_changepassword_rl:
+                //修改密码
                 startActivity(new Intent(SettingActivity.this, ChangePasswordActivity.class));
                 break;
             case R.id.setting_msgsetting_rl:
+                //推送等信息设置
                 startActivity(new Intent(SettingActivity.this, MsgSettingActivity.class));
                 break;
             case R.id.setting_aboutus_rl:
+                //关于我们
                 startActivity(new Intent(SettingActivity.this, AboutUsActivity.class));
                 break;
         }
@@ -96,11 +101,20 @@ public class SettingActivity extends BaseActivity {
     private void exitFromNet() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
         client.toExit(this, params, new CommenHandler(){
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
                 exit();
             }
@@ -108,6 +122,7 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
 

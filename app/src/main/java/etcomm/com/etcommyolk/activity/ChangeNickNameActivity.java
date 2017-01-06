@@ -85,11 +85,21 @@ public class ChangeNickNameActivity extends BaseActivity {
         params.put("value", value);
         params.put("access_token", prefs.getAccessToken());
         Log.i(tag, "params: " + params.toString());
+        cancelmDialog();
+        showProgress(0, true);
         client.toUserEdit(this, params, new CommenHandler() {
+
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 prefs.setNickName(value);
                 backWithData(Preferences.SelectNickName, nickname_et.getText().toString());
                 finish();
@@ -98,6 +108,7 @@ public class ChangeNickNameActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

@@ -199,8 +199,8 @@ public class ProgressSeekBar extends SeekBar {
 	// 初始化padding 使其左右�? 留下位置用于展示进度图片
 	private void setPadding() {
 		int top = getBitmapHeigh() + oldPaddingTop;
-		int left = getBitmapWidth() / 2 + oldPaddingLeft+10;
-		int right = getBitmapWidth() / 2 + oldPaddingRight+10;
+		int left = getBitmapWidth() / 2 + oldPaddingLeft;
+		int right = getBitmapWidth() / 2 + oldPaddingRight;
 		int bottom = oldPaddingBottom;
 		isMysetPadding = true;
 		setPadding(left, top, right, bottom);

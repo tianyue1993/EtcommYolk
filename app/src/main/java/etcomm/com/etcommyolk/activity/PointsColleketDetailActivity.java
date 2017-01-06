@@ -91,8 +91,6 @@ public class PointsColleketDetailActivity extends BaseActivity {
         Log.d(tag, "getList: " + params.toString());
         cancelmDialog();
         showProgress(0, true);
-        cancelmDialog();
-        showProgress(0, true);
         client.GetPointRuleUrl(mContext, params, new CommenHandler() {
             @Override
             public void onCancel() {

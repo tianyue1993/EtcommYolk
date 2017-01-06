@@ -95,11 +95,20 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
         object.put("device_id", InterfaceUtils.readDeviceId(this));
         object.put("password", forgetNewPwd.getText().toString().trim());
         object.put("repeat_password", forgetConfirmPwd.getText().toString().trim());
-
+        cancelmDialog();
+        showProgress(0, true);
         client.newPwdverify(this, url, object, new LostPwdGetCodeHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 showToast(commen.message);
                 setResult(TO_REQUEST_CODE);
                 finish();
@@ -108,6 +117,7 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
 

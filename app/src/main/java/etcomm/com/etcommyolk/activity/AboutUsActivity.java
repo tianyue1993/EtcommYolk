@@ -81,11 +81,21 @@ public class AboutUsActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
         params.put("version", version);
+        cancelmDialog();
+        showProgress(0, true);
         client.toUploadversion(this, params, new UpdateObjHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+
             @Override
             public void onSuccess(UpdateObj commen) {
                 super.onSuccess(commen);
-
+                cancelmDialog();
                 int code = commen.code;
                 String message = commen.message;
                 if (message.equals("已是最新版本")) {
@@ -128,6 +138,7 @@ public class AboutUsActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

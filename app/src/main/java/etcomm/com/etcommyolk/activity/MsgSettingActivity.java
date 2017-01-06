@@ -96,12 +96,21 @@ public class MsgSettingActivity extends BaseActivity {
         } else {
             params.put("status", "0");
         }
+        cancelmDialog();
+        showProgress(0, true);
         client.toSetPush(this, params, new CommenHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
             //返回Code非零时使用
             @Override
             public void onAllow(Commen commen) {
                 super.onAllow(commen);
-
+                cancelmDialog();
                 Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
                 if (type.equals("is_push")) {
                     msgsettingMsgSwitch.setChecked(!status);
@@ -116,7 +125,7 @@ public class MsgSettingActivity extends BaseActivity {
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
-
+                cancelmDialog();
                 if (type.equals("is_push")) {
                     prefs.setIsPushMsg(status);
                     if (status) {
@@ -153,6 +162,7 @@ public class MsgSettingActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

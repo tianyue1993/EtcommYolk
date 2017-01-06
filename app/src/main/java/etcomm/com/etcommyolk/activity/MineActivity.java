@@ -74,11 +74,20 @@ public class MineActivity extends BaseActivity {
 
         RequestParams params = new RequestParams();
 
+        cancelmDialog();
+        showProgress(0, true);
         client.toUserProfile(this, params, new LoginHandler(){
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Login login) {
                 super.onSuccess(login);
+                cancelmDialog();
                 prefs.setUserId(login.content.user_id);
                 prefs.setDepartmentId(login.content.department_id);
                 prefs.setCustomerId(login.content.customer_id);
@@ -121,6 +130,7 @@ public class MineActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
 

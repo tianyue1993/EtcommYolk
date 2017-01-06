@@ -66,12 +66,19 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
      * 获取默认头像
      */
     private void getDefaultAvator() {
-
+        cancelmDialog();
+        showProgress(0, true);
         client.getDefaultAvator(this, null, new DefaultAvatorHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(DefaultAvatorEntity defaultAvatorEntity) {
                 super.onSuccess(defaultAvatorEntity);
+                cancelmDialog();
                 List<DefaultAvatorEntity.DefaultAvator> ava = defaultAvatorEntity.content;
                 mMan.clear();
                 mWeMen.clear();
@@ -108,6 +115,7 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
@@ -199,11 +207,20 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
         object.put("user_id", prefs.getUserId());
         object.put("nick_name", inputChoose.getText().toString().trim());
         object.put("type", "check");
+        cancelmDialog();
+        showProgress(0, true);
         client.toRegisterUpdateInfo(this, object, new CommenHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 prefs.setFirstsetuserinfo(true);
                 prefs.setNickName(inputChoose.getText().toString().trim());
                 startActivity(new Intent(ChoosePictureActivity.this, PersonalProfileActivity.class));
@@ -212,6 +229,7 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

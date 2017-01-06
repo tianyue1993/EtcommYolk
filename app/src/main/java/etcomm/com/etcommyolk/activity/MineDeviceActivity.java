@@ -135,7 +135,7 @@ public class MineDeviceActivity extends BaseActivity {
         public void onDeviceConnected() {
             cancelmDialog();
             connectCount = 0;
-            searchbluedevices.setVisibility(View.GONE);
+            searchbluedevices.setVisibility(View.INVISIBLE);
             bindeddevice.setVisibility(View.VISIBLE);
             /**
              * 判断是否是敏狐手环 F4T
@@ -218,12 +218,20 @@ public class MineDeviceActivity extends BaseActivity {
         params.put("name", prefs.getBlueDeviceName());
         params.put("mac", prefs.getMacAddress());
         params.put("access_token", prefs.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
         client.toBindOff(this, params, new DeviceBindHandler() {
 
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(DeviceBind deviceBind) {
                 super.onSuccess(deviceBind);
+                cancelmDialog();
                 if (deviceBind.code == 0) {
                     if (deviceBind.content.status.equals("0")) {
                         unbindDeviceSuccess();
@@ -245,6 +253,7 @@ public class MineDeviceActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
@@ -421,11 +430,20 @@ public class MineDeviceActivity extends BaseActivity {
         params.put("name", device.getName());
         params.put("mac", device.getAddress());
         params.put("access_token", prefs.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
         client.toBindOn(this, params, new DeviceBindHandler() {
+
+                    @Override
+                    public void onCancel() {
+                        super.onCancel();
+                        cancelmDialog();
+                    }
 
                     @Override
                     public void onSuccess(DeviceBind deviceBind) {
                         super.onSuccess(deviceBind);
+                        cancelmDialog();
                         if (deviceBind.content.status.equals("1")) {
                             /**
                              * 判断是否是敏狐手环 F4T
@@ -449,6 +467,7 @@ public class MineDeviceActivity extends BaseActivity {
                     @Override
                     public void onFailure(BaseException exception) {
                         super.onFailure(exception);
+                        cancelmDialog();
                     }
                 }
         );
@@ -653,7 +672,7 @@ public class MineDeviceActivity extends BaseActivity {
             searchbluedevices.setVisibility(View.VISIBLE);
             bindeddevice.setVisibility(View.GONE);
         } else {
-            searchbluedevices.setVisibility(View.GONE);
+            searchbluedevices.setVisibility(View.INVISIBLE);
             bindeddevice.setVisibility(View.VISIBLE);
             /**
              * 判断是否是敏狐手环 F4T

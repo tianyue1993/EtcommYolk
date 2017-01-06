@@ -131,11 +131,20 @@ public class MineFeedBackActivity extends BaseActivity {
                 params.put("content", feedbackTv.getText().toString());
                 params.put("device_info", device_info);
                 params.put("type", type);
+                cancelmDialog();
+                showProgress(0, true);
                 client.toFeedBack(MineFeedBackActivity.this, params, new CommenHandler() {
+
+                    @Override
+                    public void onCancel() {
+                        super.onCancel();
+                        cancelmDialog();
+                    }
 
                     @Override
                     public void onSuccess(Commen commen) {
                         super.onSuccess(commen);
+                        cancelmDialog();
                         Toast.makeText(mContext, "提交成功！", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -143,6 +152,7 @@ public class MineFeedBackActivity extends BaseActivity {
                     @Override
                     public void onFailure(BaseException exception) {
                         super.onFailure(exception);
+                        cancelmDialog();
                     }
                 });
             }

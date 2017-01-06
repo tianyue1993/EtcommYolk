@@ -135,12 +135,20 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
         } else {
             url = EtcommApplication.getMailCode();
         }
+        cancelmDialog();
+        showProgress(0, true);
         client.lostPwdverify(this, url, object, new LostPwdGetCodeHandler() {
 
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 timer.start();
                 showToast(commen.message);
             }
@@ -148,6 +156,7 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

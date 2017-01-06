@@ -26,6 +26,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.limxing.library.AlertView;
+import com.limxing.library.OnConfirmeListener;
 import com.loopj.android.http.RequestParams;
 import com.umeng.analytics.MobclickAgent;
 
@@ -57,7 +59,7 @@ import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.WheelView;
 
-public class SettingPersonalDataActivity extends BaseActivity implements View.OnClickListener {
+public class SettingPersonalDataActivity extends BaseActivity implements View.OnClickListener, OnConfirmeListener {
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
     private static final int SEX = 0;
@@ -150,7 +152,8 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         personalavator_ciriv.setImageURI(prefs.getAvatar());
         personal_height_tv.setText(prefs.getHeight() + "cm");
         personal_weight_tv.setText(prefs.getWeight() + "kg");
-        personal_age_tv.setText(Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(prefs.getBirthYear()) + "岁");
+        String[] strings = prefs.getBirthday().split("-");
+        personal_age_tv.setText(Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(strings[0]) + "岁");
     }
 
 
@@ -245,17 +248,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
 
     private void sure() {
 
-        if (choosetext.getText().toString().equals("选择年龄")) {
-            if (editage != "") {
-                editUserInfo("birthday", editage);
-                prefs.setBirthYear(editage);
-                personal_age_tv.setText(Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(editage) + "岁");
-                wl_pickerweight.setSeletion(0);
-                wl_pickerage.setSeletion(0);
-                wl_pickerheight.setSeletion(0);
-            }
-
-        } else if (choosetext.getText().toString().equals("选择身高")) {
+         if (choosetext.getText().toString().equals("选择身高")) {
             if (editheight != "") {
                 editUserInfo("height", editheight);
                 prefs.setHeight(editheight);
@@ -393,42 +386,45 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
     // 年龄设置
     void personal_age_rl() {
         choosetext.setText("选择年龄");
-        if (isShow) {
-            layout_wl.setVisibility(View.VISIBLE);
-            wl_pickerage.setVisibility(View.VISIBLE);
-            wl_pickerheight.setVisibility(View.GONE);
-            wl_pickerweight.setVisibility(View.GONE);
-            isShow = false;
-            ArrayList<String> ageList = new ArrayList<String>();
-            for (int i = 0; i < 71; i++) {
-                int age = i + 1930;
-                ageList.add(age + "");
-            }
-            wl_pickerage.setOffset(1);
-            wl_pickerage.setItems(ageList);
 
-            int age = Integer.parseInt(prefs.getBirthYear());
-            if (age != 0) {
-                wl_pickerage.setSeletion(age - 1930);
-            } else {
-                wl_pickerage.setSeletion(50);
-            }
+        new AlertView("选择年龄", SettingPersonalDataActivity.this, 1991, 2100, SettingPersonalDataActivity.this).show();
 
-            wl_pickerage.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-                @Override
-                public void onSelected(int selectedIndex, String item) {
-                    Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
-                    editage = item;
-                }
-            });
-
-        } else {
-            isShow = true;
-            wl_pickerweight.setSeletion(0);
-            wl_pickerage.setSeletion(0);
-            wl_pickerheight.setSeletion(0);
-            layout_wl.setVisibility(View.GONE);
-        }
+//        if (isShow) {
+//            layout_wl.setVisibility(View.VISIBLE);
+//            wl_pickerage.setVisibility(View.VISIBLE);
+//            wl_pickerheight.setVisibility(View.GONE);
+//            wl_pickerweight.setVisibility(View.GONE);
+//            isShow = false;
+//            ArrayList<String> ageList = new ArrayList<String>();
+//            for (int i = 0; i < 71; i++) {
+//                int age = i + 1930;
+//                ageList.add(age + "");
+//            }
+//            wl_pickerage.setOffset(1);
+//            wl_pickerage.setItems(ageList);
+//
+//            int age = Integer.parseInt(prefs.getBirthYear());
+//            if (age != 0) {
+//                wl_pickerage.setSeletion(age - 1930);
+//            } else {
+//                wl_pickerage.setSeletion(50);
+//            }
+//
+//            wl_pickerage.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+//                @Override
+//                public void onSelected(int selectedIndex, String item) {
+//                    Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
+//                    editage = item;
+//                }
+//            });
+//
+//        } else {
+//            isShow = true;
+//            wl_pickerweight.setSeletion(0);
+//            wl_pickerage.setSeletion(0);
+//            wl_pickerheight.setSeletion(0);
+//            layout_wl.setVisibility(View.GONE);
+//        }
     }
 
     private void editUserInfo(final String field, final String value) {
@@ -436,11 +432,19 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         params.put("field", field);
         params.put("value", value);
         params.put("access_token", prefs.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
         client.toUserEdit(this, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
                 if (field.equals("nick_name")) {
                     personal_nickname_tv.setText(value);
@@ -452,6 +456,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
@@ -738,12 +743,20 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
                     e1.printStackTrace();
                     return;
                 }
+                cancelmDialog();
+                showProgress(0, true);
                 client.toUploadUserAvator(this, params, new CommenHandler(){
+
+                    @Override
+                    public void onCancel() {
+                        super.onCancel();
+                        cancelmDialog();
+                    }
 
                     @Override
                     public void onSuccess(Commen commen) {
                         super.onSuccess(commen);
-
+                        cancelmDialog();
                         Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
                         prefs.setAvatar(commen.content);
                         prefs.saveLoginUserAvatar(commen.content);
@@ -753,6 +766,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
                     @Override
                     public void onFailure(BaseException exception) {
                         super.onFailure(exception);
+                        cancelmDialog();
                     }
 
             });
@@ -903,5 +917,21 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         intent.putExtra("noFaceDetection", true);
         startActivityForResult(intent, CROP_PIC);
     }
+    //选择年龄
+    @Override
+    public void result(String s) {
+        if (editage != "") {
+            String day = "";
+            day = s.replace("年","/").replace("月","/").replace("日","");
+            String[] strings = day.split("/");
 
+            if (Integer.valueOf(strings[0]) > Calendar.getInstance().get(Calendar.YEAR)) {
+                showToast("出生日期不能大于当前年份");
+                return;
+            }
+            editUserInfo("birthday", day);
+            prefs.setBirthday(day);
+            personal_age_tv.setText(Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(strings[0]) + "岁");
+        }
+    }
 }

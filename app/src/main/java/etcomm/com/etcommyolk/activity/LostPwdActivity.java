@@ -158,12 +158,20 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
         } else {
             url = EtcommApplication.getMailCode();
         }
+        cancelmDialog();
+        showProgress(0, true);
         client.lostPwdverify(this, url, object, new LostPwdGetCodeHandler() {
 
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 timer.start();
                 showToast(commen.message);
             }
@@ -171,6 +179,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
@@ -188,11 +197,20 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
         } else {
             url = EtcommApplication.verifyMailCode();
         }
-
+        cancelmDialog();
+        showProgress(0, true);
         client.lostPwdverify(this, url, object, new LostPwdGetCodeHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 showToast(commen.message);
                 Intent intent = new Intent(LostPwdActivity.this, ForgotPasswordActivity.class);
                 if (getCodeType) {
@@ -210,6 +228,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }

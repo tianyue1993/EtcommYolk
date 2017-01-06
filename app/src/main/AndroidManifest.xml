@@ -284,6 +284,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".service.StepDataUploadService" />
+        <service android:name=".service.BluetoothService" />
 
         <activity android:name=".activity.MsgListActivity" />
         <activity android:name=".activity.MainActivity" />

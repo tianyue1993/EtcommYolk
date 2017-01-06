@@ -127,11 +127,22 @@ public class MsgListActivity extends BaseActivity {
             params.put("news_id", prefs.getUserId());
         }
         params.put("access_token", prefs.getAccessToken());
+
+        cancelmDialog();
+        showProgress(0, true);
+
         client.toNewsDelete(this, params, new CommenHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
                 if (item != null) {
                     mMsgList.remove(item);
@@ -153,12 +164,14 @@ public class MsgListActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
 
             // 处理非0返回值
             @Override
             public void onAllow(Commen commen) {
                 super.onAllow(commen);
+                cancelmDialog();
                 if (mMsgList.size() < 1) {
                     emptyview.setVisibility(View.VISIBLE);
                 } else {

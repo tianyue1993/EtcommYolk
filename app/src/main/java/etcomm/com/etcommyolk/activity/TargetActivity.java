@@ -13,6 +13,8 @@ import com.loopj.android.http.RequestParams;
 
 import org.joda.time.DateTime;
 
+import java.util.Calendar;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -62,7 +64,7 @@ public class TargetActivity extends BaseActivity {
                 if (isFirstSetUserInfo) {// 注册完成
                     RequestParams params = new RequestParams();
                     params.put("user_id", prefs.getUserId());
-                    params.put("birth_year", prefs.getBirthYear());
+                    params.put("birthday", prefs.getBirthday());
                     params.put("avatar", prefs.getAvatar());
                     params.put("height", prefs.getHeight());
                     params.put("weight", prefs.getWeight());
@@ -73,11 +75,20 @@ public class TargetActivity extends BaseActivity {
                     params.put("pedometer_target", String.valueOf(progressbar.getProgress() * 1000 + 1000));// 最高2w步
                     prefs.setPedometerTarget("" + (int) (progressbar.getProgress() * 1000 + 1000));
                     Log.i(tag, "params: " + params.toString());
+                    cancelmDialog();
+                    showProgress(0, true);
                     client.toRegisterUpdateInfo(this, params, new CommenHandler() {
+
+                        @Override
+                        public void onCancel() {
+                            super.onCancel();
+                            cancelmDialog();
+                        }
 
                         @Override
                         public void onSuccess(Commen commen) {
                             super.onSuccess(commen);
+                            cancelmDialog();
                             showToast(commen.message);
                             startActivity(new Intent(mContext, MainActivity.class));
                             //用户信息是否完整
@@ -88,6 +99,7 @@ public class TargetActivity extends BaseActivity {
                         @Override
                         public void onFailure(BaseException exception) {
                             super.onFailure(exception);
+                            cancelmDialog();
                         }
                     });
                 } else {
@@ -107,11 +119,20 @@ public class TargetActivity extends BaseActivity {
         params.put("value", value);
         params.put("access_token", prefs.getAccessToken());
         Log.i(tag, "params: " + params.toString());
+        cancelmDialog();
+        showProgress(0, true);
         client.toUserEdit(this, params, new CommenHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
+                cancelmDialog();
                 showToast(commen.message);
                 finish();
             }
@@ -119,7 +140,7 @@ public class TargetActivity extends BaseActivity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
-
+                cancelmDialog();
             }
         });
     }
@@ -132,7 +153,6 @@ public class TargetActivity extends BaseActivity {
         if (isFirstSetUserInfo) {
             setTitleTextView("目标设置", null);
             btn_next.setText("完成");
-            String age = prefs.getBirthYear();
             String height = prefs.getHeight();
             String weight = prefs.getWeight();
             String avator = prefs.getAvatar();
@@ -140,8 +160,8 @@ public class TargetActivity extends BaseActivity {
             nickname.setText(nick_name);
             goal_height_tv.setText(height);
             goal_weight_tv.setText(weight);
-            DateTime d = new DateTime();
-            int a = d.getYear() - Integer.valueOf(age);
+            String[] strings = prefs.getBirthday().split("/");
+            int a = Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(strings[0]);
             goal_age_tv.setText(a + "");
             // 29岁以下，10000步
             // 30-39岁，8000步
@@ -177,8 +197,9 @@ public class TargetActivity extends BaseActivity {
             goal_height_tv.setText(prefs.getHeight() + "");
             goal_weight_tv.setText(prefs.getWeight() + "");
             nickname.setText(prefs.getNickName());
-            DateTime time = new DateTime();
-            goal_age_tv.setText("" + (time.getYear() - Integer.parseInt(prefs.getBirthYear())));
+            String[] strings = prefs.getBirthday().split("/");
+            int a = Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(strings[0]);
+            goal_age_tv.setText(a + "");
             int progress = (Integer.parseInt(prefs.getPedometerTarget())) / 1000 - 1;
             progressbar.setProgress(progress);
         }
