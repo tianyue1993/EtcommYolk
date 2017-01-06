@@ -61,7 +61,6 @@ public class MoreSportsActivity extends BaseActivity {
                     sort = "hot";
                 } else {
                     //最新
-                    showToast("最新");
                     page_number = 1;
                     adaptList.clear();
                     sort = "late";

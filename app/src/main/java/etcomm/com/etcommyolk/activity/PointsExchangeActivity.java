@@ -84,7 +84,7 @@ public class PointsExchangeActivity extends BaseActivity {
                 }
 
                 if (list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0) {
+                    if (listView.getFooterViewsCount() == 0 ) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }

@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:lines="2"
+            android:text="暂时没有兑换任何商品\n;赶紧去兑换吧！"
             android:textSize="16sp" />
     </LinearLayout>
 

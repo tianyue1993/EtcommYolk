@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import com.loopj.android.http.RequestParams;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
@@ -44,6 +48,8 @@ public class SearchGroupActivity extends Activity {
     ImageView back;//返回键
     ExEditText searchHealthnewEt;//搜索框
     DownPullRefreshListView listView;//小组列表
+    @Bind(R.id.empty)
+    LinearLayout empty;
     private Context mContext;
     public int page_size = 10;
     public int page_number = 1;
@@ -74,6 +80,7 @@ public class SearchGroupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_group);
+        ButterKnife.bind(this);
         EtcommApplication.addActivity(this);
         mContext = this;
         IntentFilter filter = new IntentFilter();
@@ -223,6 +230,7 @@ public class SearchGroupActivity extends Activity {
                 cancelmDialog();
                 list = groupList.content.items;
                 if (list.size() > 0) {
+                    empty.setVisibility(View.GONE);
                     if (listView.getFooterViewsCount() == 0 && Integer.parseInt(groupList.content.pages) > 1) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
@@ -233,9 +241,17 @@ public class SearchGroupActivity extends Activity {
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
+
                     showToast("已无更多内容");
                     if (listView.getFooterViewsCount() > 0) {
                         listView.removeFooterView(footer);
+                    }
+
+                    if (searchHealthnewEt.getText().toString() != "" && !searchHealthnewEt.getText().toString().isEmpty()) {
+                        //搜索不出小组的时候，默认图片显示
+                        empty.setVisibility(View.VISIBLE);
+                    } else {
+                        empty.setVisibility(View.GONE);
                     }
 
                 }
@@ -275,7 +291,7 @@ public class SearchGroupActivity extends Activity {
     public static final int MSG_CLOSE_PROGRESS = 1;
     public static final int MSG_SHOW_TOAST = 2;
     public Handler baseHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_CLOSE_PROGRESS:
                     // cancelProgress(); //加载进度条

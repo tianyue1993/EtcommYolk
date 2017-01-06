@@ -2,12 +2,11 @@ package etcomm.com.etcommyolk.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 
@@ -29,10 +28,11 @@ public class MyExchangeActivity extends BaseActivity {
 
     @Bind(R.id.myexchangelist)
     DownPullRefreshListView listView;
+    @Bind(R.id.empty)
+    ImageView empty;
     private ArrayList<PointsExchangeItems> list = new ArrayList<>();
     private ArrayList<PointsExchangeItems> adaptList = new ArrayList<>();
     private MyExchangeListAdapter mAdapter;
-    private View emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,6 @@ public class MyExchangeActivity extends BaseActivity {
     }
 
     public void initData() {
-        getList();
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,18 +57,6 @@ public class MyExchangeActivity extends BaseActivity {
         mAdapter = new MyExchangeListAdapter(mContext, adaptList);
         listView.setAdapter(mAdapter);
         listView.setFooterDividersEnabled(false);
-        listView.setHeaderDividersEnabled(false);
-        listView.setDividerHeight(4);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PointsExchangeItems m = mAdapter.getItem(position - 1);
-                Log.i(tag, "mInfo  itemClick  : " + m.toString());
-            }
-        });
-        View emptyView = getLayoutInflater().inflate(
-                R.layout.empty_pointsexchange_view, null);
-        listView.setEmptyView(emptyView);
         loadMoreListener = new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -105,20 +92,15 @@ public class MyExchangeActivity extends BaseActivity {
                 getList();
             }
         });
-        emptyView = getLayoutInflater().inflate(R.layout.empty_myexchange, null);
-        TextView emptydec = (TextView) emptyView.findViewById(R.id.empty_dec);
-        emptydec.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent(mContext, PointsExchangeActivity.class);
-                                            mContext.startActivity(intent);
-                                            finish();
-                                        }
-                                    }
-
-        );
-        String html = "暂时没有兑换任何商品\n <br/>&#10;赶紧去【<font color=\"#f37f32\">兑换</font>】吧！";
-        emptydec.setText(Html.fromHtml(html));
+        empty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PointsExchangeActivity.class);
+                mContext.startActivity(intent);
+                finish();
+            }
+        });
+        getList();
     }
 
     private void getList() {
@@ -140,19 +122,24 @@ public class MyExchangeActivity extends BaseActivity {
             public void onSuccess(MyExchange exchange) {
                 super.onSuccess(exchange);
                 cancelmDialog();
-                list = exchange.content.model;
+                list = exchange.content.items;
                 if (list != null && list.size() > 0) {
                     for (Iterator<PointsExchangeItems> iterator = list.iterator(); iterator.hasNext(); ) {
                         PointsExchangeItems disscussCommentItems = (PointsExchangeItems) iterator.next();
                         adaptList.add(disscussCommentItems);
                     }
                     mAdapter.notifyDataSetChanged();
-                    listView.setEmptyView(emptyView);
                 } else {
                     showToast("已无更多内容");
                     if (listView.getFooterViewsCount() > 0) {
                         listView.removeFooterView(footer);
                     }
+                }
+
+                if (adaptList.size() == 0) {
+                    empty.setVisibility(View.VISIBLE);
+                } else {
+                    empty.setVisibility(View.GONE);
                 }
 
                 loadStatus = false;
@@ -165,6 +152,7 @@ public class MyExchangeActivity extends BaseActivity {
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
                 cancelmDialog();
+                Toast.makeText(mContext, R.string.network_error, Toast.LENGTH_SHORT).show();
                 listView.onRefreshComplete();
                 loadStatus = false;
                 loadingProgressBar.setVisibility(View.GONE);
