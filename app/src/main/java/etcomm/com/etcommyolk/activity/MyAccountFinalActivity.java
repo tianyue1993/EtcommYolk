@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
@@ -36,6 +37,8 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
     Button finalCommit;
     @Bind(R.id.bound_explain)
     TextView boundExplain;
+    @Bind(R.id.clear_input)
+    ImageView clearInput;
     /**
      * 获取验证码方式 true 为手机验证码 false 为邮箱验证码
      */
@@ -222,6 +225,12 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (!StringUtils.isEmpty(finalPhone.getText().toString().trim())) {
+            finalPhone.setVisibility(View.VISIBLE);
+        }else {
+            finalPhone.setVisibility(View.GONE);
+        }
+
         if (StringUtils.isEmpty(finalPhone.getText().toString().trim()) || StringUtils.isEmpty(finalCode.getText().toString().trim())) {
             finalCommit.setBackgroundResource(R.mipmap.all_fil_button);
         } else {
@@ -247,5 +256,10 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
                 toNext();
                 break;
         }
+    }
+
+    @OnClick(R.id.clear_input)
+    public void onClick() {
+        finalPhone.setText("");
     }
 }
