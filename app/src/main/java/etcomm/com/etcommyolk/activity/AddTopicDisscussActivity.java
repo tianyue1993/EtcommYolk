@@ -503,6 +503,9 @@ public class AddTopicDisscussActivity extends BaseActivity {
             Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
             cancelmDialog();
             finish();
+            Intent data = new Intent();
+            data.putExtra(Preferences.TOPICSET, "1");
+            setResult(RESULT_OK, data);
             return;
         }
         String image_data = getPicContentToString(medilist.get(i));
@@ -538,6 +541,8 @@ public class AddTopicDisscussActivity extends BaseActivity {
                 } else {
                     cancelmDialog();
                     Toast.makeText(mContext, "发布成功!", Toast.LENGTH_SHORT).show();
+                    Intent data = new Intent();
+                    setResult(RESULT_OK, data);
                     finish();
                 }
             }
@@ -580,6 +585,9 @@ public class AddTopicDisscussActivity extends BaseActivity {
                 } else {
                     Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
                     finish();
+                    Intent data = new Intent();
+                    data.putExtra(Preferences.TOPICSET, "1");
+                    setResult(RESULT_OK, data);
                     cancelmDialog();
                 }
 

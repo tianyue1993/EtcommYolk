@@ -31,9 +31,7 @@ import java.util.List;
 
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.DisscussConentListActivity;
-import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
 import etcomm.com.etcommyolk.activity.TopicReportPopActivity;
-import etcomm.com.etcommyolk.activity.TopicWebviewlActivity;
 import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.DisscussItems;
 import etcomm.com.etcommyolk.exception.BaseException;
@@ -124,19 +122,6 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 } else {
                     holder.item_healthnews_image.setImageResource(R.mipmap.ic_header);
                 }
-                holder.share_health_news.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(mContext, TopicWebviewlActivity.class);
-                        intent.putExtra("type", "health");
-                        intent.putExtra("topic_name", mInfo.title);
-                        intent.putExtra("image", mInfo.photos.get(0).thumb_image);
-                        intent.putExtra("discuse", mInfo.content);
-                        intent.putExtra("topic_id", mInfo.share_id);
-                        intent.putExtra("url", mInfo.share_url);
-                        mContext.startActivity(intent);
-                    }
-                });
 
             } else if (mInfo.share_type.equals("3")) {
                 /**
@@ -160,17 +145,6 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 }
 
                 Log.i(tag, "getView: " + mInfo.content);
-                holder.share_health_news.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
-                        intent.putExtra("topic_id", mInfo.share_id);
-                        intent.putExtra("topic_name", mInfo.title);
-                        intent.putExtra("Activity_id", mInfo.share_type);
-                        intent.putExtra("activity_rank", mInfo.detail_url);
-                        mContext.startActivity(intent);
-                    }
-                });
             } else if (mInfo.share_type.equals("2")) {
 //                分享的活动
                 holder.disscuss_content_tv.setVisibility(View.GONE);
@@ -183,19 +157,6 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 if (mInfo.photos.size() > 0) {
                     holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
                 }
-                holder.share_health_news.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(mContext, TopicWebviewlActivity.class);
-                        intent.putExtra("type", "activity");
-                        intent.putExtra("topic_name", mInfo.title);
-                        intent.putExtra("image", mInfo.photos.get(0).thumb_image);
-                        intent.putExtra("discuse", mInfo.content);
-                        intent.putExtra("topic_id", mInfo.share_id);
-                        intent.putExtra("url", mInfo.share_url);
-                        mContext.startActivity(intent);
-                    }
-                });
             }
 
             holder.disscuss_content_tv.setText(mInfo.content);
@@ -272,16 +233,10 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 holder.disscuss_pics_gridview.setLayoutParams(source);
                 Log.i(tag, "setLayoutParams");
             } else {
-                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.FILL_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
                 LinearLayout.LayoutParams source = (LinearLayout.LayoutParams) holder.disscuss_pics_gridview.getLayoutParams();
                 source.width = mScreenWidth * 2 / 3;
                 source.height = mScreenWidth * 2 / 9 * column;
                 holder.disscuss_pics_gridview.setLayoutParams(source);
-
-                // }
-
             }
             final DisscussPhotoGridAdapter adapter = new DisscussPhotoGridAdapter(mContext, mInfo.photos, mScreenWidth * 2 / 9 - DensityUtil.dip2px(mContext, 10));
             holder.disscuss_pics_gridview.setAdapter(adapter);
@@ -309,19 +264,6 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                     intent.putExtra("discussion_id", mInfo.discussion_id);
                     intent.putExtra("type", "discussion");
                     mContext.startActivity(intent);
-                    return true;
-                }
-            });
-            holder.root.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (mInfo.share_type.equals("0")) {
-                        Intent intent = new Intent(mContext, TopicReportPopActivity.class);
-                        intent.putExtra("discussion_id", mInfo.discussion_id);
-                        intent.putExtra("type", "discussion");
-                        mContext.startActivity(intent);
-                    }
-
                     return true;
                 }
             });

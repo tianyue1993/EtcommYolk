@@ -31,6 +31,7 @@ import etcomm.com.etcommyolk.ApiClient;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.AddNewTopicActivity;
 import etcomm.com.etcommyolk.activity.MineActivity;
+import etcomm.com.etcommyolk.activity.MsgListActivity;
 import etcomm.com.etcommyolk.activity.SearchGroupActivity;
 import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
 import etcomm.com.etcommyolk.adapter.GoodGroupAdapter;
@@ -121,6 +122,7 @@ public class AroundFragment extends BaseFragment {
         IntentFilter filter = new IntentFilter();
         filter.addAction("add");
         mContext.registerReceiver(receiver, filter);
+
     }
 
     @Override
@@ -143,6 +145,14 @@ public class AroundFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         limitOnresumSide = true;
+        if (limitOnresumSide) {
+            adaptList.clear();
+            list.clear();
+            arrayList.clear();
+            page_number = 1;
+            getList();
+            getGoodgroup();
+        }
     }
 
 
@@ -150,8 +160,6 @@ public class AroundFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
-        getList();
-        getGoodgroup();
         adapter = new GoodGroupAdapter(mContext, arrayList);
         goodGroup.setAdapter(adapter);
         mAdapter = new MyGroupListAdapter(mContext, adaptList, new MyGroupListAdapter.mAttentioned() {
@@ -224,6 +232,7 @@ public class AroundFragment extends BaseFragment {
                 startActivity(new Intent(mContext, SearchGroupActivity.class));
                 break;
             case R.id.base_right:
+                startActivity(new Intent(mContext, MsgListActivity.class));
                 break;
             case R.id.to_see:
                 startActivity(new Intent(mContext, SearchGroupActivity.class));

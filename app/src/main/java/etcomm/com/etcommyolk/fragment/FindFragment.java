@@ -31,6 +31,7 @@ import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.activity.MoreHealthActivity;
 import etcomm.com.etcommyolk.activity.MoreSportsActivity;
 import etcomm.com.etcommyolk.activity.MoreWealfeActivity;
+import etcomm.com.etcommyolk.activity.MsgListActivity;
 import etcomm.com.etcommyolk.activity.PointsExchangeActivity;
 import etcomm.com.etcommyolk.activity.SearchGroupActivity;
 import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
@@ -112,13 +113,20 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
         limitResumeFind = true;
+        if (limitResumeFind) {
+            page_number = 2;
+            adaptList.clear();
+            list.clear();
+            getFindHome();
+            getFindHome();
+        }
+
     }
 
     @Override
@@ -228,8 +236,6 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 mContext.startActivity(intent);
             }
         });
-
-        getFindHome();
         return rootView;
     }
 
@@ -259,6 +265,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, MineActivity.class));
                 break;
             case R.id.base_right:
+                startActivity(new Intent(mContext, MsgListActivity.class));
                 break;
             case R.id.activity_image:
                 if (!recommendactivity.detail_url.isEmpty()) {

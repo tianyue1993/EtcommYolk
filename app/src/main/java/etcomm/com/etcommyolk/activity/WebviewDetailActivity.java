@@ -22,6 +22,10 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.net.URLDecoder;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.EtcommApplication;
@@ -104,24 +108,15 @@ public class WebviewDetailActivity extends BaseActivity {
         animation.setRepeatMode(Animation.REVERSE);//反向执行
         animation.setStartOffset(0);//设置启动时间
 
-
         WebSettings webSettings = webview.getSettings();
         webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//设置js可以直接打开窗口，如window.open()，默认为false
-
         webview.getSettings().setJavaScriptEnabled(true);//是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞
-
         webview.getSettings().setSupportZoom(true);//是否可以缩放，默认true
-
         webview.getSettings().setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
-
         webview.getSettings().setUseWideViewPort(true);//设置此属性，可任意比例缩放。大视图模式
-
         webview.getSettings().setLoadWithOverviewMode(true);//和setUseWideViewPort(true)一起解决网页自适应问题
-
         webview.getSettings().setAppCacheEnabled(true);//是否使用缓存
-
         webview.getSettings().setDomStorageEnabled(true);//DOM Storage
-
         webview.setWebViewClient(new MyWebview());
         webSettings.setSavePassword(false);
         webSettings.setSaveFormData(false);
@@ -149,7 +144,29 @@ public class WebviewDetailActivity extends BaseActivity {
 
         }
 
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            // name : id Url拦截处理
+            String str = url;
+            if (StringUtils.startsWithIgnoreCase(url, "etcomm")) {
+                try {
+                    String[] flag = url.split("\\:");
+                    String[] content = flag[1].split("\\|");
+                    Intent intent = new Intent(WebviewDetailActivity.this, TopicDisscussListActivity.class);
+                    intent.putExtra("topic_id", content[1]);
+                    intent.putExtra("topic_name", URLDecoder.decode(content[0], "utf-8"));
+                    intent.putExtra("user_id", "");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return true;
+        }
+
     }
+
 
 // TODO: 2016/12/20分享功能
 
