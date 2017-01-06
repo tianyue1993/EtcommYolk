@@ -16,11 +16,12 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,7 +62,6 @@ import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
-import etcomm.com.etcommyolk.widget.ExEditText;
 import etcomm.com.etcommyolk.widget.HorizontalListView;
 
 public class TopicDisscussListActivity extends BaseActivity {
@@ -69,7 +69,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     @Bind(R.id.topic_image)
     SimpleDraweeView topic_image;
     @Bind(R.id.topic_discuss)
-    ExEditText topic_discuss;
+    EditText topic_discuss;
     @Bind(R.id.attion_image)
     HorizontalListView image_list;
     @Bind(R.id.attion_count)
@@ -122,16 +122,32 @@ public class TopicDisscussListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_disscuss_list);
         ButterKnife.bind(this);
+        hideSoftKeyBoard();
         EtcommApplication.addActivity(this);
         if (getIntent() != null) {
             topic_id = getIntent().getStringExtra("topic_id");
             topic_name = getIntent().getStringExtra("topic_name");
             setTitleTextView(topic_name, null);
         }
-        getList();
+//        当EidtText无焦点（focusable=false）时阻止输入法弹出
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(topic_discuss.getWindowToken(), 0);
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        page_number = 1;
+        adaptList.clear();
+        list.clear();
+        getList();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
     public void initData() {
         if (topic != null) {
@@ -249,18 +265,52 @@ public class TopicDisscussListActivity extends BaseActivity {
                 getList();
             }
         });
+
         //长按举报帖子
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 DisscussItems m = mAdapter.getItem(position - 1);
-                if (m.share_type.equals("0")) {
-                    Intent intent = new Intent(mContext, TopicReportPopActivity.class);
-                    intent.putExtra("discussion_id", m.discussion_id);
-                    intent.putExtra("type", "discussion");
+                Intent intent = new Intent(mContext, TopicReportPopActivity.class);
+                intent.putExtra("discussion_id", m.discussion_id);
+                intent.putExtra("type", "discussion");
+                startActivity(intent);
+                return true;
+            }
+        });
+        //点击进入帖子详情
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DisscussItems mInfo = mAdapter.getItem(position - 1);
+                if (mInfo.share_type.equals("1")) {
+                    Intent intent1 = new Intent(mContext, TopicWebviewlActivity.class);
+                    intent1.putExtra("type", "health");
+                    intent1.putExtra("topic_name", mInfo.title);
+                    intent1.putExtra("image", mInfo.photos.get(0).thumb_image);
+                    intent1.putExtra("discuse", mInfo.content);
+                    intent1.putExtra("topic_id", mInfo.share_id);
+                    intent1.putExtra("url", mInfo.share_url);
+                    mContext.startActivity(intent1);
+                } else if (mInfo.share_type.equals("2")) {
+                    Intent intent2 = new Intent(mContext, TopicWebviewlActivity.class);
+                    intent2.putExtra("type", "activity");
+                    intent2.putExtra("topic_name", mInfo.title);
+                    intent2.putExtra("image", mInfo.photos.get(0).thumb_image);
+                    intent2.putExtra("discuse", mInfo.content);
+                    intent2.putExtra("topic_id", mInfo.share_id);
+                    intent2.putExtra("url", mInfo.share_url);
+                    mContext.startActivity(intent2);
+                } else if (mInfo.share_type.equals("3")) {
+//                    showToast("进入小组");
+                    Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
+                    intent.putExtra("topic_id", mInfo.share_id);
+                    intent.putExtra("topic_name", mInfo.title);
+                    intent.putExtra("Activity_id", mInfo.share_type);
+                    intent.putExtra("activity_rank", mInfo.detail_url);
                     startActivity(intent);
                 }
-                return true;
+
             }
         });
 
@@ -477,6 +527,12 @@ public class TopicDisscussListActivity extends BaseActivity {
                         showToast("举报");
                     }
                     break;
+
+                case 100:
+                    adaptList.clear();
+                    page_number = 1;
+                    getList();
+                    break;
             }
         }
     }
@@ -633,7 +689,10 @@ public class TopicDisscussListActivity extends BaseActivity {
                 cancelmDialog();
             }
         });
-        getList();
+        if (field.equals("avatar")) {
+            getList();
+        }
+
     }
 
     /**
@@ -688,7 +747,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                         public void onClick(View v) {
                             Intent intent = new Intent(mContext, AddTopicDisscussActivity.class);
                             intent.putExtra("topic_id", topic_id);
-                            startActivity(intent);
+                            startActivityForResult(intent, 100);
                         }
                     });
 
@@ -705,14 +764,12 @@ public class TopicDisscussListActivity extends BaseActivity {
                         }
                     });
 
-
                     topic_discuss.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             topic_discuss.setText("");
-//                            topic_discuss.setSelection(topic_discuss.getText().toString().length());
-//                            topic_discuss.setCursorVisible(true);
-//                            topic_discuss.requestFocus();
+                            topic_discuss.setCursorVisible(true);
+                            topic_discuss.requestFocus();
                         }
                     });
                     /**
@@ -768,22 +825,22 @@ public class TopicDisscussListActivity extends BaseActivity {
                 /**
                  * 键盘隐藏的时候，如果小组内容为空，设置原文本
                  */
-                _root.getViewTreeObserver().addOnGlobalLayoutListener(
-                        new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                if (isSave) {
-                                    prefs.saveHeigh(_root.getHeight());
-                                    isSave = false;
-                                }
-                                if (_root.getHeight() < prefs.getHeigh()) { // 说明键盘是弹出状态
-
-                                } else {
-                                    topic_discuss.setText(topic.desc);
-                                    topic_discuss.setCursorVisible(false);
-                                }
-                            }
-                        });
+//                _root.getViewTreeObserver().addOnGlobalLayoutListener(
+//                        new ViewTreeObserver.OnGlobalLayoutListener() {
+//                            @Override
+//                            public void onGlobalLayout() {
+//                                if (isSave) {
+//                                    prefs.saveHeigh(_root.getHeight());
+//                                    isSave = false;
+//                                }
+//                                if (_root.getHeight() < prefs.getHeigh()) { // 说明键盘是弹出状态
+//
+//                                } else {
+//                                    topic_discuss.setText(topic.desc);
+//                                    topic_discuss.setCursorVisible(false);
+//                                }
+//                            }
+//                        });
                 mAdapter.notifyDataSetChanged();
                 loadStatus = false;
                 listView.onRefreshComplete();

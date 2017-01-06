@@ -145,9 +145,7 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name=".activity.TopicDisscussListActivity"
-            android:launchMode="singleTop" />
+        <activity android:name=".activity.TopicDisscussListActivity" />
         <activity
             android:name=".activity.AddNewTopicActivity"
             android:launchMode="singleTop" />
@@ -206,6 +204,7 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="586b4e15aed17943a3001bd8"></meta-data>
+
         <activity android:name=".activity.MineSportsActivity" />
         <activity android:name=".activity.MyAccountNextActivity" />
         <activity android:name=".activity.MyAccountFinalActivity" />

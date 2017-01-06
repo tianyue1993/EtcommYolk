@@ -31,15 +31,19 @@
                 fresco:placeholderImage="@mipmap/ic_header"
                 fresco:roundedCornerRadius="5dp" />
 
-            <etcomm.com.etcommyolk.widget.ExEditText
+            <EditText
                 android:id="@+id/topic_discuss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:background="@null"
+                android:cursorVisible="false"
                 android:enabled="false"
+                android:imeOptions="actionDone"
+                android:inputType="text|textMultiLine"
                 android:maxLength="20"
+                android:singleLine="true"
                 android:text="该创建者很懒，什么也没留下..."
                 android:textColor="#333333"
                 android:textCursorDrawable="@drawable/cursor_drawable"
@@ -50,8 +54,9 @@
         <RelativeLayout
             android:id="@+id/attention_member"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:padding="3dp">
@@ -80,7 +85,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="55dp"
+                android:layout_marginRight="60dp"
                 android:text="已加入"
                 android:textColor="#333333"
                 android:textSize="12sp" />
@@ -89,12 +94,11 @@
                 android:id="@+id/depart_rank"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:padding="5dp"
                 android:src="@mipmap/depart_rank"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </RelativeLayout>
 
     </LinearLayout>
