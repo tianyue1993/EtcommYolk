@@ -1,10 +1,13 @@
 package etcomm.com.etcommyolk.fragment;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +21,15 @@ import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.LoginActivity;
 import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
+import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
 
 /**
  * zuoh
  */
 public abstract class BaseFragment extends Fragment {
+    //推送
+    public static boolean isActive = false;
     //SP 存储更新
     protected GlobalSetting prefs;
     //网络请求
@@ -42,7 +48,6 @@ public abstract class BaseFragment extends Fragment {
         return getActivity();
     }
 
-    ;
 
     /**
      * 跳转进入我的页面
@@ -63,6 +68,34 @@ public abstract class BaseFragment extends Fragment {
     public View footer;
     public ProgressBar loadingProgressBar;
     public TextView loadingText;
+    //变更推送图标
+    public abstract void receive_msg_data();
+
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Check action just to be on the safe side.
+            if (intent.getAction().equals(Preferences.ACTION_MSG_DATA)) {
+                prefs.setHaveReceiveUnReadData(true);
+                receive_msg_data();
+            } else {
+                // updateViewByBlueData();
+            }
+        }
+    };
+
+    void registerBroadcastReceiver(){
+        IntentFilter filter = new IntentFilter(Preferences.ACTION_MSG_DATA);
+        getActivity().registerReceiver(mReceiver, filter);
+    }
+    void unregisterBroadcastReceiver(){
+        if(mReceiver!=null){
+            getActivity().unregisterReceiver(mReceiver);
+        }
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +108,7 @@ public abstract class BaseFragment extends Fragment {
         loadingProgressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
         loadingText = (TextView) footer.findViewById(R.id.title);
         super.onCreate(savedInstanceState);
+        registerBroadcastReceiver();
     }
 
     @Override
@@ -83,6 +117,24 @@ public abstract class BaseFragment extends Fragment {
         View view = inflater.inflate(getLayoutId(), container, false);
         initView(view, savedInstanceState);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        isActive = true;
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        isActive = false;
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterBroadcastReceiver();
+        super.onDestroy();
     }
 
     protected void showToast(String message) {

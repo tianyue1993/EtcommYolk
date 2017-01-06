@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,12 +13,25 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/login_pic"
-            android:layout_width="80dp"
+            android:layout_width="120dp"
             android:layout_height="120dp"
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/login_egg" />
+            fresco:placeholderImage="@mipmap/login_egg"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"
+            fresco:roundedCornerRadius="180dp"/>
 
+        <ImageView
+            android:id="@+id/login_pic_none"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@mipmap/login_egg"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            />
 
     </RelativeLayout>
 

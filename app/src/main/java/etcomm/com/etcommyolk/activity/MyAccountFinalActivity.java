@@ -176,7 +176,7 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
                 } else {
                     prefs.setEmail(finalPhone.getText().toString().trim());
                 }
-                prefs.saveLoginUserNmae(finalPhone.getText().toString().trim());
+                prefs.saveLoginUserName(finalPhone.getText().toString().trim());
                 intent.putExtra("boo", false);
                 setResult(RESULT_OK, intent);
                 finish();

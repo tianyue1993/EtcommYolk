@@ -11,9 +11,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.igexin.sdk.PushManager;
 import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
@@ -52,6 +54,9 @@ public class LoginActivity extends Activity {
     //登录头像
     @Bind(R.id.login_pic)
     SimpleDraweeView loginPic;
+    //没有确认头像时显示的头像
+    @Bind(R.id.login_pic_none)
+    ImageView loginPicNone;
     //对话框
     private ProgressDialog mProgress;
     //存储
@@ -69,6 +74,7 @@ public class LoginActivity extends Activity {
 
     private void initView() {
         EtcommApplication.addActivity(this);
+        PushManager.getInstance().initialize(this.getApplicationContext());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -77,13 +83,18 @@ public class LoginActivity extends Activity {
         client = ApiClient.getInstance();
         if (!prefs.getLoginUserAvatar().equals("")) {
             loginPic.setImageURI(prefs.getLoginUserAvatar());
+            loginPicNone.setVisibility(View.GONE);
+            loginPic.setVisibility(View.VISIBLE);
+        }else {
+            loginPicNone.setVisibility(View.VISIBLE);
+            loginPic.setVisibility(View.GONE);
         }
         if (!prefs.getLoginUserName().equals("")) {
             loginName.setText(prefs.getLoginUserName());
         }
 
-    }
 
+    }
 
 
     /**
@@ -101,6 +112,8 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onSuccess(Login login) {
                     super.onSuccess(login);
+                    prefs.saveLoginUserName(loginName.getText().toString().trim());
+                    prefs.saveLoginUserAvatar(login.content.avatar);
                     prefs.setUserId(login.content.user_id);
                     prefs.setDepartmentId(login.content.department_id);
                     prefs.setCustomerId(login.content.customer_id);
@@ -128,6 +141,12 @@ public class LoginActivity extends Activity {
                     prefs.setIsSign(login.content.is_sign);
                     prefs.setCustomerImage(login.content.customer_image);
                     prefs.setInfoStatus(login.content.info_status);
+                    //用户信息完整性
+                    if (login.content.info_status.equals("1")) {
+                        prefs.saveInfoState(true);
+                    } else {
+                        prefs.saveInfoState(false);
+                    }
                     prefs.setIsLike(login.content.is_like);
                     prefs.setIsComment(login.content.is_comment);
                     prefs.setIsComment(login.content.islevel);

@@ -80,6 +80,8 @@ public class TargetActivity extends BaseActivity {
                             super.onSuccess(commen);
                             showToast(commen.message);
                             startActivity(new Intent(mContext, MainActivity.class));
+                            //用户信息是否完整
+                            prefs.saveInfoState(true);
                             finish();
                         }
 

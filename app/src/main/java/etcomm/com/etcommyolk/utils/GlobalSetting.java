@@ -71,6 +71,8 @@ public class GlobalSetting {
     private static final String ACTIONBLUESTEP = "com.etcomm.dcare.ActionBlueSteps";//获取蓝牙计步数据
     private static final String SPSETTINGSREANLOINGON = "isscreenlongon";//运动时，屏幕常量
     private static final String SOFTPEDONMTERSENSITIVITY = "softPedometerSensitivity"; //app计步灵敏度
+    private static final String SPLASHOPEN = "splash_open"; //是否第一次进入
+    private static final String INFOSTATE = "info_state"; //用户信息是否完整
 
 
     private GlobalSetting(Context context) {
@@ -111,12 +113,12 @@ public class GlobalSetting {
 
     public void clear_Login() {
         getSharedPreferencesLogin().edit().clear();
-        getSharedPreferencesLogin().edit().clear();
+        getSharedPreferencesLogin().edit().commit();
     }
 
     //下几项用户用户登录时使用
     //用户名
-    public void saveLoginUserNmae(String value) {
+    public void saveLoginUserName(String value) {
         SharedPreferences.Editor editor = getSharedPreferencesLogin().edit();
         editor.putString(USER_NAME, value);
         editor.commit();
@@ -173,6 +175,28 @@ public class GlobalSetting {
         editor.commit();
     }
 
+
+    /**
+     * 是否是第一次启动splash
+     */
+    public void saveOpen(Boolean boo){
+        saveBoolean(SPLASHOPEN, boo);
+    }
+
+    public boolean getOpen(){
+        return getSharedPreferences().getBoolean(SPLASHOPEN, true);
+    }
+
+    /**
+     * 用户信息是否完整
+     */
+    public void saveInfoState(Boolean boo){
+        saveBoolean(INFOSTATE, boo);
+    }
+
+    public boolean getInfoState(){
+        return getSharedPreferences().getBoolean(INFOSTATE, false);
+    }
 
     /**
      * 设置积分

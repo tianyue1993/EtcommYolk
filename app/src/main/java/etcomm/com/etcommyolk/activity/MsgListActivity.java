@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import com.yydcdut.sdlv.Menu;
 import com.yydcdut.sdlv.MenuItem;
 import com.yydcdut.sdlv.SlideAndDragListView;
@@ -30,6 +31,9 @@ import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.handler.MsgListHandler;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 
+/**
+ * 推送消息
+ */
 public class MsgListActivity extends BaseActivity {
 
     @Bind(R.id.sdlistview)
@@ -50,6 +54,11 @@ public class MsgListActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        prefs.setHaveReceiveUnReadData(false);
+    }
 
     @Override
     protected void onStart() {
@@ -74,11 +83,13 @@ public class MsgListActivity extends BaseActivity {
 
                 if (mMsgList.size() < 1) {
                     emptyview.setVisibility(View.VISIBLE);
+                    sdlistview.setVisibility(View.GONE);
                 } else {
                     emptyview.setVisibility(View.GONE);
+                    sdlistview.setVisibility(View.VISIBLE);
                 }
-                adapter.notifyDataSetChanged();
-
+                adapter = new MsgListAdapter(mContext, mMsgList, mScreenWidth);
+                sdlistview.setAdapter(adapter);
             }
 
             @Override
@@ -127,8 +138,10 @@ public class MsgListActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     if (mMsgList.size() < 1) {
                         emptyview.setVisibility(View.VISIBLE);
+                        sdlistview.setVisibility(View.GONE);
                     } else {
                         emptyview.setVisibility(View.GONE);
+                        sdlistview.setVisibility(View.VISIBLE);
                     }
                 } else {
                     mMsgList.clear();
@@ -260,13 +273,13 @@ public class MsgListActivity extends BaseActivity {
                         notifyintent.putExtra("isFromMSG", true);
                         startActivity(notifyintent);
                     } else if (obj.topic_list_type.equals("2")) {
-//                        Intent notifyintent = new Intent(MsgListActivity.this, DisscussConentListActivity.class);
-//                        notifyintent.putExtra("topic_id", String.valueOf(obj.getTopic_id()));
-//                        notifyintent.putExtra("disscuss_id", obj.getDetail_id());
-//                        notifyintent.putExtra("isAttentioned", obj.getIs_like());
-//                        notifyintent.putExtra("topic_name", obj.getTopic_name());// /
-//                        notifyintent.putExtra("isFromMSG", true);
-//                        startActivity(notifyintent);
+                        Intent notifyintent = new Intent(MsgListActivity.this, DisscussConentListActivity.class);
+                        notifyintent.putExtra("topic_id", String.valueOf(obj.topic_id));
+                        notifyintent.putExtra("disscuss_id", obj.detail_id);
+                        notifyintent.putExtra("isAttentioned", obj.is_like);
+                        notifyintent.putExtra("topic_name", obj.topic_name);
+                        notifyintent.putExtra("isFromMSG", true);
+                        startActivity(notifyintent);
 
                     }
 
@@ -274,8 +287,6 @@ public class MsgListActivity extends BaseActivity {
 
             }
         });
-        adapter = new MsgListAdapter(mContext, mMsgList, mScreenWidth);
-        sdlistview.setAdapter(adapter);
 
     }
 
