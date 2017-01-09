@@ -107,13 +107,11 @@ public class GlobalSetting {
 
 
     public void clear() {
-        getSharedPreferences().edit().clear();
-        getSharedPreferences().edit().commit();
+        getSharedPreferences().edit().clear().commit();
     }
 
     public void clear_Login() {
-        getSharedPreferencesLogin().edit().clear();
-        getSharedPreferencesLogin().edit().commit();
+        getSharedPreferencesLogin().edit().clear().commit();
     }
 
     //下几项用户用户登录时使用
@@ -179,22 +177,22 @@ public class GlobalSetting {
     /**
      * 是否是第一次启动splash
      */
-    public void saveOpen(Boolean boo){
+    public void saveOpen(Boolean boo) {
         saveBoolean(SPLASHOPEN, boo);
     }
 
-    public boolean getOpen(){
+    public boolean getOpen() {
         return getSharedPreferences().getBoolean(SPLASHOPEN, true);
     }
 
     /**
      * 用户信息是否完整
      */
-    public void saveInfoState(Boolean boo){
+    public void saveInfoState(Boolean boo) {
         saveBoolean(INFOSTATE, boo);
     }
 
-    public boolean getInfoState(){
+    public boolean getInfoState() {
         return getSharedPreferences().getBoolean(INFOSTATE, false);
     }
 
@@ -631,40 +629,47 @@ public class GlobalSetting {
     /**
      * 地址
      */
-    public String getMacAddress(){
+    public String getMacAddress() {
         return getSharedPreferences().getString(MACADDRESS, "");
     }
-    public void setMacAddress(String string){
+
+    public void setMacAddress(String string) {
         saveString(MACADDRESS, string);
     }
+
     /**
      * 硬件名称
      */
-    public String getBlueDeviceName(){
+    public String getBlueDeviceName() {
         return getSharedPreferences().getString(BLUEDEVICENAME, "");
     }
 
-    public void setBlueDeviceName(String string){
+    public void setBlueDeviceName(String string) {
         saveString(BLUEDEVICENAME, string);
     }
+
     /**
      * 硬件唯一
      */
-    public int getBlueDeviceRssi(){
+    public int getBlueDeviceRssi() {
         return getSharedPreferences().getInt(BLUEDEVICERSSI, 0);
     }
-    public void setBlueDeviceRssi(int i){
+
+    public void setBlueDeviceRssi(int i) {
         saveInt(BLUEDEVICERSSI, i);
     }
+
     /**
      * 是否有新消息推送
      */
-    public Boolean getHaveReceiveUnReadData(){
+    public Boolean getHaveReceiveUnReadData() {
         return getSharedPreferences().getBoolean(ISHAVERECEIVEUNREADDATA, false);
     }
-    public void setHaveReceiveUnReadData(boolean boo){
+
+    public void setHaveReceiveUnReadData(boolean boo) {
         saveBoolean(ISHAVERECEIVEUNREADDATA, boo);
     }
+
     /**
      * APP计步是否开启
      */
@@ -672,9 +677,10 @@ public class GlobalSetting {
         return getSharedPreferences().getBoolean(IFSOFTPEDOMETERON, true);
     }
 
-    public void setIfSoftPedometerOn(boolean boo){
+    public void setIfSoftPedometerOn(boolean boo) {
         saveBoolean(IFSOFTPEDOMETERON, boo);
     }
+
     /**
      * 蓝牙连接状态
      */
@@ -701,7 +707,7 @@ public class GlobalSetting {
      * 默认计步设置-常亮设置
      */
     public void setIsScreenLongOn(boolean isScreenOn) {
-       saveBoolean(SPSETTINGSREANLOINGON, isScreenOn);
+        saveBoolean(SPSETTINGSREANLOINGON, isScreenOn);
     }
 
     public boolean isScreenLongOn() {
@@ -717,11 +723,10 @@ public class GlobalSetting {
     }
 
 
-
     /**
      * 用户一步距离
      */
-    public String getUserStepLeight(){
+    public String getUserStepLeight() {
         return getSharedPreferences().getString(USERSTEPLEIGHT, "66");
     }
 
@@ -754,8 +759,6 @@ public class GlobalSetting {
     public float getTmpCaliries(Context context, String date) {
         return getSharedPreferences().getFloat(date + "-" + getUserId() + DAYCALORIES, 0);
     }
-
-
 
 
 }
