@@ -135,7 +135,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
 
     // 身高设置
     void personal_height_rl() {
-        choosetext.setText("身　高：");
+        choosetext.setText("身　高");
         if (isShow) {
             layout_wl.setVisibility(View.VISIBLE);
             wl_pickerage.setVisibility(View.GONE);
@@ -181,7 +181,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
 
     // 体重设置
     void personal_weight_rl() {
-        choosetext.setText("体　重：");
+        choosetext.setText("体　重");
         if (isShow) {
             layout_wl.setVisibility(View.VISIBLE);
             wl_pickerage.setVisibility(View.GONE);
@@ -227,46 +227,8 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
 
     // 年龄设置
     void personal_age_rl() {
-        choosetext.setText("生　日：");
-//        if (isShow) {
-
-            new AlertView("选择年龄", PersonalProfileActivity.this, 1988, 2010, PersonalProfileActivity.this).show();
-
-//            layout_wl.setVisibility(View.VISIBLE);
-//            wl_pickerage.setVisibility(View.VISIBLE);
-//            wl_pickerheight.setVisibility(View.GONE);
-//            wl_pickerweight.setVisibility(View.GONE);
-//            isShow = false;
-//            ArrayList<String> ageList = new ArrayList<String>();
-//            for (int i = 0; i < 71; i++) {
-//                int age = i + 1930;
-//                ageList.add(age + "");
-//            }
-//            wl_pickerage.setOffset(1);
-//            wl_pickerage.setItems(ageList);
-//
-//            int age1 = Integer.parseInt(age.getText().toString());
-//            if (age1 != 0) {
-//                wl_pickerage.setSeletion(age1 - 1930);
-//            } else {
-//                wl_pickerage.setSeletion(50);
-//            }
-//
-//            wl_pickerage.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-//                @Override
-//                public void onSelected(int selectedIndex, String item) {
-//                    Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
-//                    age.setText(item);
-//                }
-//            });
-//
-//        } else {
-//            isShow = true;
-//            wl_pickerweight.setSeletion(0);
-//            wl_pickerage.setSeletion(0);
-//            wl_pickerheight.setSeletion(0);
-//            layout_wl.setVisibility(View.GONE);
-//        }
+        choosetext.setText("");
+            new AlertView("选择年龄", PersonalProfileActivity.this, 1930, 2000, PersonalProfileActivity.this).show();
     }
 
     private void cancel() {

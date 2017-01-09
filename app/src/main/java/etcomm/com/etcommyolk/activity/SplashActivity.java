@@ -2,22 +2,30 @@ package etcomm.com.etcommyolk.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.igexin.sdk.PushManager;
+import com.iwown.android_iwown_ble.utils.LogUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import etcomm.com.etcommyolk.R;
@@ -114,13 +122,19 @@ public class SplashActivity extends BaseActivity {
                     // TODO Auto-generated method stub
                 }
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    if (!StringUtils.isEmpty(GlobalSetting.getInstance(SplashActivity.this).getAccessToken())) {
-                        if (prefs.getInfoState()) {
-                            // 信息完整
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                            startActivity(intent);
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        String string = prefs.getAccessToken();
+                        if (!StringUtils.isEmpty(prefs.getAccessToken())) {
+                            if (prefs.getInfoState()) {
+                                // 信息完整
+                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
+                                startActivity(intent);
+                            }
+
                         } else {
                             Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
                             startActivity(intent);

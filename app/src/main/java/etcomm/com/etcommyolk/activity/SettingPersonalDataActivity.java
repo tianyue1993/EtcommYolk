@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -375,44 +376,8 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
     void personal_age_rl() {
         choosetext.setText("选择年龄");
 
-        new AlertView("选择年龄", SettingPersonalDataActivity.this, 1988, 2010, SettingPersonalDataActivity.this).show();
+        new AlertView("选择年龄", SettingPersonalDataActivity.this, 1930, 2000, SettingPersonalDataActivity.this).show();
 
-//        if (isShow) {
-//            layout_wl.setVisibility(View.VISIBLE);
-//            wl_pickerage.setVisibility(View.VISIBLE);
-//            wl_pickerheight.setVisibility(View.GONE);
-//            wl_pickerweight.setVisibility(View.GONE);
-//            isShow = false;
-//            ArrayList<String> ageList = new ArrayList<String>();
-//            for (int i = 0; i < 71; i++) {
-//                int age = i + 1930;
-//                ageList.add(age + "");
-//            }
-//            wl_pickerage.setOffset(1);
-//            wl_pickerage.setItems(ageList);
-//
-//            int age = Integer.parseInt(prefs.getBirthYear());
-//            if (age != 0) {
-//                wl_pickerage.setSeletion(age - 1930);
-//            } else {
-//                wl_pickerage.setSeletion(50);
-//            }
-//
-//            wl_pickerage.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-//                @Override
-//                public void onSelected(int selectedIndex, String item) {
-//                    Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
-//                    editage = item;
-//                }
-//            });
-//
-//        } else {
-//            isShow = true;
-//            wl_pickerweight.setSeletion(0);
-//            wl_pickerage.setSeletion(0);
-//            wl_pickerheight.setSeletion(0);
-//            layout_wl.setVisibility(View.GONE);
-//        }
     }
 
     private void editUserInfo(final String field, final String value) {
@@ -797,7 +762,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         if (bp == null) {
             Log.e(tag, "发生异常");
         }
-        personalavator_ciriv.setImageBitmap(bp);
+        personalavator_ciriv.setImageURI(Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bp, null,null)));
     }
 
     private void tryCropProfileImage(Uri uri) {
