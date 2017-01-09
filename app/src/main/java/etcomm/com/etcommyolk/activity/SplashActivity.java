@@ -122,24 +122,17 @@ public class SplashActivity extends BaseActivity {
                     // TODO Auto-generated method stub
                 }
 
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        String string = prefs.getAccessToken();
-                        if (!StringUtils.isEmpty(prefs.getAccessToken())) {
-                            if (prefs.getInfoState()) {
-                                // 信息完整
-                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
-                                startActivity(intent);
-                            }
-
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (!StringUtils.isEmpty(prefs.getAccessToken())) {
+                        if (prefs.getInfoState()) {
+                            // 信息完整
+                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                            startActivity(intent);
                         } else {
                             Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
                             startActivity(intent);
                         }
-
                     } else {
                         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);
