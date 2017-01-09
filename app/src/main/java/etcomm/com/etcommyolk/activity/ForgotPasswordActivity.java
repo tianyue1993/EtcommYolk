@@ -31,9 +31,6 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
     //显示隐藏Icon
     @Bind(R.id.forget_show_pwd_check)
     CheckBox forgetShowPwdCheck;
-    //显示隐藏文本
-    @Bind(R.id.forget_show_pwd_text)
-    TextView forgetShowPwdText;
     //显示面
     @Bind(R.id.forget_show_pwd)
     LinearLayout forgetShowPwd;
@@ -132,13 +129,11 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
                 if (forgetShowPwdCheck.isChecked()) {
                     //如果选中，隐藏密码
                     forgetShowPwdCheck.setChecked(false);
-                    forgetShowPwdText.setText("   显示密码");
                     forgetNewPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     forgetConfirmPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     //否则显示密码
                     forgetShowPwdCheck.setChecked(true);
-                    forgetShowPwdText.setText("   隐藏密码");
                     forgetNewPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     forgetConfirmPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }

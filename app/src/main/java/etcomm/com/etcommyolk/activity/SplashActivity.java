@@ -2,22 +2,30 @@ package etcomm.com.etcommyolk.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.igexin.sdk.PushManager;
+import com.iwown.android_iwown_ble.utils.LogUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import etcomm.com.etcommyolk.R;
@@ -91,48 +99,49 @@ public class SplashActivity extends BaseActivity {
         if (isShowedGuide) {
             loading.setVisibility(View.VISIBLE);
             viewpager.setVisibility(View.GONE);
-            // 替换企业
-            if (prefs.getCustomerImage() != null && prefs.getCustomerImage() != "") {
-                flymanbackground.setImageURI("");
-            } else {
-                flymanbackground.setBackgroundResource(R.mipmap.loading_chaoren);
-            }
-
-            animation = new AlphaAnimation(1.0f, 1.0f);
-            animation.setDuration(1500);
-            flymanbackground.setAnimation(animation);
-            animation.startNow();
-            animation.setAnimationListener(new Animation.AnimationListener() {
-
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    // TODO Auto-generated method stub
+                // 替换企业
+                if (prefs.getCustomerImage() != null && prefs.getCustomerImage() != "") {
+                    flymanbackground.setImageURI("");
+                } else {
+                    flymanbackground.setBackgroundResource(R.mipmap.loading_chaoren);
                 }
 
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                    // TODO Auto-generated method stub
-                }
+                animation = new AlphaAnimation(1.0f, 1.0f);
+                animation.setDuration(1500);
+                flymanbackground.setAnimation(animation);
+                animation.startNow();
+                animation.setAnimationListener(new Animation.AnimationListener() {
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    if (!StringUtils.isEmpty(GlobalSetting.getInstance(SplashActivity.this).getAccessToken())) {
-                        if (prefs.getInfoState()) {
-                            // 信息完整
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                            startActivity(intent);
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        String string = prefs.getAccessToken();
+                        if (!StringUtils.isEmpty(prefs.getAccessToken())) {
+                            if (prefs.getInfoState()) {
+                                // 信息完整
+                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
+                                startActivity(intent);
+                            }
+
                         } else {
-                            Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
+                            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
-
-                    } else {
-                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                        SplashActivity.this.finish();
                     }
-                    SplashActivity.this.finish();
-                }
-            });
+                });
         } else {
             //第一次打开
             viewpager.setVisibility(View.VISIBLE);

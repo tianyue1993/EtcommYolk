@@ -39,10 +39,6 @@ public class RankActivity extends BaseActivity {
     protected static final int GetStructureRankUrl = 1;
     ImageView leftimage;
     ImageView title_right_iv;
-    View leftindicator;
-    View rightindicator;
-    TextView around_tab_attationed;
-    TextView around_tab_notattationed;
     WebView webview;
 
     private String token;
@@ -59,10 +55,6 @@ public class RankActivity extends BaseActivity {
         EtcommApplication.addActivity(this);
         leftimage = (ImageView) findViewById(R.id.leftimage);
         title_right_iv = (ImageView) findViewById(R.id.title_right_iv);
-        leftindicator = findViewById(R.id.leftindicator);
-        rightindicator = findViewById(R.id.rightindicator);
-        around_tab_attationed = (TextView) findViewById(R.id.around_tab_attationed);
-        around_tab_notattationed = (TextView) findViewById(R.id.around_tab_notattationed);
         webview = (WebView) findViewById(R.id.webview);
 
 
@@ -100,105 +92,6 @@ public class RankActivity extends BaseActivity {
                 intent.putExtra("Token", prefs.getAccessToken());
                 intent.setClass(RankActivity.this, PointsColleketDetailActivity.class);
                 startActivity(intent);
-            }
-        });
-        around_tab_attationed.setOnClickListener(new View.OnClickListener() {
-
-            @SuppressLint("NewApi")
-            @Override
-            public void onClick(View v) {
-                around_tab_notattationed.setBackground(null);
-                around_tab_notattationed.setTextColor(Color.parseColor("#aba8a8"));
-                around_tab_attationed.setTextColor(Color.parseColor("#ffffff"));
-                if (curTab == 0) {
-
-                } else {
-                    if (animation != null) {
-                        animation.cancel();
-                        animation = null;
-                    }
-                    animation = new TranslateAnimation(0, -DensityUtil.dip2px(mContext, 80), 0, 0);
-                    animation.setInterpolator(new AccelerateInterpolator());
-                    animation.setDuration(100);
-                    animation.setFillAfter(true);
-                    animation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                            leftindicator.setVisibility(View.VISIBLE);
-                            rightindicator.setVisibility(View.INVISIBLE);
-                            around_tab_attationed.setBackground(null);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            around_tab_attationed.setBackgroundResource(R.mipmap.arout_tab_choosed_bg);
-                            leftindicator.setVisibility(View.INVISIBLE);
-                            rightindicator.setVisibility(View.INVISIBLE);
-                        }
-                    });
-                    rightindicator.startAnimation(animation);
-                }
-                curTab = 0;
-                if (userurl == null) {
-                    geturlFromNet(0);
-                } else {
-                    mHandler.sendEmptyMessage(GetUserRankUrl);
-                }
-            }
-        });
-        around_tab_notattationed.setOnClickListener(new View.OnClickListener() {
-
-            @SuppressLint("NewApi")
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                around_tab_attationed.setBackground(null);
-                around_tab_notattationed.setTextColor(Color.parseColor("#ffffff"));
-                around_tab_attationed.setTextColor(Color.parseColor("#aba8a8"));// /aba8a8
-                // //656363
-                if (curTab == 0) {
-                    if (animation != null) {
-                        animation.cancel();
-                        animation = null;
-                    }
-                    animation = new TranslateAnimation(0, DensityUtil.dip2px(mContext, 80), 0, 0);
-                    ;
-                    animation.setInterpolator(new AccelerateInterpolator());
-                    animation.setDuration(100);
-                    animation.setFillAfter(true);
-                    animation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                            rightindicator.setVisibility(View.VISIBLE);
-                            leftindicator.setVisibility(View.INVISIBLE);
-                            around_tab_notattationed.setBackground(null);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            around_tab_notattationed.setBackgroundResource(R.mipmap.arout_tab_choosed_bg);
-                            leftindicator.setVisibility(View.INVISIBLE);
-                            rightindicator.setVisibility(View.INVISIBLE);
-                        }
-                    });
-                    leftindicator.startAnimation(animation);
-                } else {
-
-                }
-                curTab = 1;
-                if (structureurl == null) {
-                    geturlFromNet(1);
-                } else {
-                    mHandler.sendEmptyMessage(GetStructureRankUrl);
-                }
             }
         });
 

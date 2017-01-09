@@ -12,12 +12,12 @@
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_camera_pressed.png"
     },
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_back_arrow_white_pressed.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_back_arrow_white_pressed.png"
-    },
-    {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_picture_loadfailed.png",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_picture_loadfailed.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_back_arrow_white_pressed.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_back_arrow_white_pressed.png"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_picture_loading.png",
