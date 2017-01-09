@@ -3,9 +3,17 @@ package etcomm.com.etcommyolk;
 import android.content.Context;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.SyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
+import java.security.KeyManagementException;
+import java.security.UnrecoverableKeyException;
 
 import etcomm.com.etcommyolk.handler.JsonResponseHandler;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
@@ -17,7 +25,6 @@ public class ApiClient {
 
 
     private AsyncHttpClient asyncHttpClient;
-    private SyncHttpClient syncHttpClient;
     private GlobalSetting pres;
 
     private volatile static ApiClient instance;
@@ -33,16 +40,24 @@ public class ApiClient {
         return instance;
     }
 
+
     private ApiClient() {
         asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.setURLEncodingEnabled(false);
         asyncHttpClient.setTimeout(10000);
         asyncHttpClient.setMaxRetriesAndTimeout(0, 5000);
         asyncHttpClient.addHeader("Accept", "application/json; version=public");
-        syncHttpClient = new SyncHttpClient();
-        syncHttpClient.setURLEncodingEnabled(false);
-        syncHttpClient.setTimeout(10000);
-        syncHttpClient.setMaxRetriesAndTimeout(0, 5000);
+        try {
+            asyncHttpClient.setSSLSocketFactory(new MySSLSocketFactory(KeyStore.getInstance("BKS")));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
     }
 
     public void login(String url, TextHttpResponseHandler handler) {

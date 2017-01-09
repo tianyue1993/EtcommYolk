@@ -11,6 +11,7 @@ public class GlobalSetting {
 
     private static Context mContext;
     private static SharedPreferences mPrefs;
+    private static SharedPreferences mPrefsLogin;
     private static GlobalSetting mSpInstance;
 
     private static final String PREFERENCE_NAME = "etcommyolk";
@@ -98,17 +99,16 @@ public class GlobalSetting {
     }
 
     public SharedPreferences getSharedPreferencesLogin() {
-        if (mPrefs == null) {
-            mPrefs = mContext.getSharedPreferences(PREFERENCE_NAME_LOGIN,
+        if (mPrefsLogin == null) {
+            mPrefsLogin = mContext.getSharedPreferences(PREFERENCE_NAME_LOGIN,
                     Context.MODE_PRIVATE);
         }
-        return mPrefs;
+        return mPrefsLogin;
     }
 
 
     public void clear() {
-        getSharedPreferences().edit().clear();
-        getSharedPreferences().edit().commit();
+        getSharedPreferences().edit().clear().commit();
     }
 
     public void clear_Login() {
@@ -128,16 +128,6 @@ public class GlobalSetting {
         return getSharedPreferencesLogin().getString(USER_NAME, "");
     }
 
-    //密码
-    public void saveLoginUserPwd(String value) {
-        SharedPreferences.Editor editor = getSharedPreferencesLogin().edit();
-        editor.putString(USER_PWD, value);
-        editor.commit();
-    }
-
-    public String getLoginUserPwd() {
-        return getSharedPreferencesLogin().getString(USER_PWD, "");
-    }
 
     //用户头像
     public void saveLoginUserAvatar(String value) {

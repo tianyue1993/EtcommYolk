@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.fragment.AroundFragment;
 import etcomm.com.etcommyolk.fragment.FindFragment;
@@ -57,6 +58,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EtcommApplication.addActivity(this);
         //为空时初始化
         if (savedInstanceState == null) {
             initView();

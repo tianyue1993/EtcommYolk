@@ -7,8 +7,11 @@ import android.os.CountDownTimer;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,6 +60,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     //注册输入方式
     @Bind(R.id.reg_input_type)
     TextView regInputType;
+    @Bind(R.id.login_showh_pwd)
+    CheckBox loginShowhPwd;
     /**
      * 获取验证码方式 true 为手机验证码 false 为邮箱验证码
      */
@@ -186,7 +191,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 cancelmDialog();
                 if (commen.code != 0) {
                     showToast(commen.message);
-                }else {
+                } else {
                     toPerfectRegister();
                 }
             }
@@ -199,8 +204,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
+
+    /**
+     * 显示隐藏密码
+     */
+    private void toShowHidePwd() {
+        if (loginShowhPwd.isChecked()) {
+            //如果选中，显示密码
+            registerPassword.getEditText().setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else {
+            //否则隐藏密码
+            registerPassword.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+    }
+
     //调用注册监听
-    private void toPerfectRegister(){
+    private void toPerfectRegister() {
         RequestParams object = new RequestParams();
         String url;
         //true 为手机 false 为邮箱
@@ -232,7 +251,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 super.onSuccess(login);
                 cancelmDialog();
                 prefs.saveLoginUserName(registeredPhone.getEditText().getText().toString().trim());
-                prefs.saveLoginUserPwd(registerPassword.getEditText().getText().toString().trim());
                 prefs.setUserId(login.content.user_id);
                 prefs.setDepartmentId(login.content.department_id);
                 prefs.setCustomerId(login.content.customer_id);
@@ -263,7 +281,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 //用户信息完整性
                 if (login.content.info_status.equals("1")) {
                     prefs.saveInfoState(true);
-                }else {
+                } else {
                     prefs.saveInfoState(false);
                 }
                 prefs.setIsLike(login.content.is_like);
@@ -332,7 +350,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 cancelmDialog();
                 if (commen.code != 0) {
                     showToast(commen.message);
-                }else {
+                } else {
                     timer.start();
                 }
             }
@@ -401,7 +419,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     };
 
 
-    @OnClick({R.id.qr_code, R.id.reg_get_code, R.id.reg_commit})
+    @OnClick({R.id.qr_code, R.id.reg_get_code, R.id.reg_commit, R.id.login_showh_pwd})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.qr_code:
@@ -420,6 +438,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 //注册方式
                 toSetInputType();
                 break;
+            case R.id.login_showh_pwd:
+                //注册方式
+                toShowHidePwd();
+                break;
+
+
 
         }
     }

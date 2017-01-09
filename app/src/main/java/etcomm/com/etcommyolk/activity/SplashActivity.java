@@ -124,7 +124,8 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        if (!StringUtils.isEmpty(GlobalSetting.getInstance(SplashActivity.this).getAccessToken())) {
+                        String string = prefs.getAccessToken();
+                        if (!StringUtils.isEmpty(prefs.getAccessToken())) {
                             if (prefs.getInfoState()) {
                                 // 信息完整
                                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);

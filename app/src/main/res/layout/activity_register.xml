@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -180,6 +181,7 @@
             android:id="@+id/registerPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:passwordToggleEnabled="false"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView4"
             android:layout_toEndOf="@+id/textView4">
@@ -191,10 +193,20 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:layout_gravity="center"
-                android:inputType="textPassword"
                 android:paddingLeft="35dp"
+                android:inputType="textPassword"
                 android:textSize="15dp" />
         </android.support.design.widget.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/login_showh_pwd"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:button="@null"
+            android:background="@drawable/login_show_pwd"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 
