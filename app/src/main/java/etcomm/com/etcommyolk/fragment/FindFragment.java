@@ -88,6 +88,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     RecommendItems recommendactivity;
     RecommendItems recommendhealth;
     RecommendItems recommendwelfare;
+    int page = 2;
 
     /**
      * onCreateView
@@ -120,10 +121,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         super.onResume();
         limitResumeFind = true;
         if (limitResumeFind) {
-            page_number = 2;
+            page = 2;
             adaptList.clear();
             list.clear();
-            getFindHome();
             getFindHome();
         }
         if (prefs.getHaveReceiveUnReadData()) {
@@ -223,7 +223,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                     listView.removeFooterView(footer);
                 }
                 //下拉时候刷新整个页面接口，并将列表的页面置为2
-                page_number = 2;
+                page= 2;
                 adaptList.clear();
                 getFindHome();
             }
@@ -414,7 +414,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
-        params.put("page", (page_number++) + "");
+        params.put("page", (page++) + "");
         Log.d("", "getFindHome: " + params.toString());
         cancelmDialog();
         showProgress(0, true);

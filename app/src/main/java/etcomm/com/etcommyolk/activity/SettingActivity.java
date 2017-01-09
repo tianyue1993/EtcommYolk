@@ -103,7 +103,7 @@ public class SettingActivity extends BaseActivity {
         params.put("access_token", prefs.getAccessToken());
         cancelmDialog();
         showProgress(0, true);
-        client.toExit(this, params, new CommenHandler(){
+        client.toExit(this, params, new CommenHandler() {
 
             @Override
             public void onCancel() {
@@ -133,6 +133,7 @@ public class SettingActivity extends BaseActivity {
         prefs.clear();
         Intent intent = new Intent(mContext, LoginActivity.class);
         startActivity(intent);
+        EtcommApplication.finishActivity();
         finish();
     }
 }
