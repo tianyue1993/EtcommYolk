@@ -13,7 +13,7 @@ android {
         // 不让gradle自动生成不同屏幕分辨率的png图
         generatedDensities = []
         manifestPlaceholders = [
-                serverDoMain  : "http://113.59.227.10:96/",
+                serverDoMain  : "https://api.365happybonus.com/",
                 PUSH_APPID    : "DzC8LxNlDLAJ4NBFpgmE11",
                 PUSH_APPKEY   : "hFpxGLeO3j5Y1YqguIGiz3",
                 PUSH_APPSECRET: "vQH7vwTLdRAJScR9oMC4u4"
@@ -32,6 +32,10 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     //相关文件冲突解决
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
@@ -47,17 +51,17 @@ android {
     }
 
     //打包相关
-//    signingConfigs {
-//
-//        release {
-//            //签名文件 需放在根目录
-//            storeFile file("")
-//            storePassword ""
-//            keyAlias ""
-//            keyPassword ""
-//        }
-//
-//    }
+    signingConfigs {
+
+        release {
+            //签名文件 需放在根目录
+            storeFile file("yolkkey.jks")
+            storePassword "123456"
+            keyAlias "yolk"
+            keyPassword "123456"
+        }
+
+    }
 
     //分渠道 分站点打包 分配服务器路径等
     productFlavors {

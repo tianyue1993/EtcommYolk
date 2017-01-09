@@ -85,7 +85,7 @@ public class LoginActivity extends Activity {
             loginPic.setImageURI(prefs.getLoginUserAvatar());
             loginPicNone.setVisibility(View.GONE);
             loginPic.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             loginPicNone.setVisibility(View.VISIBLE);
             loginPic.setVisibility(View.GONE);
         }
@@ -181,6 +181,7 @@ public class LoginActivity extends Activity {
                         return;
                     }
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }
 
                 @Override

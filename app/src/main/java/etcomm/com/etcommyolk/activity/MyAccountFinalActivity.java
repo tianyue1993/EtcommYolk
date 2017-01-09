@@ -130,7 +130,7 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
     private void toNSURLRequest() {
         RequestParams object = new RequestParams();
         object.put("receiver", finalPhone.getText().toString().trim());
-        object.put("type", "forgot_password");
+        object.put("type", "mobile_sign_up");
         //true 为手机验证码 false 为邮箱验证码
         String url;
         if (getCodeType) {
@@ -226,9 +226,9 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (!StringUtils.isEmpty(finalPhone.getText().toString().trim())) {
-            finalPhone.setVisibility(View.VISIBLE);
+            clearInput.setVisibility(View.VISIBLE);
         }else {
-            finalPhone.setVisibility(View.GONE);
+            clearInput.setVisibility(View.GONE);
         }
 
         if (StringUtils.isEmpty(finalPhone.getText().toString().trim()) || StringUtils.isEmpty(finalCode.getText().toString().trim())) {

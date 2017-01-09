@@ -10,11 +10,9 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.EtcommApplication;
-import etcomm.com.etcommyolk.fragment.FindFragment;
 import etcomm.com.etcommyolk.fragment.AroundFragment;
+import etcomm.com.etcommyolk.fragment.FindFragment;
 import etcomm.com.etcommyolk.fragment.SportFragment;
 
 /**
@@ -75,6 +73,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 
     /**
      * 初始化控件
@@ -100,13 +103,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mSide = (CheckBox) findViewById(R.id.main_bottom_rb_side);
         mSide.setChecked(false);
         mSide.setOnClickListener(this);
-
-        //控制第一次进入的页面
-        if (EtcommApplication.isFirstSetDefault) {
-            EtcommApplication.isFirstSetDefault = false;
-            //此代码在运行期间只执行一次
+        //为了应对修改密码等需求调到登录页面 下面的代码暂时注释
+//        //控制第一次进入的页面
+//        if (EtcommApplication.isFirstSetDefault) {
+//            EtcommApplication.isFirstSetDefault = false;
+//            //此代码在运行期间只执行一次
             selectFragment(0);//选择默认值
-        }
+//        }
     }
 
     /**

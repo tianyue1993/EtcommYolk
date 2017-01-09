@@ -595,7 +595,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             public void onPageSelected(int arg0) {
                 curPageIndex = arg0;
                 PedometerItem.Pedometer.PedometerData object = pedometerlist.get(arg0);
-                Log.i(tagPage, "onPageSelected: " + arg0 + " object: " + object.toString());
                 tv_caliries.setText(object.calorie);
                 tv_mileage.setText(object.distance);
                 tv_motiontimes.setText(decimalFormat.format(Float.valueOf(object.total_time)));
@@ -884,7 +883,7 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                             PedometerData = (PedometerItem.Pedometer.PedometerData) li.get(li.size() - 2 - i);
                         }
 
-                        if (!pedometerlist.contains(PedometerData) && pedometerlist.size() > 0) {
+                        if (!pedometerlist.contains(PedometerData) && pedometerlist.size() > 0 && PedometerData != null) {
                             pedometerlist.add(0, PedometerData);
                         }
                     }

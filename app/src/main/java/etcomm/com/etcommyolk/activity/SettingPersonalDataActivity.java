@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,14 +20,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.limxing.library.AlertView;
 import com.limxing.library.OnConfirmeListener;
 import com.loopj.android.http.RequestParams;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,20 +31,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.Commen;
-import etcomm.com.etcommyolk.entity.StructureContent;
-import etcomm.com.etcommyolk.entity.StructureItems;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.utils.DcareUtils;
@@ -152,7 +140,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         personalavator_ciriv.setImageURI(prefs.getAvatar());
         personal_height_tv.setText(prefs.getHeight() + "cm");
         personal_weight_tv.setText(prefs.getWeight() + "kg");
-        String[] strings = prefs.getBirthday().split("-");
+        String[] strings = prefs.getBirthday().split("/");
         personal_age_tv.setText(Integer.valueOf(Calendar.getInstance().get(Calendar.YEAR)) - Integer.valueOf(strings[0]) + "岁");
     }
 
@@ -387,7 +375,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
     void personal_age_rl() {
         choosetext.setText("选择年龄");
 
-        new AlertView("选择年龄", SettingPersonalDataActivity.this, 1991, 2100, SettingPersonalDataActivity.this).show();
+        new AlertView("选择年龄", SettingPersonalDataActivity.this, 1988, 2010, SettingPersonalDataActivity.this).show();
 
 //        if (isShow) {
 //            layout_wl.setVisibility(View.VISIBLE);

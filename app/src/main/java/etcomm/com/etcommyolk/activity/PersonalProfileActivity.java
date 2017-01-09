@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.limxing.library.AlertView;
 import com.limxing.library.OnConfirmeListener;
-import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 
@@ -20,9 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.entity.Commen;
-import etcomm.com.etcommyolk.exception.BaseException;
-import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.widget.WheelView;
 
 public class PersonalProfileActivity extends BaseActivity implements OnConfirmeListener {
@@ -234,7 +230,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
         choosetext.setText("生　日：");
 //        if (isShow) {
 
-            new AlertView("选择年龄", PersonalProfileActivity.this, 1991, 2100, PersonalProfileActivity.this).show();
+            new AlertView("选择年龄", PersonalProfileActivity.this, 1988, 2010, PersonalProfileActivity.this).show();
 
 //            layout_wl.setVisibility(View.VISIBLE);
 //            wl_pickerage.setVisibility(View.VISIBLE);
