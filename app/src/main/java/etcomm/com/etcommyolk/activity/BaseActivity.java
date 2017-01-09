@@ -114,6 +114,8 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //让布局向上移来显示软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.setContentView(R.layout.activity_base);
         mContext = this;
         prefs = etcomm.com.etcommyolk.utils.GlobalSetting.getInstance(mContext);

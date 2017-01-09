@@ -71,6 +71,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private String structure_id;
 
+    /**
+     * 效验邀请码是否正确
+     */
+    private Boolean structure_code = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,45 +167,49 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        RequestParams object = new RequestParams();
-        object.put("receiver", registeredPhone.getEditText().getText().toString().trim());
-        object.put("verify_code", verificationCode.getEditText().getText().toString().trim());
-        //true 为手机验证码 false 为邮箱验证码
-        String url;
-        if (getCodeType) {
-            object.put("type", "mobile_sign_up");
-            url = EtcommApplication.verifyPhoneCode();
-        } else {
-            object.put("type", "email_sign_up");
-            url = EtcommApplication.verifyMailCode();
-        }
-        cancelmDialog();
-        showProgress(0, true);
-        client.lostPwdverify(this, url, object, new EfficacyCodeHandler() {
-
-            @Override
-            public void onCancel() {
-                super.onCancel();
-                cancelmDialog();
+        if (structure_code){
+            RequestParams object = new RequestParams();
+            object.put("receiver", registeredPhone.getEditText().getText().toString().trim());
+            object.put("verify_code", verificationCode.getEditText().getText().toString().trim());
+            //true 为手机验证码 false 为邮箱验证码
+            String url;
+            if (getCodeType) {
+                object.put("type", "mobile_sign_up");
+                url = EtcommApplication.verifyPhoneCode();
+            } else {
+                object.put("type", "email_sign_up");
+                url = EtcommApplication.verifyMailCode();
             }
+            cancelmDialog();
+            showProgress(0, true);
+            client.lostPwdverify(this, url, object, new EfficacyCodeHandler() {
 
-            @Override
-            public void onSuccess(Commen commen) {
-                super.onSuccess(commen);
-                cancelmDialog();
-                if (commen.code != 0) {
-                    showToast(commen.message);
-                } else {
-                    toPerfectRegister();
+                @Override
+                public void onCancel() {
+                    super.onCancel();
+                    cancelmDialog();
                 }
-            }
 
-            @Override
-            public void onFailure(BaseException exception) {
-                super.onFailure(exception);
-                cancelmDialog();
-            }
-        });
+                @Override
+                public void onSuccess(Commen commen) {
+                    super.onSuccess(commen);
+                    cancelmDialog();
+                    if (commen.code != 0) {
+                        showToast(commen.message);
+                    } else {
+                        toPerfectRegister();
+                    }
+                }
+
+                @Override
+                public void onFailure(BaseException exception) {
+                    super.onFailure(exception);
+                    cancelmDialog();
+                }
+            });
+        }else {
+            showToast("请输入邀请码");
+        }
     }
 
 
@@ -387,8 +395,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (commen.code == 0) {
                     //获得部门ID
                     structure_id = commen.content.structure.get(0).getStructure_id();
+                    structure_code = true;
                 } else {
                     showToast(commen.message);
+                    structure_code = false;
                 }
             }
 

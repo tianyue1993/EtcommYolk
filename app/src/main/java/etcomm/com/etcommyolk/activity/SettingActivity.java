@@ -133,7 +133,6 @@ public class SettingActivity extends BaseActivity {
         prefs.clear();
         Intent intent = new Intent(mContext, LoginActivity.class);
         startActivity(intent);
-        EtcommApplication.finishActivity();
         finish();
     }
 }
