@@ -299,10 +299,10 @@ public class TopicDisscussListActivity extends BaseActivity {
                     intent2.putExtra("image", mInfo.photos.get(0).thumb_image);
                     intent2.putExtra("discuse", mInfo.content);
                     intent2.putExtra("topic_id", mInfo.share_id);
-                    intent2.putExtra("url", mInfo.share_url);
+                    intent2.putExtra("url", mInfo.detail_url);
                     mContext.startActivity(intent2);
                 } else if (mInfo.share_type.equals("3")) {
-//                    showToast("进入小组");
+                    showToast("进入小组");
                     Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
                     intent.putExtra("topic_id", mInfo.share_id);
                     intent.putExtra("topic_name", mInfo.title);

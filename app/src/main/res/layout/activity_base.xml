@@ -12,11 +12,11 @@
 
     <RelativeLayout
         android:id="@+id/base_layout"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginTop="10dp"
-        android:background="#FFCC00">
+        android:background="#FFCC00"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/base_left"
@@ -66,9 +66,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="45dp"
+            android:layout_marginRight="40dp"
             android:padding="5dp"
             android:textColor="#000000"
+            android:textSize="13sp"
             android:visibility="gone" />
 
         <TextView
@@ -79,11 +80,12 @@
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:maxLength="10"
+            android:padding="3dp"
             android:paddingRight="10dp"
             android:singleLine="true"
             android:text="title"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:visibility="visible" />
     </RelativeLayout>
 

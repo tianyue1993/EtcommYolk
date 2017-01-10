@@ -80,18 +80,18 @@ public class ApiClient {
     }
 
     /**
-<<<<<<< HEAD
+     * <<<<<<< HEAD
      * 找回密码/注册 综合调用 设置密码
-=======
+     * =======
      * 部门排名
      */
-    public void toRank(Context context,String url, RequestParams entity, JsonResponseHandler handler){
+    public void toRank(Context context, String url, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
     /**
-     *  找回密码/注册 综合调用 设置密码
->>>>>>> a2378aaccfe5afe1495f56b0d7efff1c4fbc3b94
+     * 找回密码/注册 综合调用 设置密码
+     * >>>>>>> a2378aaccfe5afe1495f56b0d7efff1c4fbc3b94
      */
     public void newPwdverify(Context context, String url, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, url + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
@@ -121,7 +121,7 @@ public class ApiClient {
     /**
      * 上传用户头像
      */
-    public void toUploadUserAvator(Context context,RequestParams entity, JsonResponseHandler handler){
+    public void toUploadUserAvator(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(context, EtcommApplication.toUploadUserAvator() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
@@ -152,30 +152,35 @@ public class ApiClient {
     public void toTrendsUrl(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toTrendsUrl() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 每日签到
      */
     public void toSignIn(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toSignIn() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 每日排名
      */
     public void toShowRank(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toShowRank() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 天气预报
      */
     public void toWeather(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toWeather() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 获取前七天的记步数据
      */
     public void toPedometerWeek(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toPedometerWeek() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 设置消息推送
      */
@@ -189,6 +194,7 @@ public class ApiClient {
     public void toExit(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toExit() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 我的活动
      */
@@ -217,6 +223,7 @@ public class ApiClient {
     public void toBindOff(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.toBindOff() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 获取用户基本信息[我的模块使用]
      */
@@ -264,7 +271,6 @@ public class ApiClient {
      * 获取发现，首页列表
      */
     public void GetFindHome(Context context, RequestParams entity, JsonResponseHandler handler) {
-        String str = EtcommApplication.HOME() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken();
         asyncHttpClient.get(EtcommApplication.HOME() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
 
@@ -325,6 +331,7 @@ public class ApiClient {
     public void CheckCreate(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.get(EtcommApplication.CHECK_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 消息推送
      */
@@ -345,12 +352,14 @@ public class ApiClient {
     public void toBindOn(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(EtcommApplication.toBindOn() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 创建小组
      */
     public void TopicCreate(Context context, RequestParams entity, JsonResponseHandler handler) {
         asyncHttpClient.post(EtcommApplication.TOPIC_CREATE() + "?access_token=" + GlobalSetting.getInstance(context).getAccessToken(), entity, handler);
     }
+
     /**
      * 按天同步数据
      */

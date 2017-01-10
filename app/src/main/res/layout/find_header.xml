@@ -27,18 +27,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@mipmap/ic_group" />
+            android:src="@mipmap/ic_aikang" />
 
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/header1"
             android:layout_width="match_parent"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:background="@color/white">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,8 +77,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/health"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/header2"
@@ -119,8 +123,10 @@
 
 
     <RelativeLayout
+        android:id="@+id/welfare"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/header3"

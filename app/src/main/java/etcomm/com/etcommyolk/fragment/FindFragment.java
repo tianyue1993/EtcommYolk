@@ -1,8 +1,10 @@
 package etcomm.com.etcommyolk.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -36,12 +38,15 @@ import etcomm.com.etcommyolk.activity.PointsExchangeActivity;
 import etcomm.com.etcommyolk.activity.SearchGroupActivity;
 import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
 import etcomm.com.etcommyolk.adapter.SportsAdapter;
+import etcomm.com.etcommyolk.entity.DaySignUp;
 import etcomm.com.etcommyolk.entity.FindHome;
 import etcomm.com.etcommyolk.entity.FindList;
 import etcomm.com.etcommyolk.entity.RecommendItems;
 import etcomm.com.etcommyolk.exception.BaseException;
+import etcomm.com.etcommyolk.handler.DaySignUpHandler;
 import etcomm.com.etcommyolk.handler.FindHomeHandler;
 import etcomm.com.etcommyolk.handler.FindListHandler;
+import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 import etcomm.com.etcommyolk.widget.SlideADView;
 
@@ -77,6 +82,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     SimpleDraweeView welfareImage;
     TextView welfaretopic;
     TextView tvTime;
+    RelativeLayout activity, health, walfe;
 
 
     private Context mContext;
@@ -114,6 +120,12 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                signin();
+            }
+        }, 1000);
     }
 
     @Override
@@ -148,6 +160,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         listView = (DownPullRefreshListView) rootView.findViewById(R.id.listview);
         //以下为头布局内容(涉及两部分layout，不能使用butterknife)
         header = View.inflate(getActivity(), R.layout.find_header, null);
+        health = (RelativeLayout) header.findViewById(R.id.health);
+        activity = (RelativeLayout) header.findViewById(R.id.activity);
+        walfe = (RelativeLayout) header.findViewById(R.id.welfare);
         slideADView = (SlideADView) header.findViewById(R.id.slideADView);
         exchange = (ImageView) header.findViewById(R.id.exchange);
         group = (ImageView) header.findViewById(R.id.group);
@@ -223,7 +238,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                     listView.removeFooterView(footer);
                 }
                 //下拉时候刷新整个页面接口，并将列表的页面置为2
-                page= 2;
+                page = 2;
                 adaptList.clear();
                 getFindHome();
             }
@@ -349,7 +364,22 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                         tvTime.setText(items.start_at + "——" + items.end_at);
                     }
                 }
-
+               //判断条目是否有数据
+                if (recommendhealth == null) {
+                    health.setVisibility(View.GONE);
+                } else {
+                    health.setVisibility(View.VISIBLE);
+                }
+                if (recommendactivity == null) {
+                    activity.setVisibility(View.GONE);
+                } else {
+                    activity.setVisibility(View.VISIBLE);
+                }
+                if (recommendwelfare == null) {
+                    walfe.setVisibility(View.GONE);
+                } else {
+                    walfe.setVisibility(View.VISIBLE);
+                }
                 //是否显示爱康
                 if (findHome.content.app_module.get(0).name.equals("爱康")) {
                     AppMudle = 1;
@@ -484,6 +514,51 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void displayImage(RecommendItems ad, SimpleDraweeView imageView) {
             imageView.setImageURI(ad.image);
+        }
+    };
+
+
+    //每日签到
+    protected void signin() {
+        RequestParams params = new RequestParams();
+        params.put("access_token", prefs.getAccessToken());
+        client.toSignIn(getActivity(), params, new DaySignUpHandler() {
+
+            @Override
+            public void onSuccess(DaySignUp daySignUp) {
+                super.onSuccess(daySignUp);
+                prefs.setScore(daySignUp.content.score);
+                showSignedDialoag(daySignUp.content.day, daySignUp.content.score);
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+            }
+        });
+    }
+
+    private static final long SigninDialogDismissTime = 1500;
+
+    protected void showSignedDialoag(String days, String score) {
+        final Dialog signinDialog = DialogFactory.getDialogFactory().showSignedDialog(mContext, days, score);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                signinDialog.dismiss();
+            }
+        }, SigninDialogDismissTime);
+    }
+
+    static final int IS_TODAY = 0x09;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case IS_TODAY:
+                    signin();
+                default:
+                    break;
+            }
         }
     };
 }

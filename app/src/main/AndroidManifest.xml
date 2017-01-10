@@ -133,9 +133,7 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name=".activity.TopicDisscussListActivity"
-            android:launchMode="singleTop" />
+        <activity android:name=".activity.TopicDisscussListActivity" />
         <activity
             android:name=".activity.AddNewTopicActivity"
             android:launchMode="singleTop" />

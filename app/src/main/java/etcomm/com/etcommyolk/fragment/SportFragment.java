@@ -53,12 +53,10 @@ import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.activity.MsgListActivity;
 import etcomm.com.etcommyolk.activity.RankActivity;
 import etcomm.com.etcommyolk.entity.Commen;
-import etcomm.com.etcommyolk.entity.DaySignUp;
 import etcomm.com.etcommyolk.entity.PedometerItem;
 import etcomm.com.etcommyolk.entity.Weather;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.CommenHandler;
-import etcomm.com.etcommyolk.handler.DaySignUpHandler;
 import etcomm.com.etcommyolk.handler.PedometerItemHandler;
 import etcomm.com.etcommyolk.handler.WeatherHandler;
 import etcomm.com.etcommyolk.service.StepDataUploadService;
@@ -71,7 +69,6 @@ import etcomm.com.etcommyolk.utils.BluetoothUtils;
 import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.AutoTextView;
-import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.StepPageDataView;
 import me.chunyu.pedometerservice.IntentConsts;
 import me.chunyu.pedometerservice.PedometerCounterService;
@@ -147,7 +144,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
     protected static final int GetLocalSport255 = 21;
     protected static final int SendDevicePower = 13;
     protected static final int SendDiviceBlueDataUpdateView = 22;
-    private static final long SigninDialogDismissTime = 1500;
     protected static final int SyncBlueDeviceData = 15;
     protected static final int SendDeviceTimeSync = 16;
     private static final String dateformat = "yyyyMMdd";
@@ -222,9 +218,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                     break;
                 case GetLocalSport255:
                     wrist_status.setText("已连接");
-                    break;
-                case IS_TODAY:
-                    signin();
                     break;
                 default:
                     break;
@@ -373,35 +366,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
     }
 
 
-    //每日签到
-    protected void signin() {
-        RequestParams params = new RequestParams();
-        params.put("access_token", prefs.getAccessToken());
-        client.toSignIn(getActivity(), params, new DaySignUpHandler() {
-
-            @Override
-            public void onSuccess(DaySignUp daySignUp) {
-                super.onSuccess(daySignUp);
-                prefs.setScore(daySignUp.content.score);
-                showSignedDialoag(daySignUp.content.day, daySignUp.content.score);
-            }
-
-            @Override
-            public void onFailure(BaseException exception) {
-                super.onFailure(exception);
-            }
-        });
-    }
-
-    protected void showSignedDialoag(String days, String score) {
-        final Dialog signinDialog = DialogFactory.getDialogFactory().showSignedDialog(mContext, days, score);
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                signinDialog.dismiss();
-            }
-        }, SigninDialogDismissTime);
-    }
 
     @Override
     public void onStart() {
@@ -761,12 +725,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             Log.e(tag, "daoDeviceDailyData null    or   daoDevice5MinData null");
         }
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                signin();
-            }
-        }, 1000);
         /**
          *  暂时存储计步 方便后续使用 固定时间的值
          *  第一时间清除老数据

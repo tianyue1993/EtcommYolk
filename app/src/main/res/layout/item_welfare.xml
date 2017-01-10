@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="centerCrop"
-        fresco:placeholderImage="@mipmap/ic_eg" />
+        fresco:placeholderImage="@mipmap/ic_defalt" />
 
     <RelativeLayout
         android:layout_width="match_parent"
