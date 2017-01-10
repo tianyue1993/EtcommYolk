@@ -135,7 +135,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
 
     // 身高设置
     void personal_height_rl() {
-        choosetext.setText("身　高：");
+        choosetext.setText("身　高");
         if (isShow) {
             layout_wl.setVisibility(View.VISIBLE);
             wl_pickerage.setVisibility(View.GONE);
@@ -181,7 +181,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
 
     // 体重设置
     void personal_weight_rl() {
-        choosetext.setText("体　重：");
+        choosetext.setText("体　重");
         if (isShow) {
             layout_wl.setVisibility(View.VISIBLE);
             wl_pickerage.setVisibility(View.GONE);
@@ -227,7 +227,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
 
     // 年龄设置
     void personal_age_rl() {
-        choosetext.setText("生　日：");
+        choosetext.setText("");
             new AlertView("选择年龄", PersonalProfileActivity.this, 1930, 2000, PersonalProfileActivity.this).show();
     }
 

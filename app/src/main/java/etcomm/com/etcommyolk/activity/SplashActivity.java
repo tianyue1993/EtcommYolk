@@ -99,49 +99,47 @@ public class SplashActivity extends BaseActivity {
         if (isShowedGuide) {
             loading.setVisibility(View.VISIBLE);
             viewpager.setVisibility(View.GONE);
-                // 替换企业
-                if (prefs.getCustomerImage() != null && prefs.getCustomerImage() != "") {
-                    flymanbackground.setImageURI("");
-                } else {
-                    flymanbackground.setBackgroundResource(R.mipmap.loading_chaoren);
+            // 替换企业
+            if (prefs.getCustomerImage() != null && prefs.getCustomerImage() != "") {
+                flymanbackground.setImageURI("");
+            } else {
+                flymanbackground.setBackgroundResource(R.mipmap.loading_chaoren);
+            }
+
+            animation = new AlphaAnimation(1.0f, 1.0f);
+            animation.setDuration(1500);
+            flymanbackground.setAnimation(animation);
+            animation.startNow();
+            animation.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    // TODO Auto-generated method stub
                 }
 
-                animation = new AlphaAnimation(1.0f, 1.0f);
-                animation.setDuration(1500);
-                flymanbackground.setAnimation(animation);
-                animation.startNow();
-                animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                    // TODO Auto-generated method stub
+                }
 
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        // TODO Auto-generated method stub
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                        // TODO Auto-generated method stub
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        String string = prefs.getAccessToken();
-                        if (!StringUtils.isEmpty(prefs.getAccessToken())) {
-                            if (prefs.getInfoState()) {
-                                // 信息完整
-                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
-                                startActivity(intent);
-                            }
-
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (!StringUtils.isEmpty(prefs.getAccessToken())) {
+                        if (prefs.getInfoState()) {
+                            // 信息完整
+                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                            startActivity(intent);
                         } else {
-                            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                            Intent intent = new Intent(SplashActivity.this, ChoosePictureActivity.class);
                             startActivity(intent);
                         }
-                        SplashActivity.this.finish();
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(intent);
                     }
-                });
+                    SplashActivity.this.finish();
+                }
+            });
         } else {
             //第一次打开
             viewpager.setVisibility(View.VISIBLE);
