@@ -168,5 +168,9 @@
             android:layout_below="@+id/header3" />
     </RelativeLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#eeeeee" />
 
 </LinearLayout>
