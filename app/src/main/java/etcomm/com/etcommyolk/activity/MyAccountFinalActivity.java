@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.exception.BaseException;
+import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.handler.LostPwdGetCodeHandler;
 import etcomm.com.etcommyolk.utils.StringUtils;
 
@@ -105,11 +107,7 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
         if (!StringUtils.isEmpty(finalCode.getText().toString().trim())) {
             toVerifyCode();
         } else {
-            if (getCodeType) {
-                showToast("请输入手机号！");
-            } else {
-                showToast("请输入邮箱！");
-            }
+            showToast("请输入验证码！");
         }
     }
 
@@ -130,12 +128,13 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
     private void toNSURLRequest() {
         RequestParams object = new RequestParams();
         object.put("receiver", finalPhone.getText().toString().trim());
-        object.put("type", "mobile_sign_up");
         //true 为手机验证码 false 为邮箱验证码
         String url;
         if (getCodeType) {
+            object.put("type", "mobile_sign_up");
             url = EtcommApplication.getPhoneCode();
         } else {
+            object.put("type", "email_sign_up");
             url = EtcommApplication.getMailCode();
         }
         cancelmDialog();
@@ -182,11 +181,46 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
             @Override
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
-                showToast(commen.message);
+                if (getCodeType) {
+                    editUserInfo("mobile", finalPhone.getText().toString().trim());
+                } else {
+                    editUserInfo("email", finalPhone.getText().toString().trim());
+                }
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+            }
+        });
+    }
+
+    private void editUserInfo(String field, final String value) {
+        RequestParams params = new RequestParams();
+        params.put("field", field);
+        params.put("value", value);
+        params.put("access_token", prefs.getAccessToken());
+        Log.i(tag, "params: " + params.toString());
+        cancelmDialog();
+        showProgress(0, true);
+        client.toUserEdit(this, params, new CommenHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
                 if (getCodeType) {
                     prefs.setMobile(finalPhone.getText().toString().trim());
+                    showToast("更换手机号成功");
                 } else {
                     prefs.setEmail(finalPhone.getText().toString().trim());
+                    showToast("更换邮箱成功");
                 }
                 prefs.saveLoginUserName(finalPhone.getText().toString().trim());
                 intent.putExtra("boo", false);
@@ -197,9 +231,11 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
             }
         });
     }
+
 
     // 注册 刷新验证码 倒计时
     CountDownTimer timer = new CountDownTimer(60 * 1000, 1000) {
@@ -227,14 +263,16 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (!StringUtils.isEmpty(finalPhone.getText().toString().trim())) {
             clearInput.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             clearInput.setVisibility(View.GONE);
         }
 
         if (StringUtils.isEmpty(finalPhone.getText().toString().trim()) || StringUtils.isEmpty(finalCode.getText().toString().trim())) {
             finalCommit.setBackgroundResource(R.mipmap.all_fil_button);
+            finalCommit.setClickable(false);
         } else {
             finalCommit.setBackgroundResource(R.mipmap.all_ok_button);
+            finalCommit.setClickable(true);
         }
 
     }

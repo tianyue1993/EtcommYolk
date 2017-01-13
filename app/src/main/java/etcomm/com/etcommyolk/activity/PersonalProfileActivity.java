@@ -120,7 +120,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
             ivAvator.setImageURI(prefs.getAvatar());
         }
         setTitleTextView("个人资料", null);
-        age.setText("1980/1/1");
+        age.setText("1988/1/1");
         if (usersex == 1) {
             // 男
             weight.setText("65");
@@ -228,7 +228,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
     // 年龄设置
     void personal_age_rl() {
         choosetext.setText("");
-            new AlertView("选择年龄", PersonalProfileActivity.this, 1930, 2000, PersonalProfileActivity.this).show();
+            new AlertView("选择年龄", PersonalProfileActivity.this, 1931, 2000, PersonalProfileActivity.this).show();
     }
 
     private void cancel() {

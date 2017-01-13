@@ -1,10 +1,13 @@
 package etcomm.com.etcommyolk.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 
@@ -29,6 +32,10 @@ import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 public class MineSportsActivity extends BaseActivity {
     @Bind(R.id.collectpulllist)
     DownPullRefreshListView collectpulllist;
+    @Bind(R.id.toseesee)
+    TextView toseesee;
+    @Bind(R.id.noMineSports)
+    RelativeLayout noMineSports;
     private ArrayList<RecommendItems> list = new ArrayList<RecommendItems>();
     private MineSportsListAdapter mHealthAdapter;
     protected int page_size = 6;
@@ -49,6 +56,13 @@ public class MineSportsActivity extends BaseActivity {
     private void initView() {
         EtcommApplication.addActivity(this);
         setTitleTextView("我的活动", null);
+        toseesee.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        toseesee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MineSportsActivity.this, MoreSportsActivity.class));
+            }
+        });
         //上拉listview加载更多监听
         loadMoreListener = new AbsListView.OnScrollListener() {
             @Override
@@ -137,7 +151,11 @@ public class MineSportsActivity extends BaseActivity {
                         }
                     }
                     mHealthAdapter.notifyDataSetChanged();
+                    noMineSports.setVisibility(View.GONE);
+                    collectpulllist.setVisibility(View.VISIBLE);
                 } else {
+                    noMineSports.setVisibility(View.VISIBLE);
+                    collectpulllist.setVisibility(View.GONE);
                     showToast("暂无更多资讯");
                 }
                 loadStatus = false;

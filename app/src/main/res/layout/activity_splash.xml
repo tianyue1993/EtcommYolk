@@ -20,9 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             fresco:failureImage="@mipmap/loading_chaoren"
-            fresco:failureImageScaleType="fitCenter"
+            fresco:failureImageScaleType="fitXY"
             />
 
         <ImageView
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             />
     </RelativeLayout>
 

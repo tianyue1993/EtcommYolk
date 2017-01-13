@@ -1,5 +1,6 @@
 package etcomm.com.etcommyolk.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +9,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,9 +33,6 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
     //显示隐藏Icon
     @Bind(R.id.forget_show_pwd_check)
     CheckBox forgetShowPwdCheck;
-    //显示面
-    @Bind(R.id.forget_show_pwd)
-    LinearLayout forgetShowPwd;
     //完成
     @Bind(R.id.forget_commit)
     Button forgetCommit;
@@ -56,6 +55,23 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
     private void initView() {
         EtcommApplication.addActivity(this);
         setTitleTextView("找回密码", null);
+
+
+        forgetShowPwdCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //如果选中，隐藏密码
+                    forgetNewPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    forgetConfirmPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //否则显示密码
+                    forgetNewPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    forgetConfirmPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
         initListener();
     }
     //注册监听
@@ -80,14 +96,15 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
         }
         RequestParams object = new RequestParams();
         String url;
-        if (getIntent().getStringArrayExtra("type").equals("phone")) {
+        Intent intent = getIntent();
+        if (intent.getStringExtra("type").equals("phone")) {
             //手机找回
             url = EtcommApplication.alterPhonePwd();
-            object.put("mobile", getIntent().getStringArrayExtra("input"));
+            object.put("mobile", getIntent().getStringExtra("input"));
         } else {
             //邮箱找回
             url = EtcommApplication.alterMailPwd();
-            object.put("email", getIntent().getStringArrayExtra("input"));
+            object.put("email", getIntent().getStringExtra("input"));
         }
         object.put("device_id", InterfaceUtils.readDeviceId(this));
         object.put("password", forgetNewPwd.getText().toString().trim());
@@ -121,27 +138,11 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
 
     }
 
-    @OnClick({R.id.forget_show_pwd, R.id.forget_commit})
+    @OnClick({R.id.forget_commit})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.forget_show_pwd:
-                // true 为隐藏密码 false 为显示密码
-                if (forgetShowPwdCheck.isChecked()) {
-                    //如果选中，隐藏密码
-                    forgetShowPwdCheck.setChecked(false);
-                    forgetNewPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    forgetConfirmPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    //否则显示密码
-                    forgetShowPwdCheck.setChecked(true);
-                    forgetNewPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    forgetConfirmPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
-                break;
             case R.id.forget_commit:
-
                 toCommitPwd();
-
                 break;
         }
     }

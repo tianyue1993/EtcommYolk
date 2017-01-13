@@ -2,11 +2,10 @@ package etcomm.com.etcommyolk.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.loopj.android.http.RequestParams;
 
@@ -23,7 +22,6 @@ import etcomm.com.etcommyolk.entity.FindHome;
 import etcomm.com.etcommyolk.entity.RecommendItems;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.FindHomeHandler;
-import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 
 /**
@@ -33,6 +31,8 @@ public class MyCollectionActivity extends BaseActivity {
 
     @Bind(R.id.collectpulllist)
     DownPullRefreshListView collectpulllist;
+    @Bind(R.id.noCollection)
+    RelativeLayout noCollection;
     private ArrayList<RecommendItems> list = new ArrayList<RecommendItems>();
     private HealthAdapter mHealthAdapter;
     protected int page_size = 6;
@@ -146,9 +146,13 @@ public class MyCollectionActivity extends BaseActivity {
                         }
                     }
                     mHealthAdapter.notifyDataSetChanged();
+                    noCollection.setVisibility(View.GONE);
+                    collectpulllist.setVisibility(View.VISIBLE);
                 } else {
-                    showToast("暂无更多资讯");
-                }loadStatus = false;
+                    noCollection.setVisibility(View.VISIBLE);
+                    collectpulllist.setVisibility(View.GONE);
+                }
+                loadStatus = false;
                 collectpulllist.onRefreshComplete();
                 loadingProgressBar.setVisibility(View.GONE);
                 loadingText.setText(getResources().getString(R.string.loadmore));

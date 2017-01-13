@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -158,7 +159,7 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
                         showToast("昵称长度为1至10个字，请核实昵称");
                         return;
                     }
-                }else {
+                } else {
                     return;
                 }
 
@@ -271,4 +272,14 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
     public void afterTextChanged(Editable s) {
 
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            EtcommApplication.finishActivity();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

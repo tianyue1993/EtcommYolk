@@ -15,7 +15,7 @@
     <string name="email_format_error">您输入的邮箱格式有误</string>
     <string name="mobile_format_error">您输入的手机号格式有误</string>
     <string name="job_number_error">工号应不小于三位，请检查</string>
-    <string name="password_length_error">请输入6位到12位的字母或数字</string>
+    <string name="password_length_error">请输入6-12位字母、数字组成的密码</string>
     <string name="password_equals_error">您两次密码输入不一致，请检查</string>
     <string name="password_error">密码输入有误，请检查密码</string>
     <string name="relateworknumber_prompt">提示：员工号关联成功后，可使用员工号登录</string>
@@ -50,6 +50,7 @@
     <string name="login_suc">登录成功</string>
     <string name="switch_on">开</string>
     <string name="switch_off">关</string>
+    <string name="to_see"><u>去看看</u></string>
     <string name="tips_input_name">帐号不能为空</string>
     <string name="tips_input_null_phone">手机号不能为空</string>
     <string name="tips_input_null_invitecode">邀请码不能为空</string>

@@ -1,7 +1,10 @@
 package etcomm.com.etcommyolk.activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -59,9 +62,39 @@ public class MyAccountNextActivity extends BaseActivity {
 
     @OnClick(R.id.get_show_change)
     public void onClick() {
-        intent.putExtra("type", boundType);
-        intent.setClass(MyAccountNextActivity.this, MyAccountFinalActivity.class);
-        startActivityForResult(intent, 5);
+        if (intent.getStringExtra("type").contains("手机")) {
+            final Dialog alertDialog = new AlertDialog.Builder(this).
+                    setTitle("提示").
+                    setMessage("确定要变换手机号？").
+                    setIcon(R.drawable.ic_launcher).
+                    setPositiveButton("否", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).
+                    setNegativeButton("是", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            intent.putExtra("type", boundType);
+                            intent.setClass(MyAccountNextActivity.this, MyAccountFinalActivity.class);
+                            startActivityForResult(intent, 5);
+                        }
+                    }).
+                    create();
+            alertDialog.show();
+        } else {
+            getShowType.setText("已绑定邮箱");
+            getShowContent.setText(prefs.getEmail());
+            typeShowF.setText("更换邮箱");
+            boundType = "绑定邮箱";
+            intent.putExtra("type", boundType);
+            intent.setClass(MyAccountNextActivity.this, MyAccountFinalActivity.class);
+            startActivityForResult(intent, 5);
+        }
+
     }
 
     @Override

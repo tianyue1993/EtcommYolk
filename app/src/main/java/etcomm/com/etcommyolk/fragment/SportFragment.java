@@ -50,6 +50,7 @@ import java.util.TimerTask;
 
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.activity.MineActivity;
+import etcomm.com.etcommyolk.activity.MineDeviceActivity;
 import etcomm.com.etcommyolk.activity.MsgListActivity;
 import etcomm.com.etcommyolk.activity.RankActivity;
 import etcomm.com.etcommyolk.entity.Commen;
@@ -308,6 +309,30 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                     }
                 }
             }
+        } else if (prefs.getMacAddress().length() > 5 && org.apache.commons.lang3.StringUtils.startsWithIgnoreCase(prefs.getMacAddress(), "F4:06:A5")) {
+            //判断为敏狐手环
+            /**
+             * 创建敏狐连接对象
+             */
+            bluetoothLeManager = BluetoothLeManager.getInstance(getActivity(), SportFragment.this, true);
+            /**
+             * 处理耗时操作
+             */
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    /**
+                     * 设置同步数据
+                     */
+                    bluetoothLeManager.setSyncFlag(true);
+                    /**
+                     * 连接设备
+                     */
+                    bluetoothLeManager.connect(prefs.getMacAddress());
+                    Log.d("sampleBLE", "start");
+                }
+            }).start();
+
         }
         if (prefs.getHaveReceiveUnReadData()) {
             msg_iv.setImageResource(R.mipmap.icon_msg_unread);
@@ -793,30 +818,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                 /**
                  * 开启记步动态监听服务器 实现动态更新首页记步数据
                  */
-            } else if (prefs.getMacAddress().length() > 5 && org.apache.commons.lang3.StringUtils.startsWithIgnoreCase(prefs.getMacAddress(), "F4:06:A5")) {
-                //判断为敏狐手环
-                /**
-                 * 创建敏狐连接对象
-                 */
-                bluetoothLeManager = BluetoothLeManager.getInstance(getActivity(), SportFragment.this, true);
-                /**
-                 * 处理耗时操作
-                 */
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        /**
-                         * 设置同步数据
-                         */
-                        bluetoothLeManager.setSyncFlag(true);
-                        /**
-                         * 连接设备
-                         */
-                        bluetoothLeManager.connect(prefs.getMacAddress());
-                        Log.d("sampleBLE", "start");
-                    }
-                }).start();
-
             }
             object.calorie = decimalFormat.format(blueCalories);
             object.distance = (decimalFormat.format(blueMiles));
@@ -871,7 +872,9 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                 /**
                  * 需要第一次加载时存储的步数
                  */
-                curStep = Integer.valueOf(pedometerItem.content.data.get(pedometerItem.content.data.size() - 1).step);
+                if (!pedometerItem.content.data.isEmpty()) {
+                    curStep = Integer.valueOf(pedometerItem.content.data.get(pedometerItem.content.data.size() - 1).step);
+                }
 
                 // 返回八天数据，今天在这个当日当回数据的基础上计步
 
@@ -1210,32 +1213,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
 
     }
 
-    // TODO 同步903
-    void sync903Data(String bStep, String bCalories, String bDistance, String bSeconds) {
-        blueStep = Integer.valueOf(bStep);
-        updataTodayView(blueStep);
-        blueCalories = Float.valueOf(bCalories);
-        blueMiles = (float) calculateActiveMile(blueStep);
-        blueSeconds = Float.valueOf(decimalFormat.format(blueStep * 500 / 3600000f));
-        LogUtil.e(TAG, "2 .--> Year>" + "blueStep" + blueStep + "blueMiles" + blueMiles + "blueCalories" + blueCalories + "blueSeconds" + blueSeconds);
-        if (blueStep != wristData.getS()) {
-            wristData.setC(blueCalories);
-            wristData.setD(blueMiles);
-            wristData.setS(blueStep);
-            wristData.setT(blueSeconds);
-            saveWristDataToSp();
-        }
-        /**
-         * 存储蓝牙903数据
-         */
-        saveTodayToDataSp(blueStep, (float) calculateActiveMile(blueStep), blueCalories, blueSeconds);
-        updateViewByBlueData();
-    }
-
-    /**
-     * 是否已经发送同步
-     */
-    public boolean isSendSync = false;
 
 
     public DeviceDailyData CurrData_0x29_Convert_DailyData(String json) {
@@ -1317,6 +1294,7 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
          * 体重
          */
         Log.d("sampleBLE", "sync finished, version " + i + ", battery " + i1);
+        String s = prefs.getMacAddress();
         DaySportsData data = bluetoothLeManager.getDaySportsData(0, prefs.getMacAddress(), 170, 65);
         if (data == null) {
             Log.d("sampleBLE", "no sports data!");

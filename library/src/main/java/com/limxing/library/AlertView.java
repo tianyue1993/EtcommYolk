@@ -45,8 +45,13 @@ public class AlertView implements OnItemSelectedListener {
      */
     @Override
     public void onItemSelected(LoopView view) {
-        String year = yearView.getItems().get(yearView.getSelectedItem());
-        year = year.substring(0, year.length() - 1);
+        String year = "";
+        try {
+            year = yearView.getItems().get(yearView.getSelectedItem());
+            year = year.substring(0, year.length() - 1);
+        }catch (Exception e){
+            year = "2000";
+        }
         String month = monthView.getItems().get(monthView.getSelectedItem());
         month = month.substring(0, month.length() - 1);
         getDay(Integer.parseInt(year), Integer.parseInt(month));

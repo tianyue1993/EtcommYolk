@@ -77,7 +77,6 @@
         <activity android:name=".activity.MineActivity" />
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
@@ -276,6 +275,7 @@
         <activity android:name=".activity.MineSportsActivity" />
         <activity android:name=".activity.MyAccountNextActivity" />
         <activity android:name=".activity.MyAccountFinalActivity" />
+
         <activity android:name=".activity.RankActivity" />
         <activity android:name=".activity.PedometerActivity" />
         <activity android:name=".activity.MineDeviceActivity" />
@@ -287,7 +287,9 @@
         <service android:name=".service.StepDataUploadService" />
         <service android:name=".service.BluetoothService" />
 
-        <activity android:name=".activity.MsgListActivity" />
+        <activity android:name=".activity.MsgListActivity"
+            android:launchMode="singleTask"
+            />
         <activity android:name=".activity.MainActivity" />
 
     </application>

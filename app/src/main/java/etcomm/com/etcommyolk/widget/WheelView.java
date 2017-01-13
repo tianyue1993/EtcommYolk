@@ -61,6 +61,7 @@ public class WheelView extends ScrollView {
 	private List<String> getItems() {
 		return items;
 	}
+	boolean boo = false;
 
 	public void setItems(List<String> list) {
 		if (null == items) {
@@ -68,15 +69,16 @@ public class WheelView extends ScrollView {
 		}
 		items.clear();
 		items.addAll(list);
-
 		// 列表数据顶部和底部的空白数据补齐
 		for (int i = 0; i < offset; i++) {
 			items.add(0, "");
 			items.add("");
 		}
-
-		initData();
-
+		if (!boo) {
+			views.removeAllViews();
+			initData();
+			boo = true;
+		}
 	}
 
 	public static final int OFF_SET_DEFAULT = 1;
@@ -169,9 +171,10 @@ public class WheelView extends ScrollView {
 
 	private void initData() {
 		displayItemCount = offset * 2 + 1;
-
 		for (String item : items) {
+
 			views.addView(createView(item));
+//			views.removeAllViews();
 		}
 
 		refreshItemView(0);
@@ -330,6 +333,7 @@ public class WheelView extends ScrollView {
 		}
 
 	}
+
 
 	public void setSeletion(int position) {
 		final int p = position;

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "etcomm.com.etcommyolk"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         // 不让gradle自动生成不同屏幕分辨率的png图
