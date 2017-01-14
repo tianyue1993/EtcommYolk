@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -91,6 +92,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         setTitleTextView("注册", null);
         getRightTextView().setVisibility(View.VISIBLE);
         getRightTextView().setText("邮箱注册");
+        registeredPhone.getEditText().setSingleLine(true);
+        registeredPhone.getEditText().setEllipsize(TextUtils.TruncateAt.END);
+        registeredPhone.getEditText().setEms(15);
     }
 
     //监听注册
