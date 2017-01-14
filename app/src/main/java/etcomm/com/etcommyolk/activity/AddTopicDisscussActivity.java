@@ -17,7 +17,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -44,6 +43,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.adapter.AddTopicDisscussPhotoGridAdapter;
 import etcomm.com.etcommyolk.entity.Commen;
@@ -80,8 +80,10 @@ public class AddTopicDisscussActivity extends BaseActivity {
     private View.OnClickListener publishListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showProgress(0, true);
-            publishtext();
+            if (!topicdisscuss.getText().toString().isEmpty() || medilist.size() - 1 > 0) {
+                publishtext();
+            }
+
         }
     };
     private Intent intent;
@@ -129,12 +131,14 @@ public class AddTopicDisscussActivity extends BaseActivity {
         setTitleTextView("发帖", null);
         setRightText("发布", publishListener);
         initDatas();
+        setRightTextUnEnable();
     }
 
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart(tag);
+
     }
 
     public void onPause() {
@@ -178,26 +182,21 @@ public class AddTopicDisscussActivity extends BaseActivity {
             }
         });
 
-        topicdisscuss.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int i = 140 - s.length();
-                textCount.setText("您还可以输入" + i + "个字");
-            }
-        });
     }
 
 
+    @OnTextChanged(value = R.id.topicdisscuss, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterTextChanged_topicdisscuss(Editable s) {
+        int i = 140 - s.length();
+        textCount.setText("您还可以输入" + i + "个字");
+
+        if (s.length() > 0 || medilist.size() - 1 > 0) {
+            setRightTextEnable();
+        } else {
+            setRightTextUnEnable();
+        }
+    }
     // 计算图片的缩放值
 
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -275,6 +274,11 @@ public class AddTopicDisscussActivity extends BaseActivity {
                 count = medilist.size() - 1;
             }
             adapter.notifyDataSetChanged();
+            if (medilist.size() > 0 || topicdisscuss.getText().length() >= 1) {
+                setRightTextEnable();
+            } else {
+                setRightTextEnable();
+            }
         }
     };
 
@@ -335,6 +339,11 @@ public class AddTopicDisscussActivity extends BaseActivity {
                             count = medilist.size() - 1;
                         }
 
+                        if (medilist.size() - 1 > 0) {
+                            setRightTextEnable();
+                        } else {
+                            setRightTextUnEnable();
+                        }
                         adapter.notifyDataSetChanged();
                     } else {
                         Log.i(tag, "error  拍照失败  ");
@@ -377,6 +386,13 @@ public class AddTopicDisscussActivity extends BaseActivity {
                     picintent.putExtras(bundle);
                     AddTopicDisscussActivity.this.startActivityForResult(picintent, CHOOSEORTAKEPHOTO);
                 }
+
+                if (medilist.size() - 1 > 0) {
+                    setRightTextEnable();
+                } else {
+                    setRightTextUnEnable();
+                }
+
                 break;
             case PhotoList:
                 photos = (List<PhotoModel>) intent.getExtras().getSerializable("photos");
@@ -395,6 +411,12 @@ public class AddTopicDisscussActivity extends BaseActivity {
                 } else {
                     medilist.add(medilist.size(), "0");
                     count = medilist.size() - 1;
+                }
+
+                if (medilist.size() - 1 > 0) {
+                    setRightTextEnable();
+                } else {
+                    setRightTextUnEnable();
                 }
 
                 break;
@@ -423,6 +445,13 @@ public class AddTopicDisscussActivity extends BaseActivity {
                 } else {
                     Log.e(tag, "Result cancel");
                 }
+
+                if (medilist.size() - 1 > 0) {
+                    setRightTextEnable();
+                } else {
+                    setRightTextUnEnable();
+                }
+
                 break;
             default:
                 break;
@@ -552,6 +581,7 @@ public class AddTopicDisscussActivity extends BaseActivity {
                 super.onFailure(exception);
                 mHandler.sendEmptyMessage(PublishPicFail);
                 cancelmDialog();
+                setRightTextEnable();
             }
         });
     }
@@ -570,6 +600,7 @@ public class AddTopicDisscussActivity extends BaseActivity {
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
                 cancelmDialog();
+                setRightTextEnable();
             }
 
             @Override

@@ -32,7 +32,7 @@ public class BaseActivity extends Activity {
     private ImageView leftTextView;
     //右边按钮
     private ImageView rightImageView;
-    private TextView rightTextView ,rightText;
+    private TextView rightTextView, rightText;
     //外部布局
     private RelativeLayout allRelativeLayout;
     //标题布局
@@ -124,7 +124,7 @@ public class BaseActivity extends Activity {
         leftTextView = (ImageView) findViewById(R.id.base_left);
         rightImageView = (ImageView) findViewById(R.id.base_right);
         rightTextView = (TextView) findViewById(R.id.text_base_right);
-        rightText= (TextView)findViewById(R.id.text_right);
+        rightText = (TextView) findViewById(R.id.text_right);
         allRelativeLayout = (RelativeLayout) findViewById(R.id.all_base_layout);
         titleRelativeLayout = (RelativeLayout) findViewById(R.id.base_layout);
         leftTextView.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +147,18 @@ public class BaseActivity extends Activity {
 
     }
 
+
+    public void setRightTextUnEnable() {
+        rightText.setEnabled(false);
+        rightText.setClickable(false);
+        rightText.setTextColor(getResources().getColor(R.color.gray));
+    }
+
+    public void setRightTextEnable() {
+        rightText.setEnabled(true);
+        rightText.setClickable(true);
+        rightText.setTextColor(getResources().getColor(R.color.black));
+    }
 
     /**
      * 设置子布局
@@ -243,9 +255,10 @@ public class BaseActivity extends Activity {
             }
         }
     }
+
     //获取右边
-    protected TextView getRightTextView(){
-        return  rightTextView;
+    protected TextView getRightTextView() {
+        return rightTextView;
     }
 
     @Override
@@ -286,7 +299,6 @@ public class BaseActivity extends Activity {
             mProgress.dismiss();
         }
     }
-
 
 
     /**

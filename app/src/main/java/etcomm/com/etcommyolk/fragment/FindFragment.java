@@ -401,7 +401,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
 
                 //三个推荐下面的列表
                 list = findHome.content.activity;
-
+                if (listView.getHeaderViewsCount() < 2) {
+                    listView.addHeaderView(header);
+                }
                 if (list.size() > 0) {
                     if (listView.getFooterViewsCount() == 0) {
                         listView.addFooterView(footer);
@@ -464,9 +466,6 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 cancelmDialog();
                 list = findList.content.activity;
                 if (list.size() > 0) {
-                    if (listView.getHeaderViewsCount() < 2) {
-                        listView.addHeaderView(header);
-                    }
                     if (listView.getFooterViewsCount() == 0 && Integer.parseInt(findList.content.pages) > 0) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
