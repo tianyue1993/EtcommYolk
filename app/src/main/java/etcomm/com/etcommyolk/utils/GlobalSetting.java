@@ -140,6 +140,18 @@ public class GlobalSetting {
     }
 
 
+    //用户是否需要签到
+    public void savesignin(String value) {
+        SharedPreferences.Editor editor = getSharedPreferencesLogin().edit();
+        editor.putString("signin", value);
+        editor.commit();
+    }
+
+    public String getsignin() {
+        return getSharedPreferencesLogin().getString("signin", "");
+    }
+
+
     private void saveBoolean(String key, boolean value) {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
         editor.putBoolean(key, value);

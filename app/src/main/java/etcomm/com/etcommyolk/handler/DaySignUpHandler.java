@@ -1,7 +1,6 @@
 package etcomm.com.etcommyolk.handler;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
@@ -10,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.DaySignUp;
 import etcomm.com.etcommyolk.exception.BaseException;
@@ -39,7 +37,7 @@ public class DaySignUpHandler extends JsonResponseHandler {
 
     }
 
-    public void onAllow(Commen commen){
+    public void onAllow(Commen commen) {
 
     }
 
@@ -64,7 +62,6 @@ public class DaySignUpHandler extends JsonResponseHandler {
                                     onAllow(JSON.parseObject(response.toString(), Commen.class));
                                     //请求异常,弹出提示
                                     onFailure(new BaseException("Unexpected response " + response, -1));
-                                    Toast.makeText(EtcommApplication.getContext(), messege, Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 onFailure(new BaseException("Unexpected response " + response, -1));

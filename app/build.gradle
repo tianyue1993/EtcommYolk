@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
         // 不让gradle自动生成不同屏幕分辨率的png图
         generatedDensities = []
         manifestPlaceholders = [
@@ -75,7 +75,7 @@ android {
             applicationId "etcomm.com.etcommyolk.alpha"
             minSdkVersion 15
             targetSdkVersion 21
-            versionCode 28
+            versionCode 1
             versionName "1.0"
             // 不让gradle自动生成不同屏幕分辨率的png图
             generatedDensities = []

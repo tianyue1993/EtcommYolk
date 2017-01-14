@@ -120,12 +120,15 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                signin();
-            }
-        }, 1000);
+        if (!prefs.getsignin().equals("1")) {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    signin();
+                }
+            }, 1000);
+        }
+
     }
 
     @Override
@@ -364,7 +367,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                         tvTime.setText(items.start_at + "——" + items.end_at);
                     }
                 }
-               //判断条目是否有数据
+                //判断条目是否有数据
                 if (recommendhealth == null) {
                     health.setVisibility(View.GONE);
                 } else {
@@ -535,7 +538,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
             }
+
         });
+        prefs.savesignin("1");
     }
 
     private static final long SigninDialogDismissTime = 1500;
@@ -555,7 +560,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case IS_TODAY:
-                    signin();
+//                    signin();
                 default:
                     break;
             }
