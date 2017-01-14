@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -127,6 +128,7 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
         EtcommApplication.addActivity(this);
         scrollhsv = (ScrollHorizontalScrollView) findViewById(R.id.scrollhsv);
         scrollhsv.setHorizontalFadingEdgeEnabled(false);
+        scrollhsv.scrollTo(-100,0);
         inputChoose.addTextChangedListener(this);
 
         scrollhsv.setOnItemClickListener(new ScrollHorizontalScrollView.OnItemClickListener() {
