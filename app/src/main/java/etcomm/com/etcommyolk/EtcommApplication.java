@@ -15,6 +15,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,10 @@ public class EtcommApplication extends Application {
      */
     public static String BASE_URL;
 
+    //在application文件中配置三方平台的appkey
+    {
+        PlatformConfig.setWeixin("wxfc0c9c862c377d06", "10e2560413f9b37dc5f01749ea061259");
+    }
 
     /**
      * 是否是第一次默认设置
@@ -97,10 +103,12 @@ public class EtcommApplication extends Application {
         super.onCreate();
         mCon = getApplicationContext();
         Fresco.initialize(this);
+        UMShareAPI.get(this);
         PedometerCounterService.initAppService(getApplicationContext());
         etcommApplication = this;
         initDoMain();
         initImageLoader();
+
     }
 
 
@@ -278,63 +286,104 @@ public class EtcommApplication extends Application {
     public static String toFavorite() {
         return BASE_URL + "user/favorite";
     }
+
     /**
      * 我的活动
      */
-    public static String toMyActivity(){return  BASE_URL + "user/my-activity"; }
+    public static String toMyActivity() {
+        return BASE_URL + "user/my-activity";
+    }
+
     /**
      * 每日签到
      */
-    public static String toSignIn(){return  BASE_URL + "user/sign-in"; }
+    public static String toSignIn() {
+        return BASE_URL + "user/sign-in";
+    }
 
     /**
      * 每日排名
      */
-    public static String toShowRank(){return  BASE_URL + "user/rank"; }
+    public static String toShowRank() {
+        return BASE_URL + "user/rank";
+    }
+
     /**
      * 天气
      */
-    public static String toWeather(){return  BASE_URL + "weather"; }
+    public static String toWeather() {
+        return BASE_URL + "weather";
+    }
+
     /**
      * 获取前七天的计步数据
      */
-    public static String toPedometerWeek(){return  BASE_URL + "user/pedometer-two-months"; }
+    public static String toPedometerWeek() {
+        return BASE_URL + "user/pedometer-two-months";
+    }
+
     /**
      * 解绑设备
      */
-    public static String toBindOff(){return  BASE_URL + "device-bind/bind-off"; }
+    public static String toBindOff() {
+        return BASE_URL + "device-bind/bind-off";
+    }
+
     /**
      * 绑定设备
      */
-    public static String toBindOn(){return  BASE_URL + "device-bind/bind-on"; }
+    public static String toBindOn() {
+        return BASE_URL + "device-bind/bind-on";
+    }
+
     /**
      * 按天同步设备
      */
-    public static String toDateSync(){return  BASE_URL + "pedometer/date-sync"; }
+    public static String toDateSync() {
+        return BASE_URL + "pedometer/date-sync";
+    }
+
     /**
      * 个人排行榜 H5
      */
-    public static String toMyRank(){return  BASE_URL + "user/my-rank"; }
+    public static String toMyRank() {
+        return BASE_URL + "user/my-rank";
+    }
+
     /**
      * 部门排行榜
      */
-    public static String toStructureRank(){return  BASE_URL + "structure/structure-rank"; }
+    public static String toStructureRank() {
+        return BASE_URL + "structure/structure-rank";
+    }
+
     /**
      * 上传个人记步数据
      */
-    public static String toTrendsUrl(){return  BASE_URL + "user/trends-url"; }
+    public static String toTrendsUrl() {
+        return BASE_URL + "user/trends-url";
+    }
+
     /**
      * 获取用户基本信息[我的模块使用]
      */
-    public static String toUserProfile(){return  BASE_URL + "user/profile"; }
+    public static String toUserProfile() {
+        return BASE_URL + "user/profile";
+    }
+
     /**
      * 消息推送
      */
-    public static String toNews(){return  BASE_URL + "news"; }
+    public static String toNews() {
+        return BASE_URL + "news";
+    }
+
     /**
      * 删除某一条推送消息
      */
-    public static String toNewsDelete(){return  BASE_URL + "news/news-delete"; }
+    public static String toNewsDelete() {
+        return BASE_URL + "news/news-delete";
+    }
 
 
     public static String LOGIN() {
@@ -467,7 +516,6 @@ public class EtcommApplication extends Application {
         return BASE_URL + "common/share"; //举报
 
     }
-
 
 
 }

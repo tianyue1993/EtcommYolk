@@ -111,7 +111,6 @@ dependencies {
     compile 'com.github.satyan:sugar:1.5'
     compile(name: 'pedometerservice-release', ext: 'aar')
     compile files('libs/umeng-analytics-v6.0.1.jar')
-    compile files('libs/umeng_social_sdk.jar')
     compile files('libs/GetuiExt-2.0.3.jar')
     compile files('libs/GetuiSDK2.7.0.0.jar')
     compile files('libs/universal-image-loader-1.9.3-with-sources.jar')
@@ -123,5 +122,6 @@ dependencies {
     compile files('libs/commons-lang3-3.1.jar')
     compile project(':DcarePhotoSelector')
     compile project(':library')
+
 
 }

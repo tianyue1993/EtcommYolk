@@ -129,7 +129,7 @@ public class MsgListActivity extends BaseActivity {
 
         cancelmDialog();
         showProgress(0, true);
-
+        Log.d("", "deleteAllMsgFromNet: " + params.toString());
         client.toNewsDelete(this, params, new CommenHandler() {
 
             @Override

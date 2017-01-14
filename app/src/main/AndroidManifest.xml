@@ -186,6 +186,12 @@
         <activity android:name=".activity.SportDetailActivity" />
         <activity android:name=".activity.ExamineReportActivity" />
         <activity android:name=".activity.TopicWebviewlActivity" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 设置友盟分享的id -->
         <meta-data

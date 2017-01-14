@@ -133,6 +133,7 @@ public class MineFeedBackActivity extends BaseActivity {
                 params.put("type", type);
                 cancelmDialog();
                 showProgress(0, true);
+                Log.d("", "onClick: " +params.toString());
                 client.toFeedBack(MineFeedBackActivity.this, params, new CommenHandler() {
 
                     @Override

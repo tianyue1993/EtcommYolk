@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -290,7 +291,8 @@ public class TopicDisscussListActivity extends BaseActivity {
                     intent1.putExtra("image", mInfo.photos.get(0).thumb_image);
                     intent1.putExtra("discuse", mInfo.content);
                     intent1.putExtra("topic_id", mInfo.share_id);
-                    intent1.putExtra("url", mInfo.share_url);
+                    intent1.putExtra("detail_url", mInfo.detail_url);
+                    intent1.putExtra("share_url", mInfo.share_url);
                     mContext.startActivity(intent1);
                 } else if (mInfo.share_type.equals("2")) {
                     Intent intent2 = new Intent(mContext, TopicWebviewlActivity.class);
@@ -299,10 +301,10 @@ public class TopicDisscussListActivity extends BaseActivity {
                     intent2.putExtra("image", mInfo.photos.get(0).thumb_image);
                     intent2.putExtra("discuse", mInfo.content);
                     intent2.putExtra("topic_id", mInfo.share_id);
-                    intent2.putExtra("url", mInfo.detail_url);
+                    intent2.putExtra("detail_url", mInfo.detail_url);
+                    intent2.putExtra("share_url", mInfo.share_url);
                     mContext.startActivity(intent2);
                 } else if (mInfo.share_type.equals("3")) {
-                    showToast("进入小组");
                     Intent intent = new Intent(mContext, TopicDisscussListActivity.class);
                     intent.putExtra("topic_id", mInfo.share_id);
                     intent.putExtra("topic_name", mInfo.title);
@@ -591,9 +593,6 @@ public class TopicDisscussListActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setAction("add");
                 mContext.sendBroadcast(intent);
-                adaptList.clear();
-                page_number = 1;
-                getList();
             }
 
             @Override
@@ -626,9 +625,6 @@ public class TopicDisscussListActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setAction("add");
                 mContext.sendBroadcast(intent);
-                adaptList.clear();
-                page_number = 1;
-                getList();
             }
 
             @Override
@@ -809,19 +805,6 @@ public class TopicDisscussListActivity extends BaseActivity {
                 } else {
                     emptyview.setVisibility(View.INVISIBLE);
                 }
-                if (list != null && list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 1) {
-                        listView.addFooterView(footer);
-                        listView.setAdapter(mAdapter);
-                    }
-                    adaptList.addAll(list);
-                } else {
-                    showToast("暂无更多内容啦");
-                    if (listView.getFooterViewsCount() > 0) {
-                        listView.removeFooterView(footer);
-                    }
-                }
-
 
                 /**
                  * 键盘隐藏的时候，如果小组内容为空，设置原文本
@@ -842,7 +825,24 @@ public class TopicDisscussListActivity extends BaseActivity {
 //                                }
 //                            }
 //                        });
-                mAdapter.notifyDataSetChanged();
+
+                if (list.size() > 0) {
+                    if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 1) {
+                        listView.addFooterView(footer);
+                        listView.setAdapter(mAdapter);
+                    }
+                    for (Iterator<DisscussItems> iterator = list.iterator(); iterator.hasNext(); ) {
+                        DisscussItems disscussCommentItems = iterator.next();
+                        adaptList.add(disscussCommentItems);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    showToast("已无更多内容");
+                    if (listView.getFooterViewsCount() > 0) {
+                        listView.removeFooterView(footer);
+                    }
+
+                }
                 loadStatus = false;
                 listView.onRefreshComplete();
                 loadingProgressBar.setVisibility(View.GONE);

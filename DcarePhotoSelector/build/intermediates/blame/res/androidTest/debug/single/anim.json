@@ -1,15 +1,11 @@
 [
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\translate_up.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\translate_up.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\translate_down.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\translate_down.xml"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\translate_up_current.xml",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\translate_up_current.xml"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\translate_down_current.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\translate_down_current.xml"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\pb_default.xml",
@@ -20,7 +16,11 @@
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\activity_alpha_action_in.xml"
     },
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\translate_down.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\translate_down.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\translate_down_current.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\translate_down_current.xml"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\translate_up.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\anim\\translate_up.xml"
     }
 ]

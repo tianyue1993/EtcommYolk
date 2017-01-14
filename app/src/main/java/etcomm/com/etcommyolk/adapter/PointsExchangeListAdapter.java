@@ -98,6 +98,13 @@ public class PointsExchangeListAdapter extends YolkBaseAdapter<PointsExchangeIte
                 viewHolder.gift_exchange.setClickable(true);
             }
 
+            if (!mInfo.show_money.equals("")) {
+                viewHolder.gift_realprice.setText(mInfo.show_money);
+                viewHolder.rl_realprice.setVisibility(View.VISIBLE);
+
+            } else {
+                viewHolder.rl_realprice.setVisibility(View.GONE);
+            }
             if (mInfo.detail != null) {
                 viewHolder.gift_detail.setText("详    情：" + mInfo.detail);
             } else {

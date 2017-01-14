@@ -31,7 +31,7 @@ public class TopicDiscussSettingActivity extends Activity {
     String topic_id;
     Context mContext;
     @Bind(R.id.btn_going)
-    LinearLayout btnGoing;
+    Button btnGoing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

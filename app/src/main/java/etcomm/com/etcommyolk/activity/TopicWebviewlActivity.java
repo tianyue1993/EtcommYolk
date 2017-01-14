@@ -22,6 +22,10 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.net.URLDecoder;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import etcomm.com.etcommyolk.EtcommApplication;
@@ -39,7 +43,7 @@ public class TopicWebviewlActivity extends BaseActivity {
 
     TranslateAnimation animation;
     String type = "";
-    String url = "";
+    String detail_url = "";
     boolean open = false;//是否有分享功能
 
     @Override
@@ -51,7 +55,7 @@ public class TopicWebviewlActivity extends BaseActivity {
         final Intent intent = getIntent();
         if (intent != null) {
             type = intent.getStringExtra("type");
-            url = intent.getStringExtra("url");
+            detail_url = intent.getStringExtra("detail_url");
             if (type != "") {
                 if (type.equals("activity")) {
                     //活动
@@ -84,7 +88,7 @@ public class TopicWebviewlActivity extends BaseActivity {
                                             new ShareAction(TopicWebviewlActivity.this).withMedia(image).
                                                     withTitle(intent.getStringExtra("topic_name")).
                                                     withText(intent.getStringExtra("discuse")).
-                                                    withTargetUrl(intent.getStringExtra("url")).
+                                                    withTargetUrl(intent.getStringExtra("share_url")).
                                                     setPlatform(share_media).
                                                     setCallback(umShareListener).share();
                                         }
@@ -125,8 +129,8 @@ public class TopicWebviewlActivity extends BaseActivity {
         webSettings.setSaveFormData(false);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(false);
-        if (url != "") {
-            webview.loadUrl(url);
+        if (detail_url != "") {
+            webview.loadUrl(detail_url);
         }
     }
 
@@ -147,9 +151,37 @@ public class TopicWebviewlActivity extends BaseActivity {
 
         }
 
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            // name : id Url拦截处理
+            String str = url;
+            if (StringUtils.startsWithIgnoreCase(url, "etcomm")) {
+                try {
+                    String[] flag = url.split("\\:");
+                    String[] content = flag[1].split("\\|");
+                    Intent intent = new Intent(TopicWebviewlActivity.this, TopicDisscussListActivity.class);
+                    intent.putExtra("topic_id", content[1]);
+                    intent.putExtra("topic_name", URLDecoder.decode(content[0], "utf-8"));
+                    intent.putExtra("user_id", "");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return true;
+        }
+
     }
 
 // TODO: 2016/12/20分享功能
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
 
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
@@ -175,12 +207,6 @@ public class TopicWebviewlActivity extends BaseActivity {
             Toast.makeText(TopicWebviewlActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-    }
 
 
 }

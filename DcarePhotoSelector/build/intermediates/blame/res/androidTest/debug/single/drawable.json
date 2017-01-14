@@ -1,19 +1,7 @@
 [
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_black_textcolor_selector.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_black_textcolor_selector.xml"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bg_back_arrow_white_selector.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\bg_back_arrow_white_selector.xml"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_back_selector.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_back_selector.xml"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_checkbox_selector.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_checkbox_selector.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_camera_selector.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_camera_selector.xml"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_green_selector_rectangle.xml",
@@ -24,7 +12,19 @@
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\bg_dark_selector.xml"
     },
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_camera_selector.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_camera_selector.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_checkbox_selector.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_checkbox_selector.xml"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_back_selector.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_back_selector.xml"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bg_back_arrow_white_selector.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\bg_back_arrow_white_selector.xml"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_black_textcolor_selector.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\bundles\\debug\\res\\drawable\\btn_black_textcolor_selector.xml"
     }
 ]

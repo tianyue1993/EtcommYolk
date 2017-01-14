@@ -1,11 +1,7 @@
 [
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\layout_album.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\layout_album.xml"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\activity_photoselector.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\activity_photoselector.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\view_camera.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\view_camera.xml"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\activity_photopreview.xml",
@@ -16,11 +12,15 @@
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\layout_photoitem.xml"
     },
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\view_camera.xml",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\view_camera.xml"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\activity_photoselector.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\activity_photoselector.xml"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\view_photopreview.xml",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\view_photopreview.xml"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\layout\\layout_album.xml",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\layout\\layout_album.xml"
     }
 ]

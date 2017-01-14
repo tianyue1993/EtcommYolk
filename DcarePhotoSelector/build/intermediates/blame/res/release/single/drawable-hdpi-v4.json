@@ -1,82 +1,82 @@
 [
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_dark.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_dark.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_title_pressed.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_title_pressed.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_camera_pressed.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_camera_pressed.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_picture_loadfailed.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_picture_loadfailed.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_back_arrow_white_pressed.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_back_arrow_white_pressed.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_picture_loading.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_picture_loading.png"
-    },
-    {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_choice_green.png",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_choice_green.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_album_border.9.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_album_border.9.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_checkbox_pressed.9.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_checkbox_pressed.9.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_title_btn_back.9.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_title_btn_back.9.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_back_arrow_white_normal.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_back_arrow_white_normal.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_loading_white.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_loading_white.png"
-    },
-    {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_launcher.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_launcher.png"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_spinner_white.png",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_spinner_white.png"
     },
     {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_picture_loadfailed.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_picture_loadfailed.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_loading_white.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_loading_white.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_title_pressed.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_title_pressed.png"
+    },
+    {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_title_normal.png",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_title_normal.png"
     },
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_dark_translucent.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_dark_translucent.png"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_camera_pressed.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_camera_pressed.png"
     },
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_grey_dark.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_grey_dark.png"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_title_btn_back.9.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_title_btn_back.9.png"
     },
     {
-        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_checkbox_normal.9.png",
-        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_checkbox_normal.9.png"
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_dark.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_dark.png"
     },
     {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_title.png",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_title.png"
     },
     {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_checkbox_normal.9.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_checkbox_normal.9.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_dark_translucent.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_dark_translucent.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_back_arrow_white_normal.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_back_arrow_white_normal.png"
+    },
+    {
         "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_camera_normal.png",
         "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_camera_normal.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_checkbox_pressed.9.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_checkbox_pressed.9.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_picture_loading.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_picture_loading.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_back_arrow_white_pressed.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_back_arrow_white_pressed.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_album_border.9.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_album_border.9.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\bg_grey_dark.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\bg_grey_dark.png"
+    },
+    {
+        "merged": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "E:\\EtcommYolk\\EtcommYolk\\DcarePhotoSelector\\res\\drawable-hdpi\\ic_launcher.png"
     }
 ]
