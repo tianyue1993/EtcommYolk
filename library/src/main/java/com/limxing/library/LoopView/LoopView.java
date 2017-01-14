@@ -339,29 +339,31 @@ public class LoopView extends View {
             if (preCurrentIndex > items.size() - 1) {
                 preCurrentIndex = items.size() - 1;
             }
-        } else {
-            if (preCurrentIndex < 0) {
-                preCurrentIndex = items.size() + preCurrentIndex;
-            }
-            if (preCurrentIndex > items.size() - 1) {
-                preCurrentIndex = preCurrentIndex - items.size();
-            }
         }
+//        else {
+//            if (preCurrentIndex < 0) {
+//                preCurrentIndex = items.size() + preCurrentIndex;
+//            }
+//            if (preCurrentIndex > items.size() - 1) {
+//                preCurrentIndex = preCurrentIndex - items.size();
+//            }
+//        }
 
         int j2 = (int) (totalScrollY % (lineSpacingMultiplier * maxTextHeight));
         // 设置as数组中每个元素的值
         int k1 = 0;
         while (k1 < itemsVisible) {
             int l1 = preCurrentIndex - (itemsVisible / 2 - k1);
-            if (isLoop) {
-                while (l1 < 0) {
-                    l1 = l1 + items.size();
-                }
-                while (l1 > items.size() - 1) {
-                    l1 = l1 - items.size();
-                }
-                as[k1] = items.get(l1);
-            } else if (l1 < 0) {
+//            if (isLoop) {
+//                while (l1 < 0) {
+//                    l1 = l1 + items.size();
+//                }
+//                while (l1 > items.size() - 1) {
+//                    l1 = l1 - items.size();
+//                }
+//                as[k1] = items.get(l1);
+//            } else
+            if (l1 < 0) {
                 as[k1] = "";
             } else if (l1 > items.size() - 1) {
                 as[k1] = "";

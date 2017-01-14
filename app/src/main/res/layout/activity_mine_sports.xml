@@ -13,7 +13,46 @@
         android:layout_height="match_parent"
         android:fadingEdge="none"
         android:scrollbars="none"
+        android:visibility="gone"
         android:footerDividersEnabled="true"
         android:headerDividersEnabled="true" />
+
+
+    <RelativeLayout
+        android:id="@+id/noMineSports"
+        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:background="@mipmap/mine_sports_bac"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您还没有活动"
+            android:id="@+id/textView5"
+            android:textSize="20dp"
+            android:textColor="#989898"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/imageView4"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to_see"
+            android:id="@+id/toseesee"
+            android:textSize="20dp"
+            android:textColor="#F28949"
+            android:textStyle="normal"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textView5"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

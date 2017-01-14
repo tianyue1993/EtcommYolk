@@ -113,7 +113,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
     private Uri photoUri;
     private File mUriFile;
     private String editweight = "50";
-    private String editage = "1980";
+    private String editage = "1988";
     private String editheight = "160";
     private static final int CAMERA_PIC = 21;
     private static final int CROP_PIC = 22;
@@ -376,7 +376,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
     void personal_age_rl() {
         choosetext.setText("选择年龄");
 
-        new AlertView("选择年龄", SettingPersonalDataActivity.this, 1930, 2000, SettingPersonalDataActivity.this).show();
+        new AlertView("选择年龄", SettingPersonalDataActivity.this, 1931, 2000, SettingPersonalDataActivity.this).show();
 
     }
 

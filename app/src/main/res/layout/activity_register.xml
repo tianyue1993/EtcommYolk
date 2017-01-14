@@ -45,6 +45,7 @@
             android:singleLine="true"
             android:textColorHint="#c7b88f"
             android:textSize="15dp"
+            android:paddingLeft="33dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView"
             android:layout_toEndOf="@+id/textView"

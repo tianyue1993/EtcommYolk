@@ -2,6 +2,7 @@ package etcomm.com.etcommyolk.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -52,14 +53,18 @@ public class ChangeNickNameActivity extends BaseActivity {
         intent = getIntent();
         nickname = intent.getStringExtra("name");
         setTitleTextView(intent.getStringExtra("type"), null);
-        nickname_et.setSingleLine();
         nickname_et.setText(nickname);
         nickname_et.requestFocus();
+        if (intent.getStringExtra("type").contains("昵称")) {
+            nickname_et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+        } else {
+            nickname_et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
+        }
         getRightTextView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(nickname_et.getText().toString())) {
-                    showToast(R.string.nick_name_nonull);
+                    showToast("请填写要修改的信息");
                     return;
                 }
                 if (nickname_et.getText().toString().trim().length() < 2) {
@@ -100,7 +105,11 @@ public class ChangeNickNameActivity extends BaseActivity {
             public void onSuccess(Commen commen) {
                 super.onSuccess(commen);
                 cancelmDialog();
-                prefs.setNickName(value);
+                if (intent.getStringExtra("type").contains("昵称")) {
+                    prefs.setNickName(value);
+                } else {
+                    prefs.setRealName(value);
+                }
                 backWithData(Preferences.SelectNickName, nickname_et.getText().toString());
                 finish();
             }

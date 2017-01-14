@@ -107,9 +107,11 @@ public class MineFeedBackActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
                 if (feedbackTv.getText().length() >= 1) {
+                    feedbackCommit.setBackgroundResource(R.mipmap.all_ok_button);
                     feedbackCommit.setClickable(true);
                     feedbackCommit.setEnabled(true);
                 } else {
+                    feedbackCommit.setBackgroundResource(R.mipmap.all_fil_button);
                     feedbackCommit.setClickable(false);
                     feedbackCommit.setEnabled(false);
                 }
@@ -146,7 +148,7 @@ public class MineFeedBackActivity extends BaseActivity {
                     public void onSuccess(Commen commen) {
                         super.onSuccess(commen);
                         cancelmDialog();
-                        Toast.makeText(mContext, "提交成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "您的反馈已收到，感谢您的使用", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 

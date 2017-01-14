@@ -167,6 +167,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
+        if (registerPassword.getEditText().getText().toString().trim().length() < 6) {
+            //判断长度
+            showToast("请输入6-12位字母、数字组成的密码");
+            return;
+        } else if (registerPassword.getEditText().getText().toString().trim().trim().length() > 12) {
+            showToast("请输入6-12位字母、数字组成的密码");
+            return;
+        }
+
+
         if (structure_code){
             RequestParams object = new RequestParams();
             object.put("receiver", registeredPhone.getEditText().getText().toString().trim());
@@ -208,7 +218,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             });
         }else {
-            showToast("请输入邀请码");
+            showToast("邀请码错误");
         }
     }
 
@@ -462,8 +472,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //扫描后邀请码赋值
-        if (requestCode == 5) {
-            regInvitationCode.setText(data.getStringExtra("code"));
+        try {
+            if (requestCode == 5) {
+                regInvitationCode.setText(data.getStringExtra("code"));
+            }
+        }catch (Exception e){
+            e.fillInStackTrace();
         }
     }
 

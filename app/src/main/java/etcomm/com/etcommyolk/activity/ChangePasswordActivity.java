@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,12 +42,6 @@ public class ChangePasswordActivity extends BaseActivity {
     //眼睛
     @Bind(R.id.forget_show_pwd_check)
     CheckBox forgetShowPwdCheck;
-    //文字说明
-    @Bind(R.id.forget_show_pwd_text)
-    TextView forgetShowPwdText;
-    //显示隐藏密码
-    @Bind(R.id.forget_show_pwd)
-    LinearLayout forgetShowPwd;
     //修改
     @Bind(R.id.btn_next)
     Button btnNext;
@@ -69,31 +64,32 @@ public class ChangePasswordActivity extends BaseActivity {
         EtcommApplication.addActivity(this);
         setTitleTextView("修改密码", null);
         client_id = PushManager.getInstance().getClientid(getApplicationContext());
-    }
 
-
-
-    @OnClick({R.id.forget_show_pwd, R.id.btn_next})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.forget_show_pwd:
+        forgetShowPwdCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // true 为隐藏密码 false 为显示密码
-                if (forgetShowPwdCheck.isChecked()) {
+                if (isChecked) {
                     //如果选中，隐藏密码
-                    forgetShowPwdCheck.setChecked(false);
-                    forgetShowPwdText.setText("   显示密码");
                     oldPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     newPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     renewPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     //否则显示密码
-                    forgetShowPwdCheck.setChecked(true);
-                    forgetShowPwdText.setText("   隐藏密码");
                     oldPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     newPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     renewPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
-                break;
+            }
+        });
+
+    }
+
+
+
+    @OnClick({R.id.btn_next})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.btn_next:
 
                 //修改密码
@@ -103,7 +99,7 @@ public class ChangePasswordActivity extends BaseActivity {
                 if (oldPass.length() < 6 || newPass.length() < 6 || newPass.length() < 6) {
                     showToast(R.string.password_length_error);
                 } else if (!newPass.trim().equalsIgnoreCase(renewPass.trim())) {
-                    showToast(R.string.password_equals_error);
+                    showToast("请检查密码是否一致");
                 } else if (oldPass.trim().length() > 12 || newPass.trim().length() > 12 || renewPass.trim().length() > 12) {
                     showToast(R.string.password_length_error);
                 } else {
