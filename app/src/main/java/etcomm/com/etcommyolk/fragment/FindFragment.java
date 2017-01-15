@@ -286,7 +286,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, MoreWealfeActivity.class));
                 break;
             case R.id.base_left:
-                startActivity(new Intent(mContext, ChoosePictureActivity.class));
+                startActivity(new Intent(mContext, MineActivity.class));
                 break;
             case R.id.base_right:
                 startActivity(new Intent(mContext, MsgListActivity.class));
