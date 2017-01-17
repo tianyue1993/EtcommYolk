@@ -172,7 +172,8 @@ public class LoginActivity extends Activity {
                     prefs.setInfoStatus(login.content.info_status);
                     prefs.setIsLike(login.content.is_like);
                     prefs.setIsComment(login.content.is_comment);
-                    prefs.setIsComment(login.content.islevel);
+                    prefs.setIslevel(login.content.islevel);
+                    prefs.setEmail(login.content.email);
                     //用户信息完整性
                     if (login.content.info_status.equals("1")) {
                         prefs.saveInfoState(true);

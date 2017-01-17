@@ -117,7 +117,8 @@ public class MineActivity extends BaseActivity {
                 prefs.setInfoStatus(login.content.info_status);
                 prefs.setIsLike(login.content.is_like);
                 prefs.setIsComment(login.content.is_comment);
-                prefs.setIsComment(login.content.islevel);
+                prefs.setIslevel(login.content.islevel);
+                prefs.setEmail(login.content.email);
                 //
                 userPhoto.setImageURI(login.content.avatar);
                 userName.setText(login.content.nick_name);

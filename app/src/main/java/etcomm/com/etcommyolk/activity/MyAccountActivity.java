@@ -62,7 +62,6 @@ public class MyAccountActivity extends BaseActivity {
             accPhone.setText(prefs.getMobile());
             changePhone.setClickable(true);
         }
-
         if (prefs.getEmail().isEmpty()) {
             accMailButton.setVisibility(View.VISIBLE);
             accMail.setVisibility(View.GONE);
