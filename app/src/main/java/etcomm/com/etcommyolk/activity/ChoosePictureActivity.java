@@ -275,13 +275,4 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            EtcommApplication.finishActivity();
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 }

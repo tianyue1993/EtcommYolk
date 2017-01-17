@@ -227,8 +227,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
         } else {
+            EtcommApplication.finishActivity();
             finish();
-            System.exit(0);
         }
     }
 

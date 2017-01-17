@@ -188,10 +188,18 @@ public class AlertView implements OnItemSelectedListener {
             yearList.add(i + "年");
         }
         for (int i = 1; i < 13; i++) {
-            monthList.add(i + "月");
+            if (i < 10) {
+                monthList.add("0" + i + "月");
+            }else {
+                monthList.add(i + "月");
+            }
         }
         for (int i = 1; i < 32; i++) {
-            dayList.add(i + "日");
+            if (i < 10) {
+                dayList.add("0" + i + "日");
+            }else {
+                dayList.add(i + "日");
+            }
         }
         initViews(yearList, monthList, dayList);
         initLoopViewListener();

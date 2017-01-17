@@ -120,7 +120,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
             ivAvator.setImageURI(prefs.getAvatar());
         }
         setTitleTextView("个人资料", null);
-        age.setText("1988/1/1");
+        age.setText("1988/01/01");
         if (usersex == 1) {
             // 男
             weight.setText("65");
