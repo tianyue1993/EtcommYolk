@@ -156,7 +156,6 @@ public class MineSportsActivity extends BaseActivity {
                 } else {
                     noMineSports.setVisibility(View.VISIBLE);
                     collectpulllist.setVisibility(View.GONE);
-                    showToast("暂无更多资讯");
                 }
                 loadStatus = false;
                 collectpulllist.onRefreshComplete();
