@@ -133,16 +133,16 @@ public class TopicDisscussListActivity extends BaseActivity {
 //        当EidtText无焦点（focusable=false）时阻止输入法弹出
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(topic_discuss.getWindowToken(), 0);
-
+        getList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        page_number = 1;
-        adaptList.clear();
-        list.clear();
-        getList();
+//        page_number = 1;
+//        adaptList.clear();
+//        list.clear();
+
     }
 
     @Override

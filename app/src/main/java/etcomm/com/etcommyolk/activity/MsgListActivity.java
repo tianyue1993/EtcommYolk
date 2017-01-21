@@ -123,7 +123,7 @@ public class MsgListActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         //不为空 删除单个消息
         if (item != null) {
-            params.put("news_id", prefs.getUserId());
+            params.put("news_id", item.news_id);
         }
         params.put("access_token", prefs.getAccessToken());
 

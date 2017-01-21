@@ -4,6 +4,8 @@ package etcomm.com.etcommyolk.entity;
  * Created by ${tianyue} on 2016/12/15.
  */
 public class RecommendItems extends Entity {
+    public String topic_id;
+    public String news_id;
     public String id;
     public String title;
     public String image;

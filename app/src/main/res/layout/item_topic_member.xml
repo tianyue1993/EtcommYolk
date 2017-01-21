@@ -17,9 +17,9 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:gravity="center_vertical">
+        >
 
         <TextView
             android:id="@+id/attention_member"
@@ -28,6 +28,7 @@
             android:layout_gravity="center"
             android:layout_margin="1dp"
             android:text="爱奔跑的蜗牛"
+            android:layout_centerVertical="true"
             android:textColor="@color/list_text_gray_new"
             android:textSize="16sp" />
 
@@ -39,6 +40,7 @@
             android:layout_gravity="center"
             android:layout_margin="1dp"
             android:text="研发部"
+            android:visibility="gone"
             android:textColor="@color/list_text_gray_new"
             android:textSize="12sp" />
 

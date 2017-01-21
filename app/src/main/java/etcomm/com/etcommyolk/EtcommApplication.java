@@ -513,7 +513,7 @@ public class EtcommApplication extends Application {
     }
 
     public static String SHARE() {
-        return BASE_URL + "common/share"; //举报
+        return BASE_URL + "common/share"; //分享
 
     }
 

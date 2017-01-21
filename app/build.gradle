@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
         // 不让gradle自动生成不同屏幕分辨率的png图
         generatedDensities = []
         manifestPlaceholders = [
@@ -52,7 +52,6 @@ android {
 
     //打包相关
     signingConfigs {
-
         release {
             //签名文件 需放在根目录
             storeFile file("yolkkey.jks")
@@ -60,7 +59,12 @@ android {
             keyAlias "yolk"
             keyPassword "123456"
         }
-
+        debug {
+            keyAlias 'yolk'
+            keyPassword '123456'
+            storeFile file('yolkkey.jks')
+            storePassword '123456'
+        }
     }
 
     //分渠道 分站点打包 分配服务器路径等
@@ -113,7 +117,6 @@ dependencies {
     compile files('libs/umeng-analytics-v6.0.1.jar')
     compile files('libs/GetuiExt-2.0.3.jar')
     compile files('libs/GetuiSDK2.7.0.0.jar')
-    compile files('libs/universal-image-loader-1.9.3-with-sources.jar')
     compile files('libs/joda-time-2.9.1.jar')
     compile files('libs/fastfoxlibrary.jar')
     compile files('libs/Android_iwown_Ble.jar')

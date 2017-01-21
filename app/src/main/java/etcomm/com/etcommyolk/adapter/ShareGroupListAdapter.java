@@ -171,7 +171,12 @@ public class ShareGroupListAdapter extends YolkBaseAdapter<GroupItems> {
             } else if (recommendItems.type.equals("health")) {
                 params.put("share_type", "Health");
             }
-            params.put("share_id", recommendItems.id);
+            //以ID来分辨小组和收藏等 待确认
+            if (recommendItems.news_id != null) {
+                params.put("share_id", recommendItems.news_id);
+            }else {
+                params.put("share_id", recommendItems.id);
+            }
         } else {
             //从小组列表点击进入详情分享
             if (type != null) {
