@@ -23,12 +23,13 @@ import android.widget.Toast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.R;
-import etcomm.com.etcommyolk.activity.ChoosePictureActivity;
 import etcomm.com.etcommyolk.activity.ExamineReportActivity;
 import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.activity.MoreHealthActivity;
@@ -36,12 +37,12 @@ import etcomm.com.etcommyolk.activity.MoreSportsActivity;
 import etcomm.com.etcommyolk.activity.MoreWealfeActivity;
 import etcomm.com.etcommyolk.activity.MsgListActivity;
 import etcomm.com.etcommyolk.activity.PointsExchangeActivity;
-import etcomm.com.etcommyolk.activity.SearchGroupActivity;
 import etcomm.com.etcommyolk.activity.WebviewDetailActivity;
 import etcomm.com.etcommyolk.adapter.SportsAdapter;
 import etcomm.com.etcommyolk.entity.DaySignUp;
 import etcomm.com.etcommyolk.entity.FindHome;
 import etcomm.com.etcommyolk.entity.FindList;
+import etcomm.com.etcommyolk.entity.FirstEvent;
 import etcomm.com.etcommyolk.entity.RecommendItems;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.DaySignUpHandler;
@@ -271,7 +272,9 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.group:
                 if (AppMudle == 0) {
-                    startActivity(new Intent(mContext, SearchGroupActivity.class));
+                    EventBus.getDefault().post(
+                            new FirstEvent("start"));
+//                    startActivity(new Intent(mContext, SearchGroupActivity.class));
                 } else {
                     startActivity(new Intent(mContext, ExamineReportActivity.class));
                 }

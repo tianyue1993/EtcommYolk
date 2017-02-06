@@ -10,8 +10,12 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import etcomm.com.etcommyolk.EtcommApplication;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.entity.FirstEvent;
 import etcomm.com.etcommyolk.fragment.AroundFragment;
 import etcomm.com.etcommyolk.fragment.FindFragment;
 import etcomm.com.etcommyolk.fragment.SportFragment;
@@ -73,6 +77,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             // 透明状态栏DcareBaseAdapter
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -198,6 +203,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             transaction.hide(mSideFragment);
         }
     }
+    //eventBus 跳转身边页面
+    @Subscribe
+    public void onEventMainThread(FirstEvent event) {
+        selectFragment(2);
+    }
 
     /**
      * 返回键监听事件
@@ -251,5 +261,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);//反注册EventBus
     }
 }

@@ -10,6 +10,8 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.2"
+        //解决AS重新编译Jar包的Bug
+        multiDexEnabled true
         // 不让gradle自动生成不同屏幕分辨率的png图
         generatedDensities = []
         manifestPlaceholders = [
@@ -113,6 +115,7 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.github.satyan:sugar:1.5'
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile(name: 'pedometerservice-release', ext: 'aar')
     compile files('libs/umeng-analytics-v6.0.1.jar')
     compile files('libs/GetuiExt-2.0.3.jar')
