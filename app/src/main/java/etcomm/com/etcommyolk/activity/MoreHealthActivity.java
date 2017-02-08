@@ -38,7 +38,7 @@ public class MoreHealthActivity extends BaseActivity {
         setContentView(R.layout.activity_more_health);
         ButterKnife.bind(this);
         EtcommApplication.addActivity(this);
-        setTitleTextView("资讯阅读", null);
+        setTitleTextView("资讯中心", null);
         setRightImage(R.mipmap.ic_search, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -63,8 +63,8 @@ public class MyExchangeListAdapter extends YolkBaseAdapter<PointsExchangeItems> 
                 viewHolder.rl_realprice.setVisibility(View.GONE);
             }
 
-            viewHolder.gift_price.setText(mInfo.score + "积分");
-            viewHolder.gift_stock.setText("数   量：" + mInfo.number);// 库存改成兑换时间
+            viewHolder.gift_price.setText("兑换价："+mInfo.score + "积分");
+            viewHolder.gift_stock.setText("数    量：" + mInfo.number);// 库存改成兑换时间
             if (Integer.valueOf(StringUtils.isEmpty(mInfo.inventory) ? "0" : mInfo.inventory) < 1) {
                 viewHolder.gift_exchange.setEnabled(false);
                 viewHolder.gift_exchange.setClickable(false);

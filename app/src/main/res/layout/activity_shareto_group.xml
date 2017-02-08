@@ -38,7 +38,7 @@
             android:background="@mipmap/search_topic_bg"
             android:drawablePadding="@dimen/marginlarge"
             android:drawableRight="@mipmap/around_search"
-            android:hint="搜索你关注的小组"
+            android:hint="搜索你要分享的小组"
             android:imeOptions="actionSearch"
             android:paddingLeft="@dimen/marginmiddle"
             android:paddingRight="@dimen/marginsmall"

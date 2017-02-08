@@ -217,7 +217,11 @@ public class BaseActivity extends Activity {
                 rightText.setVisibility(View.VISIBLE);
                 if (!string.isEmpty()) {
                     rightText.setText(string);
+                }else {
+                    rightText.setText("");
                 }
+            }else {
+                rightText.setVisibility(View.GONE);
             }
             if (onClickListener != null) {
                 rightText.setOnClickListener(onClickListener);

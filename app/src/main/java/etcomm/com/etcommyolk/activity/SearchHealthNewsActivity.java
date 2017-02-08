@@ -101,6 +101,7 @@ public class SearchHealthNewsActivity extends Activity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     page_number = 1;
+                    adaptList.clear();
                     getList();
 
                 }
@@ -228,6 +229,7 @@ public class SearchHealthNewsActivity extends Activity {
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                cancelmDialog();
                 listView.onRefreshComplete();
                 loadStatus = false;
                 loadingProgressBar.setVisibility(View.GONE);

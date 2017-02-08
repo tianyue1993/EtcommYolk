@@ -593,6 +593,10 @@ public class TopicDisscussListActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setAction("add");
                 mContext.sendBroadcast(intent);
+                page_number = 1;
+                adaptList.clear();
+                list.clear();
+                getList();
             }
 
             @Override
@@ -625,6 +629,10 @@ public class TopicDisscussListActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setAction("add");
                 mContext.sendBroadcast(intent);
+                page_number = 1;
+                adaptList.clear();
+                list.clear();
+                getList();
             }
 
             @Override
@@ -737,6 +745,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                 }
                 if (discussion.content.topic.is_followed.equals("0")) {
                     if_join.setVisibility(View.GONE);
+                    setRightText("",null);
                 } else {
                     if_join.setVisibility(View.VISIBLE);
                     setRightText("发帖子", new View.OnClickListener() {

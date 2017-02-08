@@ -130,7 +130,7 @@ public class PointsExchangeActivity extends BaseActivity {
                 }
             }
         });
-        mypoints.setText("可用积分：" + prefs.getScore());
+        mypoints.setText("  "+prefs.getScore()+"分");
         mAdapter = new PointsExchangeListAdapter(mContext, adaptList);
         mAdapter.setmPointExchanged(new PointsExchangeListAdapter.ExchangeGift() {
             @Override
