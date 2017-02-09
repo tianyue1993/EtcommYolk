@@ -230,8 +230,10 @@ public class AroundFragment extends BaseFragment implements
         int viewType = mAdapter.getItemViewType(itemPosition);
         switch (viewType) {
             case 0:
+                unAttention(mAdapter.getItem(itemPosition));
                 return clickMenuBtn0(buttonPosition, direction);
             case 1:
+                deleteTopic(mAdapter.getItem(itemPosition));
                 return clickMenuBtn1(buttonPosition, direction);
             default:
                 return Menu.ITEM_NOTHING;
@@ -240,19 +242,10 @@ public class AroundFragment extends BaseFragment implements
 
     private int clickMenuBtn0(int buttonPosition, int direction) {
         switch (direction) {
-            case MenuItem.DIRECTION_LEFT:
-                switch (buttonPosition) {
-                    case 0:
-                        return Menu.ITEM_SCROLL_BACK;
-                }
-                break;
+
             case MenuItem.DIRECTION_RIGHT:
                 switch (buttonPosition) {
                     case 0:
-                        return Menu.ITEM_DELETE_FROM_BOTTOM_TO_TOP;
-                    case 1:
-                        return Menu.ITEM_NOTHING;
-                    case 2:
                         return Menu.ITEM_SCROLL_BACK;
                 }
         }
@@ -261,17 +254,10 @@ public class AroundFragment extends BaseFragment implements
 
     private int clickMenuBtn1(int buttonPosition, int direction) {
         switch (direction) {
-            case MenuItem.DIRECTION_LEFT:
-                switch (buttonPosition) {
-                    case 0:
-                        return Menu.ITEM_SCROLL_BACK;
-                }
-                break;
+
             case MenuItem.DIRECTION_RIGHT:
                 switch (buttonPosition) {
                     case 0:
-                        return Menu.ITEM_DELETE_FROM_BOTTOM_TO_TOP;
-                    case 1:
                         return Menu.ITEM_SCROLL_BACK;
                 }
         }
