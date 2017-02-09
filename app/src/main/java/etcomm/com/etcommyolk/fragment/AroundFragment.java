@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
 import com.yydcdut.sdlv.Menu;
 import com.yydcdut.sdlv.MenuItem;
@@ -23,6 +24,7 @@ import com.yydcdut.sdlv.SlideAndDragListView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +37,7 @@ import etcomm.com.etcommyolk.activity.MsgListActivity;
 import etcomm.com.etcommyolk.activity.SearchGroupActivity;
 import etcomm.com.etcommyolk.activity.TopicDisscussListActivity;
 import etcomm.com.etcommyolk.adapter.GoodGroupAdapter;
-import etcomm.com.etcommyolk.adapter.MyGroupListAdapter;
+import etcomm.com.etcommyolk.adapter.YolkBaseAdapter;
 import etcomm.com.etcommyolk.entity.Commen;
 import etcomm.com.etcommyolk.entity.GoodGroup;
 import etcomm.com.etcommyolk.entity.GroupItems;
@@ -47,7 +49,8 @@ import etcomm.com.etcommyolk.handler.QuitGroupHandler;
 import etcomm.com.etcommyolk.utils.GlobalSetting;
 import etcomm.com.etcommyolk.widget.HorizontalListView;
 
-public class AroundFragment extends BaseFragment {
+public class AroundFragment extends BaseFragment implements
+        SlideAndDragListView.OnMenuItemClickListener {
     /**
      * 控制OnResume()执行次数
      */
@@ -62,7 +65,7 @@ public class AroundFragment extends BaseFragment {
     @Bind(R.id.base_right)
     ImageView baseRight;
     @Bind(R.id.listview)
-    SlideAndDragListView listView;
+    SlideAndDragListView<GroupItems> listView;
     @Bind(R.id.base_title)
     TextView baseTitle;
     @Bind(R.id.title)
@@ -81,6 +84,7 @@ public class AroundFragment extends BaseFragment {
     private ArrayList<GroupItems> adaptList = new ArrayList<>();
     protected ArrayList<GroupItems> list = new ArrayList<GroupItems>();
     private MyGroupListAdapter mAdapter;
+    private List<Menu> mMenuList;
     GoodGroupAdapter adapter;
     private ArrayList<GoodGroup.QuitGroup> arrayList = new ArrayList<>();
     //关注成功，刷新身边页面————添加关注小组到我的小组列表
@@ -94,6 +98,7 @@ public class AroundFragment extends BaseFragment {
             }
         }
     };
+
 
     /**
      * onCreateView
@@ -169,50 +174,9 @@ public class AroundFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
         adapter = new GoodGroupAdapter(mContext, arrayList);
         goodGroup.setAdapter(adapter);
-        mAdapter = new MyGroupListAdapter(mContext, adaptList, new MyGroupListAdapter.mAttentioned() {
-            @Override
-            public void onAttentioned(GroupItems item) {
-                item.is_followed = "1";
-            }
-        });
         //设置侧滑菜单按钮
-        Menu menu = new Menu(new ColorDrawable(Color.LTGRAY), true, 0);// the
-        menu.addItem(new MenuItem.Builder().setWidth(200)// set Width
-                //设置背景
-                .setBackground(new ColorDrawable(Color.LTGRAY))// set background
-                .setText("取消关注")// set text string
-                .setDirection(MenuItem.DIRECTION_RIGHT).setTextColor(Color.WHITE)// set
-                .setTextSize(10)// set text size
-                .build());
-        listView.setMenu(menu);
-        listView.setDividerHeight(0);
-        listView.setAdapter(mAdapter);
-
-        listView.setOnMenuItemClickListener(new SlideAndDragListView.OnMenuItemClickListener() {
-            @Override
-            public int onMenuItemClick(View v, int itemPosition, int buttonPosition, int direction) {
-                switch (direction) {
-                    case MenuItem.DIRECTION_LEFT:
-                        switch (buttonPosition) {
-                            case 0:// One
-                                return Menu.ITEM_SCROLL_BACK;
-                        }
-                        break;
-                    case MenuItem.DIRECTION_RIGHT:
-                        switch (buttonPosition) {
-                            case 0:// icon
-                                showToast("取消关注");
-                                unAttention(mAdapter.getItem(itemPosition));
-                                return Menu.ITEM_NOTHING;
-                        }
-                        break;
-                    default:
-                        return Menu.ITEM_NOTHING;
-                }
-                return Menu.ITEM_NOTHING;
-            }
-        });
-
+        initMenu();
+        initUiAndListener();
         listView.setOnListItemClickListener(new SlideAndDragListView.OnListItemClickListener() {
             @Override
             public void onListItemClick(View view, int i) {
@@ -225,6 +189,95 @@ public class AroundFragment extends BaseFragment {
         });
         return rootView;
     }
+
+
+    public void initMenu() {
+        mMenuList = new ArrayList<>(2);
+        Menu menu0 = new Menu(new ColorDrawable(Color.LTGRAY), true, 0);
+        menu0.addItem(new MenuItem.Builder().setWidth(200)// set Width
+                //设置背景
+                .setBackground(new ColorDrawable(Color.LTGRAY))// set background
+                .setText("取消关注")// set text string
+                .setDirection(MenuItem.DIRECTION_RIGHT).setTextColor(Color.WHITE)// set
+                .setTextSize(10)// set text size
+                .build());
+
+        Menu menu1 = new Menu(new ColorDrawable(Color.LTGRAY), false, 1);// the
+        menu1.addItem(new MenuItem.Builder().setWidth(200)// set Width
+                //设置背景
+                .setBackground(new ColorDrawable(Color.LTGRAY))// set background
+                .setText("关闭小组")// set text string
+                .setDirection(MenuItem.DIRECTION_RIGHT).setTextColor(Color.WHITE)// set
+                .setTextSize(10)// set text size
+                .build());
+        mMenuList.add(menu0);
+        mMenuList.add(menu1);
+    }
+
+
+    public void initUiAndListener() {
+        listView.setMenu(mMenuList);
+        mAdapter = new MyGroupListAdapter(mContext, adaptList);
+        listView.setAdapter(mAdapter);
+        listView.setOnMenuItemClickListener(this);
+        listView.setDividerHeight(1);
+    }
+
+
+    @Override
+    public int onMenuItemClick(View v, int itemPosition, int buttonPosition, int direction) {
+        Log.i(TAG, "onMenuItemClick   " + itemPosition + "   " + buttonPosition + "   " + direction);
+        int viewType = mAdapter.getItemViewType(itemPosition);
+        switch (viewType) {
+            case 0:
+                return clickMenuBtn0(buttonPosition, direction);
+            case 1:
+                return clickMenuBtn1(buttonPosition, direction);
+            default:
+                return Menu.ITEM_NOTHING;
+        }
+    }
+
+    private int clickMenuBtn0(int buttonPosition, int direction) {
+        switch (direction) {
+            case MenuItem.DIRECTION_LEFT:
+                switch (buttonPosition) {
+                    case 0:
+                        return Menu.ITEM_SCROLL_BACK;
+                }
+                break;
+            case MenuItem.DIRECTION_RIGHT:
+                switch (buttonPosition) {
+                    case 0:
+                        return Menu.ITEM_DELETE_FROM_BOTTOM_TO_TOP;
+                    case 1:
+                        return Menu.ITEM_NOTHING;
+                    case 2:
+                        return Menu.ITEM_SCROLL_BACK;
+                }
+        }
+        return Menu.ITEM_NOTHING;
+    }
+
+    private int clickMenuBtn1(int buttonPosition, int direction) {
+        switch (direction) {
+            case MenuItem.DIRECTION_LEFT:
+                switch (buttonPosition) {
+                    case 0:
+                        return Menu.ITEM_SCROLL_BACK;
+                }
+                break;
+            case MenuItem.DIRECTION_RIGHT:
+                switch (buttonPosition) {
+                    case 0:
+                        return Menu.ITEM_DELETE_FROM_BOTTOM_TO_TOP;
+                    case 1:
+                        return Menu.ITEM_SCROLL_BACK;
+                }
+        }
+        return Menu.ITEM_NOTHING;
+    }
+
 
     @OnClick({R.id.base_left, R.id.add_topic, R.id.topic_search, R.id.base_right, R.id.to_see})
     public void onClick(View view) {
@@ -247,6 +300,9 @@ public class AroundFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 获取优质小组列表
+     */
     public void getGoodgroup() {
         RequestParams params = new RequestParams();
         params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
@@ -275,6 +331,45 @@ public class AroundFragment extends BaseFragment {
                         arrayList.add(disscussCommentItems);
                     }
                     adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 关闭小组
+     * */
+    public void deleteTopic(final GroupItems mInfo) {
+        RequestParams params = new RequestParams();
+        params.put("topic_id", mInfo.topic_id);
+        params.put("access_token", prefs.getAccessToken());
+        cancelmDialog();
+        showProgress(0, true);
+        client.topicDelete(mContext, params, new CommenHandler() {
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+
+            @Override
+            public void onSuccess(Commen commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                Toast.makeText(mContext, commen.message, Toast.LENGTH_SHORT).show();
+                adaptList.remove(mInfo);
+                mAdapter.notifyDataSetChanged();
+                if (adaptList.size() < 1) {
+                    empty.setVisibility(View.VISIBLE);
+                } else {
+                    empty.setVisibility(View.GONE);
                 }
             }
         });
@@ -376,4 +471,77 @@ public class AroundFragment extends BaseFragment {
         return 0;
     }
 
+
+    public class MyGroupListAdapter extends YolkBaseAdapter<GroupItems> {
+        ViewHolder viewHolder = null;
+
+        public MyGroupListAdapter(Context context, ArrayList<GroupItems> mList) {
+            super(context);
+            this.mList = mList;
+        }
+
+
+        @Override
+        public int getItemViewType(int position) {
+            if (mList.get(position).user_id.equals(pres.getUserId())) {
+                return 1;//刪除類型
+            } else {
+                return 0;//取關类型
+            }
+
+        }
+
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;//所有的menu数量
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                viewHolder = new ViewHolder();
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_my_around_group, null);
+                viewHolder.attention_count = (TextView) convertView.findViewById(R.id.attention_count);
+                viewHolder.attention_topic = (TextView) convertView.findViewById(R.id.attention_topic);
+                viewHolder.topic_image = (SimpleDraweeView) convertView.findViewById(R.id.topic_image);
+                viewHolder.follow_count = (TextView) convertView.findViewById(R.id.follow_count);
+                viewHolder.topic_discuss = (TextView) convertView.findViewById(R.id.topic_discuss);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            final GroupItems mInfo = getItem(position);
+            if (null != mInfo) {
+                viewHolder.attention_count.setText(mInfo.follows + "人关注");
+                viewHolder.attention_topic.setText(mInfo.name + "");
+                viewHolder.follow_count.setText(mInfo.discussion_number + "个帖子");
+                if (mInfo.desc != null) {
+                    viewHolder.topic_discuss.setText(mInfo.desc);
+                }
+                if (!mInfo.avatar.isEmpty()) {
+                    viewHolder.topic_image.setImageURI(mInfo.avatar);
+                } else {
+                    viewHolder.topic_image.setImageResource(R.mipmap.ic_header);
+
+                }
+
+            }
+            return convertView;
+        }
+
+
+        private class ViewHolder {
+            TextView attention_count, follow_count;
+            TextView attention_topic, topic_discuss;
+            SimpleDraweeView topic_image;
+        }
+
+
+    }
+
+
 }
+
+
+
