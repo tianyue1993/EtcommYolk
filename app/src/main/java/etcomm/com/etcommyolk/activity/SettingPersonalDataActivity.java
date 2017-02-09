@@ -377,7 +377,7 @@ public class SettingPersonalDataActivity extends BaseActivity implements View.On
         choosetext.setText("选择年龄");
 
         new AlertView("选择年龄", SettingPersonalDataActivity.this, 1931, 2000, SettingPersonalDataActivity.this).show();
-
+        layout_wl.setVisibility(View.GONE);
     }
 
     private void editUserInfo(final String field, final String value) {

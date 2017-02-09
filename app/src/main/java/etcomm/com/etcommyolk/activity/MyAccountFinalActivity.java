@@ -62,6 +62,7 @@ public class MyAccountFinalActivity extends BaseActivity implements TextWatcher 
         EtcommApplication.addActivity(this);
         setTitleTextView(intent.getStringExtra("type"), null);
         toSetInputType();
+        finalCommit.setClickable(false);
     }
 
     //添加监听

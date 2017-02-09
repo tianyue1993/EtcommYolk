@@ -71,7 +71,7 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
                 }
             }
         });
-
+        forgetCommit.setClickable(false);
         initListener();
     }
     //注册监听
@@ -158,8 +158,10 @@ public class ForgotPasswordActivity extends BaseActivity implements TextWatcher 
         //修改Button背景
         if (StringUtils.isEmpty(forgetNewPwd.getText().toString().trim()) || StringUtils.isEmpty(forgetConfirmPwd.getText().toString().trim())) {
             forgetCommit.setBackgroundResource(R.mipmap.all_fil_button);
+            forgetCommit.setClickable(false);
         } else {
             forgetCommit.setBackgroundResource(R.mipmap.all_ok_button);
+            forgetCommit.setClickable(true);
         }
     }
 

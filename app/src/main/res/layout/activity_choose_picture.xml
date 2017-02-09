@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/all_fil_button"
+        android:background="@mipmap/all_ok_button"
         android:gravity="center"
         android:clickable="false"
         android:layout_below="@+id/relativeLayoutcho"

@@ -45,7 +45,7 @@
             android:singleLine="true"
             android:textColorHint="#c7b88f"
             android:textSize="15dp"
-            android:paddingLeft="33dp"
+            android:paddingLeft="5dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView"
             android:layout_toEndOf="@+id/textView"
@@ -103,7 +103,7 @@
                 android:singleLine="true"
                 android:maxEms="12"
                 android:ellipsize="end"
-                android:paddingLeft="35dp"
+                android:paddingLeft="5dp"
                 android:textSize="15dp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -154,7 +154,7 @@
                 android:background="@null"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:paddingLeft="35dp"
+                android:paddingLeft="5dp"
                 android:textSize="15dp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -197,7 +197,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:layout_gravity="center"
-                android:paddingLeft="35dp"
+                android:paddingLeft="5dp"
                 android:inputType="textPassword"
                 android:textSize="15dp" />
         </android.support.design.widget.TextInputLayout>
@@ -221,6 +221,7 @@
         android:layout_height="50dp"
         android:text="注册"
         android:textSize="22dp"
+        android:clickable="false"
         android:textColor="@color/white"
         android:background="@mipmap/all_fil_button"
         android:layout_marginBottom="120dp"

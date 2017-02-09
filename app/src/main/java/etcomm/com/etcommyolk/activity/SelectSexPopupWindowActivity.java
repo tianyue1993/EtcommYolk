@@ -37,8 +37,8 @@ public class SelectSexPopupWindowActivity extends Activity {
 
     private void initView() {
         EtcommApplication.addActivity(this);
-        btnTakePhoto.setText("男");
-        btnPickPhoto.setText("女");
+        btnTakePhoto.setText("女");
+        btnPickPhoto.setText("男");
     }
 
 
@@ -53,12 +53,12 @@ public class SelectSexPopupWindowActivity extends Activity {
     public void onClick(View v) {
         Intent data = new Intent();
         switch (v.getId()) {
-            case R.id.btn_take_photo: // 男
-                data.putExtra(Preferences.SelectSex, "男");
+            case R.id.btn_take_photo: // 女
+                data.putExtra(Preferences.SelectSex, "女");
                 setResult(RESULT_OK, data);
                 break;
-            case R.id.btn_pick_photo: // 女
-                data.putExtra(Preferences.SelectSex, "女");
+            case R.id.btn_pick_photo: // 男
+                data.putExtra(Preferences.SelectSex, "男");
                 setResult(RESULT_OK, data);
                 break;
             case R.id.btn_cancel:

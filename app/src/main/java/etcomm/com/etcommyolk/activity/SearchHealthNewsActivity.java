@@ -126,6 +126,7 @@ public class SearchHealthNewsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (!loadStatus && list.size() != 0) {
+
                     getList();
                 }
             }

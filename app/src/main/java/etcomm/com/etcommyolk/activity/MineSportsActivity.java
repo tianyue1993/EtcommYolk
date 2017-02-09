@@ -137,25 +137,29 @@ public class MineSportsActivity extends BaseActivity {
                 super.onSuccess(findHome);
                 cancelmDialog();
                 List<RecommendItems> lists = findHome.content.items;
-                if (lists != null && lists.size() > 0) {
-                    if (isRefresh) {
+                if (isRefresh) {
+                    if (lists != null && lists.size() > 0) {
                         list.clear();
                         list.addAll(lists);
                         collectpulllist.setAdapter(mHealthAdapter);
-                    } else {
+                    }else {
+                        noMineSports.setVisibility(View.VISIBLE);
+                        collectpulllist.setVisibility(View.GONE);
+                    }
+                }else {
+                    if (lists != null && lists.size() > 0) {
                         for (Iterator<RecommendItems> iterator = lists.iterator(); iterator.hasNext(); ) {
                             RecommendItems disscussCommentItems = (RecommendItems) iterator.next();
                             if (!list.contains(disscussCommentItems)) {
                                 list.add(disscussCommentItems);
                             }
                         }
+                    }else {
+                        showToast("已无更多内容");
+                        if (collectpulllist.getFooterViewsCount() > 0) {
+                            collectpulllist.removeFooterView(footer);
+                        }
                     }
-                    mHealthAdapter.notifyDataSetChanged();
-                    noMineSports.setVisibility(View.GONE);
-                    collectpulllist.setVisibility(View.VISIBLE);
-                } else {
-                    noMineSports.setVisibility(View.VISIBLE);
-                    collectpulllist.setVisibility(View.GONE);
                 }
                 loadStatus = false;
                 collectpulllist.onRefreshComplete();

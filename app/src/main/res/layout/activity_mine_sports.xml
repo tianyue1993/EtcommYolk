@@ -11,17 +11,14 @@
         android:id="@+id/collectpulllist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:scrollbars="none"
-        android:visibility="gone"
-        android:footerDividersEnabled="true"
-        android:headerDividersEnabled="true" />
+        />
 
 
     <RelativeLayout
         android:id="@+id/noMineSports"
         android:layout_width="match_parent"
         android:layout_centerVertical="true"
+        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <ImageView

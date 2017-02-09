@@ -172,7 +172,9 @@ public class ShareGroupListAdapter extends YolkBaseAdapter<GroupItems> {
                 params.put("share_type", "Health");
             }
             //以ID来分辨小组和收藏等 待确认
-            if (recommendItems.news_id != null) {
+            if (recommendItems.activity_id != null) {
+                params.put("share_id", recommendItems.activity_id);
+            }else if (recommendItems.news_id != null) {
                 params.put("share_id", recommendItems.news_id);
             }else {
                 params.put("share_id", recommendItems.id);

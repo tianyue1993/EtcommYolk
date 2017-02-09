@@ -36,7 +36,7 @@ import etcomm.com.etcommyolk.handler.DefaultAvatorHandler;
 import etcomm.com.etcommyolk.widget.ScrollHorizontalScrollView;
 import etcomm.com.etcommyolk.widget.ScrollHorizontalScrollViewAdapter;
 
-public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
+public class ChoosePictureActivity extends BaseActivity {
 
     @Bind(R.id.btn_enterusernamechooseavatarnext)
     Button btn_enterusernamechooseavatarnext;
@@ -131,8 +131,7 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
         EtcommApplication.addActivity(this);
         scrollhsv = (ScrollHorizontalScrollView) findViewById(R.id.scrollhsv);
         scrollhsv.setHorizontalFadingEdgeEnabled(false);
-        scrollhsv.scrollTo(-100,0);
-        inputChoose.addTextChangedListener(this);
+        scrollhsv.scrollTo(-100, 0);
 
         scrollhsv.setOnItemClickListener(new ScrollHorizontalScrollView.OnItemClickListener() {
 
@@ -164,8 +163,6 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
                         showToast("昵称长度为1至10个字，请核实昵称");
                         return;
                     }
-                } else {
-                    return;
                 }
 
                 // 校验昵称是否重复
@@ -191,6 +188,7 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
 
             }
         });
+
     }
 
     @Override
@@ -255,27 +253,6 @@ public class ChoosePictureActivity extends BaseActivity implements TextWatcher {
             }
         }
         return isMaches;
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (inputChoose.getText().toString().trim().isEmpty()) {
-            btn_enterusernamechooseavatarnext.setBackgroundResource(R.mipmap.all_fil_button);
-            btn_enterusernamechooseavatarnext.setClickable(false);
-        }else {
-            btn_enterusernamechooseavatarnext.setBackgroundResource(R.mipmap.all_ok_button);
-            btn_enterusernamechooseavatarnext.setClickable(true);
-        }
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
     }
 
 }

@@ -3,6 +3,8 @@ package etcomm.com.etcommyolk.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -30,7 +32,9 @@ import java.util.Iterator;
 
 import butterknife.OnClick;
 import etcomm.com.etcommyolk.R;
+import etcomm.com.etcommyolk.activity.AboutUsActivity;
 import etcomm.com.etcommyolk.activity.ExamineReportActivity;
+import etcomm.com.etcommyolk.activity.MainActivity;
 import etcomm.com.etcommyolk.activity.MineActivity;
 import etcomm.com.etcommyolk.activity.MoreHealthActivity;
 import etcomm.com.etcommyolk.activity.MoreSportsActivity;
@@ -44,10 +48,14 @@ import etcomm.com.etcommyolk.entity.FindHome;
 import etcomm.com.etcommyolk.entity.FindList;
 import etcomm.com.etcommyolk.entity.FirstEvent;
 import etcomm.com.etcommyolk.entity.RecommendItems;
+import etcomm.com.etcommyolk.entity.UpdateObj;
 import etcomm.com.etcommyolk.exception.BaseException;
 import etcomm.com.etcommyolk.handler.DaySignUpHandler;
 import etcomm.com.etcommyolk.handler.FindHomeHandler;
 import etcomm.com.etcommyolk.handler.FindListHandler;
+import etcomm.com.etcommyolk.handler.UpdateObjHandler;
+import etcomm.com.etcommyolk.utils.StringUtils;
+import etcomm.com.etcommyolk.utils.UpdateCheckUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 import etcomm.com.etcommyolk.widget.SlideADView;
@@ -261,6 +269,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 mContext.startActivity(intent);
             }
         });
+        checkUpdate(getVersion());
         return rootView;
     }
 
@@ -274,7 +283,6 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 if (AppMudle == 0) {
                     EventBus.getDefault().post(
                             new FirstEvent("start"));
-//                    startActivity(new Intent(mContext, SearchGroupActivity.class));
                 } else {
                     startActivity(new Intent(mContext, ExamineReportActivity.class));
                 }
@@ -545,6 +553,93 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
         });
         prefs.savesignin("1");
     }
+
+
+    //版本更新
+    private void checkUpdate(String version) {
+        RequestParams params = new RequestParams();
+        params.put("access_token", prefs.getAccessToken());
+        params.put("version", version);
+        cancelmDialog();
+        showProgress(0, true);
+        client.toUploadversion(getActivity(), params, new UpdateObjHandler() {
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                cancelmDialog();
+            }
+
+
+            @Override
+            public void onSuccess(UpdateObj commen) {
+                super.onSuccess(commen);
+                cancelmDialog();
+                int code = commen.code;
+                if (code == 45000) {
+                    String versiononServer = commen.content.version;// ("version");
+                    String dec = commen.content.description;// getString("versiononServer");
+                    Long[] longVersionOnServer = stringVersionToLong(versiononServer);
+                    Long[] longVersionOnClient = stringVersionToLong(getVersion().replaceAll("v", ""));
+                    if (longVersionOnServer[0] > 0 && longVersionOnClient[0] > 0) {// 粗略检测version值合法性
+                        if (longVersionOnServer[0] > longVersionOnClient[0]) {
+                            UpdateCheckUtils.getInstanse().lookVersion(getActivity(), true, commen);
+                            return;
+                        } else if (longVersionOnServer[0] == longVersionOnClient[0] && longVersionOnServer[1] > longVersionOnClient[1]) {
+                            UpdateCheckUtils.getInstanse().lookVersion(getActivity(), true, commen);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(BaseException exception) {
+                super.onFailure(exception);
+                cancelmDialog();
+            }
+        });
+    }
+
+    /**
+     * 根据版本号返回new long[3]。用于比较版本新旧。
+     *
+     * @param version
+     * @return
+     */
+    public Long[] stringVersionToLong(String version) {
+        Long[] longVersion = new Long[2];
+        try {
+            if (!StringUtils.isEmpty(version)) {
+                String[] temp = version.split("\\.");
+                if (temp != null && temp.length == 2) {
+                    longVersion[0] = Long.parseLong(temp[0]);
+                    longVersion[1] = Long.parseLong(temp[1]);
+                }
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return longVersion;
+    }
+
+    /**
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
+     */
+    public String getVersion() {
+        try {
+            PackageManager manager = getActivity().getPackageManager();
+            PackageInfo info = manager.getPackageInfo(getActivity().getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     private static final long SigninDialogDismissTime = 1500;
 
