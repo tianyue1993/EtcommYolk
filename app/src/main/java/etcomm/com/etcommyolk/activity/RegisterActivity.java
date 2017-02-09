@@ -97,7 +97,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         getRightTextView().setText("邮箱注册");
         registeredPhone.getEditText().setSingleLine(true);
         registeredPhone.getEditText().setEllipsize(TextUtils.TruncateAt.END);
-        registeredPhone.getEditText().setEms(15);
+        registeredPhone.getEditText().setMaxEms(11);
+        regCommit.setClickable(false);
     }
 
     //监听注册
@@ -506,12 +507,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (StringUtils.isEmpty(regInvitationCode.getText().toString().trim()) || StringUtils.isEmpty(verificationCode.getEditText().getText().toString().trim())
                 || StringUtils.isEmpty(registerPassword.getEditText().getText().toString().trim()) || StringUtils.isEmpty(registeredPhone.getEditText().getText().toString().trim())) {
             regCommit.setBackgroundResource(R.mipmap.all_fil_button);
+            regCommit.setClickable(false);
         } else {
             regCommit.setBackgroundResource(R.mipmap.all_ok_button);
+            regCommit.setClickable(true);
         }
         //监听满6位进行说明邀请码输入完毕进行网络请求
         if (regInvitationCode.getText().toString().trim().length() >= 6) {
             getSubStructure();
+        }
+        if (registeredPhone.getEditText().length() > 11) {
+//            registeredPhone.getEditText().setText(registeredPhone.getEditText().getText().subSequence(0, 11) + "...");
+        }else {
+//            registeredPhone.getEditText().setText(s.toString());
         }
     }
 

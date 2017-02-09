@@ -69,6 +69,8 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
     TextView choosetext;
     private boolean isShow = true;
     private int usersex = 0;
+    private String editweight = "50";
+    private String editheight = "160";
 
 
     @Override
@@ -167,7 +169,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
                 @Override
                 public void onSelected(int selectedIndex, String item) {
                     Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
-                    height.setText(item);
+                    editheight = item;
                 }
             });
         } else {
@@ -213,7 +215,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
                 @Override
                 public void onSelected(int selectedIndex, String item) {
                     Log.d("", "selectedIndex: " + selectedIndex + ", item: " + item);
-                    weight.setText(item);
+                    editweight = item;
                 }
             });
         } else {
@@ -229,6 +231,7 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
     void personal_age_rl() {
         choosetext.setText("");
             new AlertView("选择年龄", PersonalProfileActivity.this, 1931, 2000, PersonalProfileActivity.this).show();
+        layout_wl.setVisibility(View.GONE);
     }
 
     private void cancel() {
@@ -241,9 +244,25 @@ public class PersonalProfileActivity extends BaseActivity implements OnConfirmeL
     }
 
     private void sure() {
-        wl_pickerweight.setSeletion(0);
-        wl_pickerage.setSeletion(0);
-        wl_pickerheight.setSeletion(0);
+        if (choosetext.getText().toString().equals("身　高")) {
+            if (editheight != "") {
+                prefs.setHeight(editheight);
+                height.setText(editheight);
+                wl_pickerweight.setSeletion(0);
+                wl_pickerage.setSeletion(0);
+                wl_pickerheight.setSeletion(0);
+            }
+
+        } else if (choosetext.getText().toString().equals("体　重")) {
+            if (editweight != "") {
+                prefs.setWeight(editweight);
+                weight.setText(editweight);
+                wl_pickerweight.setSeletion(0);
+                wl_pickerage.setSeletion(0);
+                wl_pickerheight.setSeletion(0);
+            }
+
+        }
         isShow = true;
         layout_wl.setVisibility(View.GONE);
     }

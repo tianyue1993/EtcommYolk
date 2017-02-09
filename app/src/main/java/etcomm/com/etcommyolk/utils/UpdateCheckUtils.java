@@ -61,13 +61,13 @@ public class UpdateCheckUtils {
     private TextView updateTV;
     private AlertDialog upDatadialog;
     private SeekBar pb;
-    Activity activity;
+    Context activity;
     boolean isMain;//是否是从首页传送过来的
     private boolean isLoading = false;//是否正在下载Apk
     private Dialog noticeDialog;
     private boolean flag = true;
 
-    public void lookVersion(final Activity activity1, boolean isMain, UpdateObj updateObj) {
+    public void lookVersion(final Context activity1, boolean isMain, UpdateObj updateObj) {
         this.activity = activity1;
         this.isMain = isMain;
         if (isLoading) {
@@ -79,6 +79,8 @@ public class UpdateCheckUtils {
             initUpDate(updateObj);
         }
     }
+
+
 
 
     protected void initUpDate(UpdateObj updateObj) {
@@ -234,7 +236,7 @@ public class UpdateCheckUtils {
                 updateCheckUtils = null;
                 if (EtcommApplication.MUSTUPDATE) {
                     EtcommApplication.MUSTUPDATE = false;
-                    activity.finish();
+//                    activity.finish();
                 }
             }
         });

@@ -76,7 +76,7 @@ public class AboutUsActivity extends BaseActivity {
     }
 
 
-
+    //版本更新
     private void checkUpdate(String version) {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
@@ -172,61 +172,6 @@ public class AboutUsActivity extends BaseActivity {
         return longVersion;
     }
 
-    private void showNoticeDialog(String updatecontent) {
-
-        noticeDialog = DialogFactory.getDialogFactory().showUpdateVersionDialog(this, getString(R.string.update_title), updatecontent, getString(R.string.update_later), getString(R.string.update_now), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "建议现在更新", Toast.LENGTH_SHORT).show();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (flag == true) {
-                    intoDownloadManager();
-                }
-                Toast.makeText(mContext, "后台正在下载安装包", Toast.LENGTH_LONG).show();
-            }
-        }, R.color.switch_texton_color, R.color.switch_texton_color);
-        noticeDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    return true;
-                } else {
-                    return false; // 默认返回 false
-                }
-            }
-        });
-    }
-
-    private void downloadApk() {
-        Log.i(tag, "apkurl:  " + apkurl);
-        intoDownloadManager();
-    }
-
-    private void intoDownloadManager() {
-        flag = false;
-        DownloadManager dManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        Log.i(tag, "intoDownloadManager");
-        Uri uri = Uri.parse(apkurl);
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        // 设置下载路径和文件名
-        request.setDestinationInExternalPublicDir("dcare", "dcare.apk");
-        request.setDescription(getString(R.string.app_name) + "更新");
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setMimeType("application/vnd.android.package-archive");
-        // 设置为可被媒体扫描器找到
-        request.allowScanningByMediaScanner();
-        // 设置为可见和可管理
-        request.setVisibleInDownloadsUi(true);
-        long refernece = dManager.enqueue(request);
-        // 把当前下载的ID保存起来
-        SharedPreferences sPreferences = getSharedPreferences("downloadapp", 0);
-        sPreferences.edit().putLong("plato", refernece).commit();
-
-    }
 
     public class DownLoadBroadcastReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {

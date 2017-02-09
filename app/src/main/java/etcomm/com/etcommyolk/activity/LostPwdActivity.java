@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
@@ -41,6 +42,9 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
     //找回方式
     @Bind(R.id.lost_type)
     TextView lostType;
+    //清除
+    @Bind(R.id.clear_input)
+    ImageView clearInput;
     /**
      * 获取验证码方式 true 为手机验证码 false 为邮箱验证码
      */
@@ -61,6 +65,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
         setTitleTextView("找回密码", null);
         getRightTextView().setText("邮箱找回");
         getRightTextView().setVisibility(View.VISIBLE);
+        lostCommit.setClickable(false);
     }
 
     //添加监听
@@ -70,7 +75,7 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
         lostCode.addTextChangedListener(this);
     }
 
-    @OnClick({R.id.get_code, R.id.lost_commit})
+    @OnClick({R.id.get_code, R.id.lost_commit, R.id.clear_input})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.get_code:
@@ -85,9 +90,14 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
                 //切换找回方式
                 toSetInputType();
                 break;
+            case R.id.clear_input:
+                //清除
+                lostPhone.setText("");
+                break;
 
         }
     }
+
     //找回方式
     private void toSetInputType() {
         if (getRightTextView().getText().equals("邮箱找回")) {
@@ -265,10 +275,17 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (!StringUtils.isEmpty(lostPhone.getText().toString().trim())) {
+            clearInput.setVisibility(View.VISIBLE);
+        } else {
+            clearInput.setVisibility(View.GONE);
+        }
         if (StringUtils.isEmpty(lostPhone.getText().toString().trim()) || StringUtils.isEmpty(lostCode.getText().toString().trim())) {
             lostCommit.setBackgroundResource(R.mipmap.all_fil_button);
+            lostCommit.setClickable(false);
         } else {
             lostCommit.setBackgroundResource(R.mipmap.all_ok_button);
+            lostCommit.setClickable(true);
         }
 
     }
@@ -277,4 +294,5 @@ public class LostPwdActivity extends BaseActivity implements TextWatcher, View.O
     public void afterTextChanged(Editable s) {
 
     }
+
 }

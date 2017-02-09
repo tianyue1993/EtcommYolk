@@ -101,6 +101,7 @@ public class SearchHealthNewsActivity extends Activity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     page_number = 1;
+                    adaptList.clear();
                     getList();
 
                 }
@@ -125,6 +126,7 @@ public class SearchHealthNewsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (!loadStatus && list.size() != 0) {
+
                     getList();
                 }
             }
