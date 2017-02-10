@@ -96,6 +96,7 @@ public class MineSportsActivity extends BaseActivity {
                     collectpulllist.removeFooterView(footer);
                 }
                 page_number = 1;
+                loadStatus = true;
                 getHealthList(true, page_size, page_number);
             }
         });

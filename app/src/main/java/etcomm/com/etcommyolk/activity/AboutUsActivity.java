@@ -49,7 +49,6 @@ public class AboutUsActivity extends BaseActivity {
     private boolean flag = true;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,34 +103,12 @@ public class AboutUsActivity extends BaseActivity {
                     return;
                 }
                 if (code == 45000) {
-                    String versiononServer = commen.content.version;// ("version");
-                    String dec = commen.content.description;// getString("versiononServer");
                     apkurl = commen.content.file;// getString("file");
-                    // String versionOnServer = content;
-                    Long[] longVersionOnServer = stringVersionToLong(versiononServer);
-                    Long[] longVersionOnClient = stringVersionToLong(getVersion().replaceAll("v", ""));
-                    System.out.println(longVersionOnServer[0] + ",,,," + longVersionOnClient[0] + ",,," + longVersionOnServer[1] + ",,,," + longVersionOnClient[1]);
-                    if (longVersionOnServer[0] > 0 && longVersionOnClient[0] > 0) {// 粗略检测version值合法性
-                        if (longVersionOnServer[0] > longVersionOnClient[0]) {
-
-                            UpdateCheckUtils.getInstanse().lookVersion(AboutUsActivity.this, true, commen);
-
-//                            showNoticeDialog(dec);
-                            return;
-                        } else if (longVersionOnServer[0] == longVersionOnClient[0] && longVersionOnServer[1] > longVersionOnClient[1]) {
-                            UpdateCheckUtils.getInstanse().lookVersion(AboutUsActivity.this, true, commen);
-//                            showNoticeDialog(dec);
-                            return;
-                        } else {
-                            Log.i(tag, "版本没有更新 ");
-                            Toast.makeText(mContext, "已是最新版本!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Log.i(tag, "版本号有问题 ");
-                    }
-                } else {// code不为0 发生异常
+                    UpdateCheckUtils.getInstanse().lookVersion(AboutUsActivity.this, true, commen);
+                } else {
                     Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                 }
+
 
             }
 
@@ -188,6 +165,7 @@ public class AboutUsActivity extends BaseActivity {
                 context.startActivity(install);
             }
         }
+
     }
 
     /**

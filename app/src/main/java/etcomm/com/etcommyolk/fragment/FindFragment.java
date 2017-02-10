@@ -577,19 +577,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener {
                 cancelmDialog();
                 int code = commen.code;
                 if (code == 45000) {
-                    String versiononServer = commen.content.version;// ("version");
-                    String dec = commen.content.description;// getString("versiononServer");
-                    Long[] longVersionOnServer = stringVersionToLong(versiononServer);
-                    Long[] longVersionOnClient = stringVersionToLong(getVersion().replaceAll("v", ""));
-                    if (longVersionOnServer[0] > 0 && longVersionOnClient[0] > 0) {// 粗略检测version值合法性
-                        if (longVersionOnServer[0] > longVersionOnClient[0]) {
-                            UpdateCheckUtils.getInstanse().lookVersion(getActivity(), true, commen);
-                            return;
-                        } else if (longVersionOnServer[0] == longVersionOnClient[0] && longVersionOnServer[1] > longVersionOnClient[1]) {
-                            UpdateCheckUtils.getInstanse().lookVersion(getActivity(), true, commen);
-                            return;
-                        }
-                    }
+                    UpdateCheckUtils.getInstanse().lookVersion(getActivity(), true, commen);
                 }
             }
 

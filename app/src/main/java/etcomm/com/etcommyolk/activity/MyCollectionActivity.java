@@ -83,6 +83,8 @@ public class MyCollectionActivity extends BaseActivity {
                 }
             }
         };
+
+
         collectpulllist.setOnScrollListener(loadMoreListener);
         //listviw下拉刷新
         collectpulllist.setOnRefreshListener(new DownPullRefreshListView.OnRefreshListener() {
@@ -92,6 +94,7 @@ public class MyCollectionActivity extends BaseActivity {
                     collectpulllist.removeFooterView(footer);
                 }
                 page_number = 1;
+                loadStatus = true;
                 getHealthList(true, page_size, page_number);
             }
         });
