@@ -111,12 +111,18 @@
         android:textColor="#666666"
         android:textSize="14sp" />
 
-    <com.yydcdut.sdlv.SlideAndDragListView
-        android:id="@+id/listview"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/id_swipe_ly"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titlebar"
-        android:dividerHeight="0.5dip" />
+        android:layout_height="match_parent" >
+        <com.yydcdut.sdlv.SlideAndDragListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titlebar"
+            android:dividerHeight="0.5dip" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <RelativeLayout
         android:id="@+id/empty"

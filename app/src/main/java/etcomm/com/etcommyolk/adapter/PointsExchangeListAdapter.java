@@ -2,6 +2,7 @@ package etcomm.com.etcommyolk.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
@@ -79,6 +80,7 @@ public class PointsExchangeListAdapter extends YolkBaseAdapter<PointsExchangeIte
                 viewHolder.reduce_count.setEnabled(true);
             }
             viewHolder.gift_image.setImageURI(mInfo.image);
+            viewHolder.gift_realprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             if (mInfo.show_money != null) {
                 viewHolder.gift_realprice.setText(mInfo.show_money);
                 viewHolder.rl_realprice.setVisibility(View.VISIBLE);

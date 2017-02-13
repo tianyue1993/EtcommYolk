@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,6 +82,8 @@ public class AroundFragment extends BaseFragment implements
     ImageView image;
     @Bind(R.id.text)
     TextView text;
+    @Bind(R.id.id_swipe_ly)
+    SwipeRefreshLayout mSwipeLayout;
     private ArrayList<GroupItems> adaptList = new ArrayList<>();
     protected ArrayList<GroupItems> list = new ArrayList<GroupItems>();
     private MyGroupListAdapter mAdapter;
@@ -151,10 +154,8 @@ public class AroundFragment extends BaseFragment implements
         super.onResume();
         limitOnresumSide = true;
         if (limitOnresumSide) {
-            adaptList.clear();
-            list.clear();
-            arrayList.clear();
             page_number = 1;
+            adaptList.clear();
             getList();
             getGoodgroup();
         }
@@ -185,6 +186,16 @@ public class AroundFragment extends BaseFragment implements
                 intent.putExtra("topic_id", m.topic_id);
                 intent.putExtra("topic_name", m.name);
                 startActivity(intent);
+            }
+        });
+        //设置卷内的颜色
+        mSwipeLayout.setColorSchemeResources(R.color.base_color);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page_number = 1;
+                adaptList.clear();
+                getList();
             }
         });
         return rootView;
@@ -325,7 +336,7 @@ public class AroundFragment extends BaseFragment implements
 
     /**
      * 关闭小组
-     * */
+     */
     public void deleteTopic(final GroupItems mInfo) {
         RequestParams params = new RequestParams();
         params.put("topic_id", mInfo.topic_id);
@@ -368,7 +379,7 @@ public class AroundFragment extends BaseFragment implements
     public void getList() {
         RequestParams params = new RequestParams();
         params.put("access_token", GlobalSetting.getInstance(mContext).getAccessToken());
-        params.put("page", (page_number) + "");
+        params.put("page", 1);
         params.put("page_size", 1000 + "");
         params.put("type", 1 + "");//2为搜索全部，1为已关注
         Log.d("", "getList: " + params.toString());
@@ -412,6 +423,7 @@ public class AroundFragment extends BaseFragment implements
                 mAdapter.notifyDataSetChanged();
             }
         });
+        mSwipeLayout.setRefreshing(false);
     }
 
 
