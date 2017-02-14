@@ -3,13 +3,16 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
+    //打包忽略.9图片错误
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
 
     defaultConfig {
         applicationId "etcomm.com.etcommyolk"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
-        versionName "1.2"
+        versionName "1.2.2"
         //解决AS重新编译Jar包的Bug
         multiDexEnabled true
         // 不让gradle自动生成不同屏幕分辨率的png图
