@@ -86,7 +86,7 @@
         android:layout_marginRight="@dimen/marginmiddle"
         android:layout_marginTop="@dimen/marginmiddle"
         android:background="@drawable/bg_roundrantangle"
-        android:hint="请输入联系方式（qq、手机号、邮箱）"
+        android:hint="QQ、邮箱或电话"
         android:minHeight="45dp"
         android:paddingLeft="@dimen/marginsmall"
         android:paddingRight="@dimen/marginsmall"
