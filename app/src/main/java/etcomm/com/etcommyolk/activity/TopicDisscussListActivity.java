@@ -18,7 +18,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -64,6 +63,7 @@ import etcomm.com.etcommyolk.utils.StringUtils;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.DownPullRefreshListView;
 import etcomm.com.etcommyolk.widget.HorizontalListView;
+import etcomm.com.etcommyolk.widget.InputLayout;
 
 public class TopicDisscussListActivity extends BaseActivity {
 
@@ -82,7 +82,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     @Bind(R.id.pulllistview)
     DownPullRefreshListView listView;
     @Bind(R.id.root)
-    RelativeLayout _root;
+    InputLayout _root;
     @Bind(R.id.emptyview)
     View emptyview;
     @Bind(R.id.if_join)
@@ -123,16 +123,12 @@ public class TopicDisscussListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_disscuss_list);
         ButterKnife.bind(this);
-        hideSoftKeyBoard();
         EtcommApplication.addActivity(this);
         if (getIntent() != null) {
             topic_id = getIntent().getStringExtra("topic_id");
             topic_name = getIntent().getStringExtra("topic_name");
             setTitleTextView(topic_name, null);
         }
-//        当EidtText无焦点（focusable=false）时阻止输入法弹出
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(topic_discuss.getWindowToken(), 0);
         getList();
     }
 
@@ -184,7 +180,34 @@ public class TopicDisscussListActivity extends BaseActivity {
             });
         }
 
-        TopicDisscussListAdapter.DeleteOnClickListener deleteOnClickListener = new TopicDisscussListAdapter.DeleteOnClickListener() {
+//        /**
+//         * 键盘隐藏的时候，如果小组内容为空，设置原文本
+//         */
+//        _root.getViewTreeObserver().addOnGlobalLayoutListener(
+//                new ViewTreeObserver.OnGlobalLayoutListener() {
+//                    @Override
+//                    public void onGlobalLayout() {
+//                        if (isSave) {
+//                            prefs.saveHeigh(_root.getHeight());
+//                            isSave = false;
+//                        }
+//                        if (_root.getHeight() < prefs.getHeigh()) { // 说明键盘是弹出状态
+//
+//                            showToast("弹出");
+//                        } else {
+//                            showToast("收起");
+//                            if (topic_discuss.getText().length()==0){
+//                                topic_discuss.setText(topic.desc);
+//                                topic_discuss.setCursorVisible(false);
+//                            }
+//                        }
+//                    }
+//                });
+
+
+
+
+    TopicDisscussListAdapter.DeleteOnClickListener deleteOnClickListener = new TopicDisscussListAdapter.DeleteOnClickListener() {
             @Override
             public void delete(DisscussItems mInfo) {
                 // TODO Auto-generated method stub
@@ -774,6 +797,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             topic_discuss.setText("");
+                            topic_discuss.setSelection(topic_discuss.getText().toString().length());
                             topic_discuss.setCursorVisible(true);
                             topic_discuss.requestFocus();
                         }
@@ -814,26 +838,6 @@ public class TopicDisscussListActivity extends BaseActivity {
                 } else {
                     emptyview.setVisibility(View.INVISIBLE);
                 }
-
-                /**
-                 * 键盘隐藏的时候，如果小组内容为空，设置原文本
-                 */
-//                _root.getViewTreeObserver().addOnGlobalLayoutListener(
-//                        new ViewTreeObserver.OnGlobalLayoutListener() {
-//                            @Override
-//                            public void onGlobalLayout() {
-//                                if (isSave) {
-//                                    prefs.saveHeigh(_root.getHeight());
-//                                    isSave = false;
-//                                }
-//                                if (_root.getHeight() < prefs.getHeigh()) { // 说明键盘是弹出状态
-//
-//                                } else {
-//                                    topic_discuss.setText(topic.desc);
-//                                    topic_discuss.setCursorVisible(false);
-//                                }
-//                            }
-//                        });
 
                 if (list.size() > 0) {
                     if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 1) {
