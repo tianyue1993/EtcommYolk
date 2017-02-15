@@ -156,6 +156,7 @@ public class AroundFragment extends BaseFragment implements
         if (limitOnresumSide) {
             page_number = 1;
             adaptList.clear();
+            arrayList.clear();
             getList();
             getGoodgroup();
         }

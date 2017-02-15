@@ -160,6 +160,7 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             }
 
             holder.disscuss_content_tv.setText(mInfo.content);
+            holder.disscuss_like_tv.setText(mInfo.like);
             if (pres.getUserId().equals(mInfo.user_id)) {
                 holder.disscuss_delete_iv.setVisibility(View.VISIBLE);
             } else {
@@ -194,7 +195,6 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                     }
                 }
             });
-            holder.disscuss_like_tv.setText(mInfo.is_like);
             holder.disscuss_messages_iv.setOnClickListener(new OnClickListener() {
 
                 @Override

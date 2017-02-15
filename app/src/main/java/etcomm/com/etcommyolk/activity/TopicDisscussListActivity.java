@@ -81,13 +81,12 @@ public class TopicDisscussListActivity extends BaseActivity {
     RelativeLayout attention_member;
     @Bind(R.id.pulllistview)
     DownPullRefreshListView listView;
-    @Bind(R.id.root)
-    InputLayout _root;
     @Bind(R.id.emptyview)
     View emptyview;
     @Bind(R.id.if_join)
     TextView if_join;
-
+    @Bind(R.id.root)
+    RelativeLayout root;
 
     public static final int PIC = 1;
     private static final int TAKE_PHOTO = 10;
@@ -135,10 +134,6 @@ public class TopicDisscussListActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-//        page_number = 1;
-//        adaptList.clear();
-//        list.clear();
-
     }
 
     @Override
@@ -180,34 +175,21 @@ public class TopicDisscussListActivity extends BaseActivity {
             });
         }
 
-//        /**
-//         * 键盘隐藏的时候，如果小组内容为空，设置原文本
-//         */
-//        _root.getViewTreeObserver().addOnGlobalLayoutListener(
-//                new ViewTreeObserver.OnGlobalLayoutListener() {
-//                    @Override
-//                    public void onGlobalLayout() {
-//                        if (isSave) {
-//                            prefs.saveHeigh(_root.getHeight());
-//                            isSave = false;
-//                        }
-//                        if (_root.getHeight() < prefs.getHeigh()) { // 说明键盘是弹出状态
-//
-//                            showToast("弹出");
-//                        } else {
-//                            showToast("收起");
-//                            if (topic_discuss.getText().length()==0){
-//                                topic_discuss.setText(topic.desc);
-//                                topic_discuss.setCursorVisible(false);
-//                            }
-//                        }
-//                    }
-//                });
+        final InputLayout softKeyboardStateHelper = new InputLayout(root);
+        softKeyboardStateHelper.addSoftKeyboardStateListener(new InputLayout.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                //键盘打开
+            }
+            @Override
+            public void onSoftKeyboardClosed() {
+                //键盘关闭
+                editUserInfo("description", topic_discuss.getText().toString());
+            }
 
+        });
 
-
-
-    TopicDisscussListAdapter.DeleteOnClickListener deleteOnClickListener = new TopicDisscussListAdapter.DeleteOnClickListener() {
+        TopicDisscussListAdapter.DeleteOnClickListener deleteOnClickListener = new TopicDisscussListAdapter.DeleteOnClickListener() {
             @Override
             public void delete(DisscussItems mInfo) {
                 // TODO Auto-generated method stub
@@ -715,12 +697,16 @@ public class TopicDisscussListActivity extends BaseActivity {
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
                 cancelmDialog();
+
             }
+
         });
         if (field.equals("avatar")) {
             getList();
         }
-
+        if (topic_discuss.getText().length()==0){
+            topic_discuss.setText(topic.desc);
+        }
     }
 
     /**
@@ -785,6 +771,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                  * * */
                 if (discussion.content.topic.user_id.equals(prefs.getUserId())) {
                     topic_discuss.setEnabled(true);
+                    topic_discuss.setFocusable(true);
                     topic_image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -809,7 +796,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                             if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                                 if (topic_discuss.getText().toString() != null) {
-                                    editUserInfo("description ", topic_discuss.getText().toString());
+                                    editUserInfo("description", topic_discuss.getText().toString());
                                 }
                                 return true;
 
@@ -818,6 +805,9 @@ public class TopicDisscussListActivity extends BaseActivity {
                         }
                     });
 
+                }else {
+                    topic_discuss.setEnabled(false);
+                    topic_discuss.setFocusable(false);
                 }
 
                 attion_count.setText(topic.user_number + "个成员   >");
