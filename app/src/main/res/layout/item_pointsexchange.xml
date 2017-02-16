@@ -46,7 +46,7 @@
                 android:id="@+id/rl_realprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp">
+                android:layout_marginLeft="60dp">
 
                 <TextView
                     android:id="@+id/gift_realprice"
@@ -56,11 +56,6 @@
                     android:textColor="@color/common_light_black_color"
                     android:textSize="@dimen/common_text_small" />
 
-                <View
-                    android:layout_width="45dp"
-                    android:layout_height="0.5dp"
-                    android:layout_centerVertical="true"
-                    android:background="@color/common_light_black_color" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -94,9 +89,11 @@
 
             <TextView
                 android:id="@+id/bye_count"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:background="@color/circleunreached"
+                android:gravity="center"
                 android:text="1"
                 android:textColor="@color/color_black_light"
                 android:textSize="@dimen/common_text_small" />

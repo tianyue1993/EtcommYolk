@@ -69,7 +69,7 @@ public class WebviewDetailActivity extends BaseActivity {
                         open = true;
                     } else {
                         //福利
-                        setTitleTextView("公司福利", null);
+                        setTitleTextView("会员福利", null);
                         open = false;
                     }
                 }

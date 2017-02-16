@@ -1,6 +1,7 @@
 package etcomm.com.etcommyolk.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.text.TextUtils.TruncateAt;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +56,7 @@ public class MyExchangeListAdapter extends YolkBaseAdapter<PointsExchangeItems> 
             viewHolder.gift_realprice.setText(mInfo.show_money);
             viewHolder.draw_address.setText("领取地址：" + mInfo.draw_address);
             viewHolder.gift_name.setText(mInfo.name);
+            viewHolder.gift_realprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             if (!mInfo.show_money.equals("")) {
                 viewHolder.gift_realprice.setText(mInfo.show_money);
                 viewHolder.rl_realprice.setVisibility(View.VISIBLE);
@@ -97,8 +99,8 @@ public class MyExchangeListAdapter extends YolkBaseAdapter<PointsExchangeItems> 
                 viewHolder.gift_exchange.setText("已领取");
                 viewHolder.describetext.setVisibility(View.GONE);
             } else {
-                viewHolder.gift_exchange.setEnabled(true);
-                viewHolder.gift_exchange.setClickable(true);
+                viewHolder.gift_exchange.setEnabled(false);
+                viewHolder.gift_exchange.setClickable(false);
                 viewHolder.gift_exchange.setText("已申请");
                 viewHolder.describetext.setVisibility(View.VISIBLE);
 
