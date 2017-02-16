@@ -98,26 +98,6 @@ public class MsgListActivity extends BaseActivity {
         });
     }
 
-    protected void deleteAllMsg() {
-        // TODO Auto-generated method stub
-        commonDialog = DialogFactory.getDialogFactory().showCommonDialog(mContext, "确定删除该消息", "取消", "确定", new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                commonDialog.dismiss();
-            }
-        }, new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                commonDialog.dismiss();
-                deleteAllMsgFromNet(null);
-            }
-        }, Color.BLACK, Color.BLACK);
-    }
-
     protected void deleteAllMsgFromNet(final MsgListItems.MsgList item) {
         // TODO Auto-generated method stub
         RequestParams params = new RequestParams();
@@ -216,7 +196,7 @@ public class MsgListActivity extends BaseActivity {
                 // TODO Auto-generated method stub
                 if (mMsgList.size() > 0) {
 
-                    deleteAllMsg();
+                    deleteAllMsgFromNet(null);
                 } else {
                     showToast("当前没有消息");
                     // showToast(mContext, "当前没有消息", Toast.LENGTH_SHORT);
