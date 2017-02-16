@@ -348,7 +348,99 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
         } else {
             msg_iv.setImageResource(R.mipmap.ic_messege);
         }
+        //修改目标步数的Bug 在onResume里解决 但是会出现
+        if (!StringUtils.isEmpty(prefs.getPedometerTarget())) {
+            pedometerlist.clear();
+            mSuggestSteps = Integer.parseInt(prefs.getPedometerTarget());
+            initData();
+            viewpager.setAdapter(pageAdapter);
+            viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @SuppressLint("RtlHardcoded")
+                @Override
+                public void onPageSelected(int arg0) {
+                    curPageIndex = arg0;
+                    PedometerItem.Pedometer.PedometerData object = pedometerlist.get(arg0);
+                    tv_caliries.setText(object.calorie);
+                    tv_mileage.setText(object.distance);
+                    tv_motiontimes.setText(decimalFormat.format(Float.valueOf(object.total_time)));
+                    if (Float.valueOf(object.total_time) == 0 && Float.valueOf(object.calorie) > 0) {
+                        tv_motiontimes.setText(decimalFormat.format(Float.valueOf(object.total_time)));
+                        tv_motiontimes_unit.setVisibility(View.VISIBLE);
+                    } else {
+                        tv_motiontimes.setText(decimalFormat.format(Float.valueOf(object.total_time)));
+                        tv_motiontimes_unit.setVisibility(View.VISIBLE);
+                    }
+                    int curpro = (int) (100 * Float.parseFloat(object.step.equals("-") ? "0" : object.step) / Float.valueOf((object.target)));
+                    if (curpro > 100) {
+                        curpro = 100;
+                    }
+                    Log.i(tag, "setProgress: 3" + curpro);
+                    curprogress.setProgress(curpro);
+                    caliriesinfo.setText(object.calorie_text);
+                    distanceinfo.setText(object.distance_text);
+                    if (curpro > 50) {
+                        caliriesinfo.setGravity(Gravity.LEFT);
+                        distanceinfo.setGravity(Gravity.RIGHT);
+                    } else {
+                        caliriesinfo.setGravity(Gravity.RIGHT);
+                        distanceinfo.setGravity(Gravity.LEFT);
+                    }
+                    if (pedometerlist.size() == 1) {
+                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
+                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
+                    } else if (arg0 == 0 && arg0 == pedometerlist.size() - 1) {
+                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
+                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
+                    } else if (arg0 == 0) {
+                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
+                        walk_page_rightcircle.setVisibility(View.VISIBLE);
+                    } else if (arg0 == pedometerlist.size() - 1) {
+                        walk_page_leftcircle.setVisibility(View.VISIBLE);
+                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
+                    } else {
+                        walk_page_leftcircle.setVisibility(View.VISIBLE);
+                        walk_page_rightcircle.setVisibility(View.VISIBLE);
+                    }
+                    // cancelmDialog();
+                    StepPageDataView cur = sparseArray.get(arg0);
+                    if (cur != null) {
+                        Log.e(tagPage, " sparseArray get " + arg0);
+                        cur.startProcessAnimation((int) (Float.valueOf(pedometerlist.get(arg0).step) * 100 / Float.valueOf(pedometerlist.get(arg0).target)));
+                    } else {
+                        Log.e(tagPage, "sparseArray get NULL");
+                    }
 
+                }
+
+                @Override
+                public void onPageScrolled(int arg0, float arg1, int arg2) {
+                    if (arg1 != 0 || arg2 != 0) {
+                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
+                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
+                    } else {
+                        walk_page_leftcircle.setVisibility(View.VISIBLE);
+                        walk_page_rightcircle.setVisibility(View.VISIBLE);
+                        if (arg0 == 0) {
+                            walk_page_leftcircle.setVisibility(View.INVISIBLE);
+                        } else if (arg0 == pedometerlist.size() - 1) {
+                            walk_page_rightcircle.setVisibility(View.INVISIBLE);
+                        }
+                        if (pedometerlist.size() == 1) {
+                            walk_page_leftcircle.setVisibility(View.INVISIBLE);
+                            walk_page_rightcircle.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+
+                @Override
+                // arg0 ==1的时辰默示正在滑动，arg0==2的时辰默示滑动完毕了，arg0==0的时辰默示什么都没做
+                public void onPageScrollStateChanged(int arg0) {
+                    Log.i(tagPage, "onPageScrollStateChanged: " + arg0);
+                }
+            });
+            initFirstPageWithLocalData();
+
+        }
         // bindSer();
         if (!StringUtils.isEmpty(prefs.getMacAddress())) {
             if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -582,100 +674,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             }
 
         };
-
-        if (!StringUtils.isEmpty(prefs.getPedometerTarget())) {
-            pedometerlist.clear();
-            mSuggestSteps = Integer.parseInt(prefs.getPedometerTarget());
-            initData();
-            viewpager.setAdapter(pageAdapter);
-            viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @SuppressLint("RtlHardcoded")
-                @Override
-                public void onPageSelected(int arg0) {
-                    curPageIndex = arg0;
-                    PedometerItem.Pedometer.PedometerData object = pedometerlist.get(arg0);
-                    tv_caliries.setText(object.calorie);
-                    tv_mileage.setText(object.distance);
-                    tv_motiontimes.setText(decimalFormat.format(Float.valueOf(object.total_time)));
-                    if (Float.valueOf(object.total_time) == 0 && Float.valueOf(object.calorie) > 0) {
-                        tv_motiontimes.setText(decimalFormat.format(Float.valueOf(object.total_time)));
-                        tv_motiontimes_unit.setVisibility(View.VISIBLE);
-                    } else {
-                        tv_motiontimes.setText(decimalFormat.format(Float.valueOf(object.total_time)));
-                        tv_motiontimes_unit.setVisibility(View.VISIBLE);
-                    }
-                    int curpro = (int) (100 * Float.parseFloat(object.step.equals("-") ? "0" : object.step) / Float.valueOf((object.target)));
-                    if (curpro > 100) {
-                        curpro = 100;
-                    }
-                    Log.i(tag, "setProgress: 3" + curpro);
-                    curprogress.setProgress(curpro);
-                    caliriesinfo.setText(object.calorie_text);
-                    distanceinfo.setText(object.distance_text);
-                    if (curpro > 50) {
-                        caliriesinfo.setGravity(Gravity.LEFT);
-                        distanceinfo.setGravity(Gravity.RIGHT);
-                    } else {
-                        caliriesinfo.setGravity(Gravity.RIGHT);
-                        distanceinfo.setGravity(Gravity.LEFT);
-                    }
-                    if (pedometerlist.size() == 1) {
-                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
-                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
-                    } else if (arg0 == 0 && arg0 == pedometerlist.size() - 1) {
-                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
-                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
-                    } else if (arg0 == 0) {
-                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
-                        walk_page_rightcircle.setVisibility(View.VISIBLE);
-                    } else if (arg0 == pedometerlist.size() - 1) {
-                        walk_page_leftcircle.setVisibility(View.VISIBLE);
-                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
-                    } else {
-                        walk_page_leftcircle.setVisibility(View.VISIBLE);
-                        walk_page_rightcircle.setVisibility(View.VISIBLE);
-                    }
-                    // cancelmDialog();
-                    StepPageDataView cur = sparseArray.get(arg0);
-                    if (cur != null) {
-                        Log.e(tagPage, " sparseArray get " + arg0);
-                        cur.startProcessAnimation((int) (Float.valueOf(pedometerlist.get(arg0).step) * 100 / Float.valueOf(pedometerlist.get(arg0).target)));
-                    } else {
-                        Log.e(tagPage, "sparseArray get NULL");
-                    }
-
-                }
-
-                @Override
-                public void onPageScrolled(int arg0, float arg1, int arg2) {
-                    if (arg1 != 0 || arg2 != 0) {
-                        walk_page_leftcircle.setVisibility(View.INVISIBLE);
-                        walk_page_rightcircle.setVisibility(View.INVISIBLE);
-                    } else {
-                        walk_page_leftcircle.setVisibility(View.VISIBLE);
-                        walk_page_rightcircle.setVisibility(View.VISIBLE);
-                        if (arg0 == 0) {
-                            walk_page_leftcircle.setVisibility(View.INVISIBLE);
-                        } else if (arg0 == pedometerlist.size() - 1) {
-                            walk_page_rightcircle.setVisibility(View.INVISIBLE);
-                        }
-                        if (pedometerlist.size() == 1) {
-                            walk_page_leftcircle.setVisibility(View.INVISIBLE);
-                            walk_page_rightcircle.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                }
-
-                @Override
-                // arg0 ==1的时辰默示正在滑动，arg0==2的时辰默示滑动完毕了，arg0==0的时辰默示什么都没做
-                public void onPageScrollStateChanged(int arg0) {
-                    Log.i(tagPage, "onPageScrollStateChanged: " + arg0);
-                }
-            });
-            initFirstPageWithLocalData();
-
-        }
-
 
         return layout;
     }
