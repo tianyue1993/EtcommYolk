@@ -554,7 +554,7 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
     private void getWeather() {
         RequestParams params = new RequestParams();
         params.put("access_token", prefs.getAccessToken());
-        client.toWeather(getActivity(), params, new WeatherHandler(){
+        client.toWeather(getActivity(), params, new WeatherHandler() {
 
             @Override
             public void onSuccess(Weather weather) {
@@ -651,12 +651,22 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
                 StepPageDataView view = new StepPageDataView(mContext);
+//                if (pedometerlist.size() == 2) {
+//                    view.setData(pedometerlist.get(0), mSuggestSteps, false);
+//                    container.addView(view, 1);
+//                }else
+//                if (pedometerlist.get(position).date.equals("今天")) {
+//                    view.setData(pedometerlist.get(position), mSuggestSteps, true);
+//                    container.addView(view);
+//                }else {
+//                    view.setData(pedometerlist.get(position), mSuggestSteps, false);
+//                    container.addView(view);
+//                }
                 if (position == pedometerlist.size() - 1) {
                     view.setData(pedometerlist.get(position), mSuggestSteps, true);
                 } else {
                     view.setData(pedometerlist.get(position), mSuggestSteps, false);
                 }
-                container.addView(view);
                 Log.e(tagPage, "sparseArray put : " + position);
                 sparseArray.put(position, view);
                 return view;
@@ -839,12 +849,6 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             public void onSuccess(PedometerItem pedometerItem) {
                 super.onSuccess(pedometerItem);
 
-                /**
-                 * 需要第一次加载时存储的步数
-                 */
-                if (!pedometerItem.content.data.isEmpty()) {
-                    curStep = Integer.valueOf(pedometerItem.content.data.get(pedometerItem.content.data.size() - 1).step);
-                }
 
                 // 返回八天数据，今天在这个当日当回数据的基础上计步
 
@@ -860,6 +864,10 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                             pedometerlist.add(0, PedometerData);
                         }
                     }
+                    //天数为两天时UI绘制有Bug 做此模拟一天数据
+//                    if (pedometerlist.size() == 2) {
+//                        pedometerlist.remove(pedometerlist.size() - 1);
+//                    }
                     sparseArray.clear();
                     pageAdapter.notifyDataSetChanged();
                     viewpager.setCurrentItem(pedometerlist.size() - 1, false);
