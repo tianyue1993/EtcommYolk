@@ -38,7 +38,7 @@ public class RankActivity extends BaseActivity {
     protected static final int GetUserRankUrl = 0;
     protected static final int GetStructureRankUrl = 1;
     ImageView leftimage;
-    ImageView title_right_iv;
+    TextView title_right_iv;
     WebView webview;
 
     private String token;
@@ -54,7 +54,7 @@ public class RankActivity extends BaseActivity {
     private void initView() {
         EtcommApplication.addActivity(this);
         leftimage = (ImageView) findViewById(R.id.leftimage);
-        title_right_iv = (ImageView) findViewById(R.id.title_right_iv);
+        title_right_iv = (TextView) findViewById(R.id.title_right_iv);
         webview = (WebView) findViewById(R.id.webview);
 
 

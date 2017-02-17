@@ -15,16 +15,17 @@
         android:layout_height="@dimen/height_alert_title"
         android:background="#FFCC00">
 
-        <ImageView
+        <TextView
             android:id="@+id/title_right_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:paddingLeft="@dimen/marginlarge"
-            android:paddingRight="@dimen/marginlarge"
-            android:src="@mipmap/how_point_to" />
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="积分规则"
+            />
 
         <ImageView
             android:id="@+id/leftimage"
