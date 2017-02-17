@@ -19,8 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.photoselector.model.PhotoModel;
 import com.photoselector.ui.PhotoPreviewActivity;
 import com.photoselector.util.CommonUtils;
@@ -39,6 +39,7 @@ import etcomm.com.etcommyolk.handler.CommenHandler;
 import etcomm.com.etcommyolk.utils.DensityUtil;
 import etcomm.com.etcommyolk.utils.Preferences;
 import etcomm.com.etcommyolk.utils.StringUtils;
+import etcomm.com.etcommyolk.widget.CircleImageView;
 import etcomm.com.etcommyolk.widget.DialogFactory;
 import etcomm.com.etcommyolk.widget.ProgressDialog;
 
@@ -88,9 +89,9 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             holder.disscuss_pics_gridview = (GridView) convertView.findViewById(R.id.disscuss_pics_gridview);
             holder.disscuss_time_tv = (TextView) convertView.findViewById(R.id.disscuss_time_tv);
             holder.disscuss_user_name_tv = (TextView) convertView.findViewById(R.id.disscuss_user_name_tv);
-            holder.disscuss_useravator = (SimpleDraweeView) convertView.findViewById(R.id.disscuss_useravator);
+            holder.disscuss_useravator = (CircleImageView) convertView.findViewById(R.id.disscuss_useravator);
             holder.item_healthnews_sumary = (TextView) convertView.findViewById(R.id.item_healthnews_sumary);
-            holder.item_healthnews_image = (SimpleDraweeView) convertView.findViewById(R.id.item_healthnews_image);
+            holder.item_healthnews_image = (ImageView) convertView.findViewById(R.id.item_healthnews_image);
             holder.item_healthnews_title = (TextView) convertView.findViewById(R.id.item_healthnews_title);
             holder.share_health_news = (RelativeLayout) convertView.findViewById(R.id.share_health_news);
             holder.topic = (TextView) convertView.findViewById(R.id.topic);
@@ -118,7 +119,8 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 holder.item_healthnews_title.setText(mInfo.title);
                 holder.item_healthnews_sumary.setText(mInfo.content);
                 if (mInfo.photos.size() > 0) {
-                    holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
+                    ImageLoader.getInstance().displayImage(mInfo.photos.get(0).thumb_image, holder.item_healthnews_image);
+//                    holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
                 } else {
                     holder.item_healthnews_image.setImageResource(R.mipmap.ic_header);
                 }
@@ -133,7 +135,8 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 holder.topic.setVisibility(View.VISIBLE);
                 holder.topic.setText("我和他们都关注了这个小组，你还在等什么？");
                 if (mInfo.photos.size() > 0) {
-                    holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
+//                    holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
+                    ImageLoader.getInstance().displayImage(mInfo.photos.get(0).thumb_image,  holder.item_healthnews_image);
                 }
                 if (!mInfo.title.equals("")) {
                     holder.item_healthnews_title.setText(mInfo.title);
@@ -155,7 +158,9 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
                 holder.item_healthnews_title.setText(mInfo.title);
                 holder.item_healthnews_sumary.setText(mInfo.content);
                 if (mInfo.photos.size() > 0) {
-                    holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
+//                    holder.item_healthnews_image.setImageURI(mInfo.photos.get(0).thumb_image);
+                    ImageLoader.getInstance().displayImage(mInfo.photos.get(0).thumb_image, holder.item_healthnews_image);
+
                 }
             }
 
@@ -269,7 +274,8 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
             });
             holder.disscuss_time_tv.setText(mInfo.created_at);
             holder.disscuss_user_name_tv.setText(mInfo.nick_name);
-            holder.disscuss_useravator.setImageURI(mInfo.avatar);
+//            holder.disscuss_useravator.setImageURI(mInfo.avatar);
+            ImageLoader.getInstance().displayImage(mInfo.avatar,holder.disscuss_useravator);
         }
         return convertView;
     }
@@ -400,7 +406,7 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
 
     private static class ViewHolder {
         TextView disscuss_time_tv, topic;
-        SimpleDraweeView disscuss_useravator, item_healthnews_image;
+        CircleImageView disscuss_useravator;
         TextView disscuss_user_name_tv;
         TextView disscuss_content_tv;
         GridView disscuss_pics_gridview;
@@ -408,7 +414,7 @@ public class TopicDisscussListAdapter extends YolkBaseAdapter<DisscussItems> {
         TextView disscuss_messages_tv, item_healthnews_title, item_healthnews_sumary;
         ImageView disscuss_messages_iv;
         TextView disscuss_delete_iv;
-        ImageView disscuss_like_iv;
+        ImageView disscuss_like_iv,item_healthnews_image;
         RelativeLayout share_health_news;
         LinearLayout root;
 

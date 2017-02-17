@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 import etcomm.com.etcommyolk.R;
 import etcomm.com.etcommyolk.entity.Topic;
+import etcomm.com.etcommyolk.widget.CircleImageView;
 
 
 public class CircleAdapter extends YolkBaseAdapter<Topic.TopicUser> {
@@ -31,7 +32,7 @@ public class CircleAdapter extends YolkBaseAdapter<Topic.TopicUser> {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_circle, null);
-            holder.coverImage = (SimpleDraweeView) convertView.findViewById(R.id.image);
+            holder.coverImage = (CircleImageView) convertView.findViewById(R.id.image);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -40,7 +41,8 @@ public class CircleAdapter extends YolkBaseAdapter<Topic.TopicUser> {
         Log.d(tag + "---->avatar", "avatar==" + mInfo.avatar);
         if (mInfo != null) {
             if (mInfo.avatar != null) {
-                holder.coverImage.setImageURI(mInfo.avatar);
+//                holder.coverImage.setImageURI(mInfo.avatar);
+                ImageLoader.getInstance().displayImage(mInfo.avatar,holder.coverImage);
             }
 
         }
@@ -50,7 +52,7 @@ public class CircleAdapter extends YolkBaseAdapter<Topic.TopicUser> {
 
 
     private static class ViewHolder {
-        private SimpleDraweeView coverImage;
+        private CircleImageView coverImage;
     }
 
 }

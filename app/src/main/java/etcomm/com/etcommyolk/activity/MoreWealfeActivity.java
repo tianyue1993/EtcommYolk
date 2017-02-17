@@ -41,7 +41,7 @@ public class MoreWealfeActivity extends BaseActivity {
         setContentView(R.layout.activity_more_sports);
         ButterKnife.bind(this);
         EtcommApplication.addActivity(this);
-        setTitleTextView("公司福利", null);
+        setTitleTextView("会员福利", null);
         hotSwitch.setVisibility(View.GONE);
         initData();
     }

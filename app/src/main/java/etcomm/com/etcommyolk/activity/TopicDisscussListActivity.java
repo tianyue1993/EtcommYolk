@@ -3,8 +3,11 @@ package etcomm.com.etcommyolk.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -116,13 +119,25 @@ public class TopicDisscussListActivity extends BaseActivity {
     String topic_id;
     String topic_name;
     Topic topic;
-
+    public BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("refresh")){
+                page_number = 1;
+                adaptList.clear();
+                getList();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_disscuss_list);
         ButterKnife.bind(this);
         EtcommApplication.addActivity(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("refresh");
+        registerReceiver(receiver, filter);
         if (getIntent() != null) {
             topic_id = getIntent().getStringExtra("topic_id");
             topic_name = getIntent().getStringExtra("topic_name");
@@ -132,13 +147,11 @@ public class TopicDisscussListActivity extends BaseActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
+        if (receiver!=null){
+            unregisterReceiver(receiver);
+        }
     }
 
     public void initData() {
@@ -535,11 +548,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                     }
                     break;
 
-                case 100:
-                    adaptList.clear();
-                    page_number = 1;
-                    getList();
-                    break;
+
             }
         }
     }
@@ -741,7 +750,6 @@ public class TopicDisscussListActivity extends BaseActivity {
             public void onSuccess(Discussion discussion) {
                 super.onSuccess(discussion);
                 cancelmDialog();
-                list = discussion.content.items;
                 topic = discussion.content.topic;
                 List<Topic.TopicUser> list1 = discussion.content.topic.user;
                 initData();
@@ -829,8 +837,10 @@ public class TopicDisscussListActivity extends BaseActivity {
                     emptyview.setVisibility(View.INVISIBLE);
                 }
 
+//                列表相關
+                list = discussion.content.items;
                 if (list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 1) {
+                    if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 0) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }
@@ -872,7 +882,6 @@ public class TopicDisscussListActivity extends BaseActivity {
     }
 
     protected void onLicenseSelectedCallBack(Uri url) {
-
         topic_image.setImageURI(url);
         updateAvatorByUrl(url);
     }
