@@ -148,6 +148,8 @@ public class AddTopicDisscussActivity extends BaseActivity {
         imm.hideSoftInputFromWindow(topicdisscuss.getWindowToken(), 0); //强制隐藏键盘
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd(tag);
+        sendBroadcast(new Intent("refresh"));
+
     }
 
     protected void initDatas() {
@@ -572,6 +574,7 @@ public class AddTopicDisscussActivity extends BaseActivity {
                     Toast.makeText(mContext, "发布成功!", Toast.LENGTH_SHORT).show();
                     Intent data = new Intent();
                     setResult(RESULT_OK, data);
+//                    sendBroadcast(new Intent("refresh"));
                     finish();
                 }
             }
@@ -586,7 +589,9 @@ public class AddTopicDisscussActivity extends BaseActivity {
         });
     }
 
-
+    /**
+     * 发布文字
+     */
     protected void publishtext() {
         RequestParams params = new RequestParams();
         params.put("topic_id", topic_id);
@@ -620,10 +625,13 @@ public class AddTopicDisscussActivity extends BaseActivity {
                     data.putExtra(Preferences.TOPICSET, "1");
                     setResult(RESULT_OK, data);
                     cancelmDialog();
+//                    sendBroadcast(new Intent("refresh"));
                 }
 
             }
         });
     }
+
+
 }
 
