@@ -353,7 +353,9 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             pedometerlist.clear();
             mSuggestSteps = Integer.parseInt(prefs.getPedometerTarget());
             initData();
-            viewpager.setAdapter(pageAdapter);
+            if (pageAdapter != null) {
+                pageAdapter.notifyDataSetChanged();
+            }
             viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @SuppressLint("RtlHardcoded")
                 @Override
@@ -653,21 +655,33 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
                 StepPageDataView view = new StepPageDataView(mContext);
 //                if (pedometerlist.size() == 2) {
 //                    view.setData(pedometerlist.get(0), mSuggestSteps, false);
-//                    container.addView(view, 1);
 //                }else
 //                if (pedometerlist.get(position).date.equals("今天")) {
 //                    view.setData(pedometerlist.get(position), mSuggestSteps, true);
-//                    container.addView(view);
 //                }else {
 //                    view.setData(pedometerlist.get(position), mSuggestSteps, false);
-//                    container.addView(view);
+//
 //                }
-                if (position == pedometerlist.size() - 1) {
-                    view.setData(pedometerlist.get(position), mSuggestSteps, true);
-                } else {
-                    view.setData(pedometerlist.get(position), mSuggestSteps, false);
-                }
-                Log.e(tagPage, "sparseArray put : " + position);
+//                if (pedometerlist.size() > 2) {
+                    if (position == pedometerlist.size() - 1) {
+                        view.setData(pedometerlist.get(position), mSuggestSteps, true);
+                    } else {
+                        view.setData(pedometerlist.get(position), mSuggestSteps, false);
+                    }
+//                }else if (pedometerlist.size() == 2){
+//                    for (int i = 0; i < pedometerlist.size(); i++){
+//
+//                    }
+//                    if (position == 1) {
+//                        view.setData(pedometerlist.get(0), mSuggestSteps, false);
+//                    } else {
+//                        view.setData(pedometerlist.get(0), mSuggestSteps, true);
+//                    }
+//                }else {
+//
+//                }
+
+                container.addView(view);
                 sparseArray.put(position, view);
                 return view;
             }
@@ -869,7 +883,7 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
 //                        pedometerlist.remove(pedometerlist.size() - 1);
 //                    }
                     sparseArray.clear();
-                    pageAdapter.notifyDataSetChanged();
+                    viewpager.setAdapter(pageAdapter);
                     viewpager.setCurrentItem(pedometerlist.size() - 1, false);
                 }
 
