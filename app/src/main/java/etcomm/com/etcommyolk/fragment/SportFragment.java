@@ -893,6 +893,9 @@ public class SportFragment extends BaseFragment implements BluetoothConnectListe
             @Override
             public void onFailure(BaseException exception) {
                 super.onFailure(exception);
+                sparseArray.clear();
+                viewpager.setAdapter(pageAdapter);
+                viewpager.setCurrentItem(pedometerlist.size() - 1, false);
             }
         });
     }
