@@ -36,7 +36,6 @@
         android:paddingRight="@dimen/marginsmall"
         android:paddingTop="@dimen/marginsmall"
         android:textColor="#5a5a5a"
-        android:textColorHint="@color/darkbrown"
         android:textCursorDrawable="@drawable/cursor_drawable" />
 
     <TextView

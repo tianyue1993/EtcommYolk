@@ -143,7 +143,8 @@ public class TopicDisscussListActivity extends BaseActivity {
             topic_name = getIntent().getStringExtra("topic_name");
             setTitleTextView(topic_name, null);
         }
-        getList();
+
+        initData();
     }
 
     @Override
@@ -155,53 +156,7 @@ public class TopicDisscussListActivity extends BaseActivity {
     }
 
     public void initData() {
-        if (topic != null) {
-            topic_image.setImageURI(topic.avatar);
-            topic_discuss.setText(topic.desc);
-            attion_count.setText(topic.user_number);
-            /**
-             *点击活动小组的活动图标，进入活动排名页面
-             **/
-            depart_rank.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, ActivityRanktActivity.class);
-                    intent.putExtra("activity_rank", topic.activity_rank);
-                    startActivity(intent);
-                }
-            });
-
-            setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, TopicDiscussSettingActivity.class);
-                    intent.putExtra("id", topic.user_id);
-                    intent.putExtra("topic_id", topic_id);
-                    intent.putExtra("isAttentioned", topic.is_followed);
-                    intent.putExtra("detail_url", topic.detail_url);
-                    intent.putExtra("is_activity", topic.is_activity);
-                    intent.putExtra("discuse", topic.desc);
-                    intent.putExtra("topic_name", topic_name);
-                    intent.putExtra("image", topic.avatar);
-                    startActivityForResult(intent, Right);
-                }
-            });
-        }
-
-        final InputLayout softKeyboardStateHelper = new InputLayout(root);
-        softKeyboardStateHelper.addSoftKeyboardStateListener(new InputLayout.SoftKeyboardStateListener() {
-            @Override
-            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
-                //键盘打开
-            }
-            @Override
-            public void onSoftKeyboardClosed() {
-                //键盘关闭
-                editUserInfo("description", topic_discuss.getText().toString());
-            }
-
-        });
-
+        getList();
         TopicDisscussListAdapter.DeleteOnClickListener deleteOnClickListener = new TopicDisscussListAdapter.DeleteOnClickListener() {
             @Override
             public void delete(DisscussItems mInfo) {
@@ -231,13 +186,25 @@ public class TopicDisscussListActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         };
+
+        //长按举报帖子
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                DisscussItems m = mAdapter.getItem(position - 1);
+                Intent intent = new Intent(mContext, TopicReportPopActivity.class);
+                intent.putExtra("discussion_id", m.discussion_id);
+                intent.putExtra("type", "discussion");
+                startActivity(intent);
+                return true;
+            }
+        });
         int mScreenWidth;
         WindowManager wm = getWindowManager();
         int width = wm.getDefaultDisplay().getWidth();
         mScreenWidth = width;
         mAdapter = new TopicDisscussListAdapter(mContext, adaptList, mScreenWidth, topic_id, deleteOnClickListener, likeOrUnLikeClickListener);
         listView.setAdapter(mAdapter);
-        listView.setDividerHeight(5);
         //点击角布局加载更多
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,18 +252,23 @@ public class TopicDisscussListActivity extends BaseActivity {
             }
         });
 
-        //长按举报帖子
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+        final InputLayout softKeyboardStateHelper = new InputLayout(root);
+        softKeyboardStateHelper.addSoftKeyboardStateListener(new InputLayout.SoftKeyboardStateListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                DisscussItems m = mAdapter.getItem(position - 1);
-                Intent intent = new Intent(mContext, TopicReportPopActivity.class);
-                intent.putExtra("discussion_id", m.discussion_id);
-                intent.putExtra("type", "discussion");
-                startActivity(intent);
-                return true;
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                //键盘打开
             }
+
+            @Override
+            public void onSoftKeyboardClosed() {
+                //键盘关闭
+                editUserInfo("description", topic_discuss.getText().toString());
+            }
+
         });
+
+
         //点击进入帖子详情
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -751,8 +723,40 @@ public class TopicDisscussListActivity extends BaseActivity {
                 super.onSuccess(discussion);
                 cancelmDialog();
                 topic = discussion.content.topic;
+                if (topic != null) {
+                    topic_image.setImageURI(topic.avatar);
+                    topic_discuss.setText(topic.desc);
+                    attion_count.setText(topic.user_number);
+                    /**
+                     *点击活动小组的活动图标，进入活动排名页面
+                     **/
+                    depart_rank.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, ActivityRanktActivity.class);
+                            intent.putExtra("activity_rank", topic.activity_rank);
+                            startActivity(intent);
+                        }
+                    });
+
+                    setRightImage(R.mipmap.ic_title_more, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, TopicDiscussSettingActivity.class);
+                            intent.putExtra("id", topic.user_id);
+                            intent.putExtra("topic_id", topic_id);
+                            intent.putExtra("isAttentioned", topic.is_followed);
+                            intent.putExtra("detail_url", topic.detail_url);
+                            intent.putExtra("is_activity", topic.is_activity);
+                            intent.putExtra("discuse", topic.desc);
+                            intent.putExtra("topic_name", topic_name);
+                            intent.putExtra("image", topic.avatar);
+                            startActivityForResult(intent, Right);
+                        }
+                    });
+                }
+
                 List<Topic.TopicUser> list1 = discussion.content.topic.user;
-                initData();
                 circleAdapter = new CircleAdapter(mContext, list1);
                 image_list.setAdapter(circleAdapter);
                 if (discussion.content.topic.is_rank.equals("0")) {
@@ -775,6 +779,7 @@ public class TopicDisscussListActivity extends BaseActivity {
                     });
 
                 }
+
                 /**如果是自己创建的小组，可修改头像，可点击修改相关信息
                  * * */
                 if (discussion.content.topic.user_id.equals(prefs.getUserId())) {
@@ -837,10 +842,9 @@ public class TopicDisscussListActivity extends BaseActivity {
                     emptyview.setVisibility(View.INVISIBLE);
                 }
 
-//                列表相關
                 list = discussion.content.items;
                 if (list.size() > 0) {
-                    if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 0) {
+                    if (listView.getFooterViewsCount() == 0 && discussion.content.pages > 1) {
                         listView.addFooterView(footer);
                         listView.setAdapter(mAdapter);
                     }

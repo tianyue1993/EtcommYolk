@@ -81,7 +81,7 @@ android {
 
         // 测试站：测试服务器地址，
         alpha {
-            applicationId "etcomm.com.etcommyolk.alpha"
+            applicationId "etcomm.com.etcommyolk"
             minSdkVersion 15
             targetSdkVersion 21
             versionCode 1
