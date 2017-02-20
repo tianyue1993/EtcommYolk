@@ -12,7 +12,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
-        versionName "1.2.3"
+        versionName "1.0"
         //解决AS重新编译Jar包的Bug
         multiDexEnabled true
         // 不让gradle自动生成不同屏幕分辨率的png图
@@ -85,7 +85,7 @@ android {
             minSdkVersion 15
             targetSdkVersion 21
             versionCode 1
-            versionName "1.0"
+            versionName "1.2.4"
             // 不让gradle自动生成不同屏幕分辨率的png图
             generatedDensities = []
             manifestPlaceholders = [
